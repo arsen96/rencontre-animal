@@ -1,0 +1,7 @@
+{
+  "name": "animal-rencontre",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
