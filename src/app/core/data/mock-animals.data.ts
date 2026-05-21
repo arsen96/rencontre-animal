@@ -1,5 +1,8 @@
 import { Animal } from '../interfaces/animal.interface';
 
+const cardGradient = (accent: string) =>
+  `radial-gradient(ellipse 70% 50% at 50% 35%, ${accent} 0%, transparent 55%), linear-gradient(180deg, #102018 0%, #0B0B0B 100%)`;
+
 export const MOCK_ANIMALS: Animal[] = [
   {
     id: 'lion',
@@ -8,7 +11,7 @@ export const MOCK_ANIMALS: Animal[] = [
     imageUrl: 'assets/animals/lion.jpg',
     personality: 'Leader, protecteur',
     traits: ['Charismatique', 'Loyal', 'Courageux'],
-    gradient: 'linear-gradient(135deg, #c9a227 0%, #8b6914 50%, #5c4033 100%)',
+    gradient: cardGradient('rgba(200, 169, 107, 0.12)'),
   },
   {
     id: 'renard',
@@ -17,7 +20,7 @@ export const MOCK_ANIMALS: Animal[] = [
     imageUrl: 'assets/animals/renard.jpg',
     personality: 'Intelligent, charmeur',
     traits: ['Rusé', 'Spirituel', 'Séducteur'],
-    gradient: 'linear-gradient(135deg, #e87d3e 0%, #c45a28 50%, #5c4033 100%)',
+    gradient: cardGradient('rgba(200, 120, 60, 0.1)'),
   },
   {
     id: 'chat',
@@ -26,7 +29,7 @@ export const MOCK_ANIMALS: Animal[] = [
     imageUrl: 'assets/animals/chat.jpg',
     personality: 'Indépendant, joueur',
     traits: ['Curieux', 'Mystérieux', 'Affectueux'],
-    gradient: 'linear-gradient(135deg, #a8b5c4 0%, #6b7d8f 50%, #3d5a45 100%)',
+    gradient: cardGradient('rgba(160, 180, 200, 0.08)'),
   },
   {
     id: 'loup',
@@ -35,7 +38,7 @@ export const MOCK_ANIMALS: Animal[] = [
     imageUrl: 'assets/animals/loup.jpg',
     personality: 'Loyal, instinctif',
     traits: ['Protecteur', 'Passionné', 'Sauvage'],
-    gradient: 'linear-gradient(135deg, #7a8a99 0%, #4a5568 50%, #2d3748 100%)',
+    gradient: cardGradient('rgba(120, 140, 160, 0.1)'),
   },
   {
     id: 'singe',
@@ -44,7 +47,7 @@ export const MOCK_ANIMALS: Animal[] = [
     imageUrl: 'assets/animals/singe.jpg',
     personality: 'Joueur, malicieux',
     traits: ['Espiègle', 'Social', 'Curieux'],
-    gradient: 'linear-gradient(135deg, #a67c52 0%, #6b4423 50%, #3e2a22 100%)',
+    gradient: cardGradient('rgba(166, 124, 82, 0.1)'),
   },
   {
     id: 'paon',
@@ -53,6 +56,6 @@ export const MOCK_ANIMALS: Animal[] = [
     imageUrl: 'assets/animals/paon.jpg',
     personality: 'Élégant, expressif',
     traits: ['Créatif', 'Fier', 'Envoûtant'],
-    gradient: 'linear-gradient(135deg, #2d7a6e 0%, #1a5c4a 40%, #c9a227 100%)',
+    gradient: cardGradient('rgba(45, 122, 110, 0.12)'),
   },
 ];

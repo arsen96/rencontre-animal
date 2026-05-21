@@ -12,13 +12,13 @@
         <p class="match-sub">La jungle vous unit</p>
 
         <div class="avatars">
-          <div class="avatar you" [style.background]="currentAnimal?.gradient">
+          <div class="avatar you">
             @if (currentAnimal) {
               <app-animal-avatar [animal]="currentAnimal" size="lg" variant="circle"></app-animal-avatar>
             }
           </div>
           <div class="heart-pulse">❤️</div>
-          <div class="avatar them" [style.background]="match.user.animal.gradient">
+          <div class="avatar them">
             <app-animal-avatar [animal]="match.user.animal" size="lg" variant="circle"></app-animal-avatar>
           </div>
         </div>

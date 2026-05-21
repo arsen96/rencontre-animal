@@ -1,28 +1,42 @@
 .primary-btn {
-  --border-radius: 16px;
-  font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: 0.04em;
-  height: 52px;
+  --border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  height: 54px;
   margin-top: 8px;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease;
+
+  &.variant-gold,
+  &.variant-green {
+    --background: rgba(11, 11, 11, 0.85);
+    --background-activated: rgba(11, 11, 11, 0.95);
+    --background-focused: rgba(11, 11, 11, 0.9);
+    --color: var(--gold-light);
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: var(--gold-border);
+    --box-shadow: 0 0 20px var(--gold-glow-soft);
+  }
 
   &.variant-gold {
-    --background: linear-gradient(135deg, var(--gold-light), var(--gold));
-    --color: var(--brown-dark);
-    --box-shadow: 0 8px 24px var(--gold-glow);
+    --color: var(--gold-light);
   }
 
   &.variant-green {
-    --background: linear-gradient(135deg, var(--jungle-light), var(--jungle-mid));
-    --color: var(--cream);
+    --color: var(--text-primary);
+    --border-color: rgba(200, 169, 107, 0.35);
   }
 
   &:not([disabled]):active {
-    transform: scale(0.97);
+    transform: scale(0.98);
+    --box-shadow: 0 0 32px var(--gold-glow), inset 0 0 24px rgba(200, 169, 107, 0.06);
   }
 
   &[disabled] {
-    opacity: 0.4;
+    opacity: 0.35;
   }
 }

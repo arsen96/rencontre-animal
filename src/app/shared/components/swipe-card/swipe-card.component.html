@@ -1,6 +1,6 @@
 <div
   #cardEl
-  class="swipe-card"
+  class="swipe-card collector-card"
   [class.dragging]="dragging"
   [class.exiting]="exiting"
   [style.z-index]="10 - stackIndex"
@@ -13,7 +13,7 @@
   <div class="stamp like" [style.opacity]="likeOpacity">LIKE</div>
   <div class="stamp pass" [style.opacity]="passOpacity">PASS</div>
 
-  <div class="card-visual" [style.background]="profile.animal.gradient">
+  <div class="card-visual collectible-stage">
     <div class="card-image-frame">
       <app-animal-avatar [animal]="profile.animal" variant="card"></app-animal-avatar>
     </div>
@@ -22,7 +22,7 @@
     </button>
   </div>
 
-  <div class="card-info glass-card">
+  <div class="card-info">
     <h2>{{ profile.displayName }}, {{ profile.age }}</h2>
     <p class="animal-label">{{ profile.animal.name }} · {{ profile.animal.personality }}</p>
     @if (profile.bio) {

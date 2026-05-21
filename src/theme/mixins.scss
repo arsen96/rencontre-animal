@@ -1,4 +1,45 @@
-@mixin glass-panel($blur: 16px) {
+@mixin collectible-stage {
+  background:
+    radial-gradient(ellipse 75% 58% at 50% 38%, rgba(200, 169, 107, 0.16) 0%, transparent 62%),
+    radial-gradient(ellipse 100% 80% at 50% 100%, rgba(16, 32, 24, 0.65) 0%, transparent 50%),
+    var(--black-deep);
+}
+
+@mixin collector-card-frame($radius: var(--card-radius)) {
+  border-radius: $radius;
+  border: 1px solid var(--gold-border);
+  background: var(--black-deep);
+  box-shadow:
+    inset 0 0 0 1px rgba(200, 169, 107, 0.06),
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    0 12px 40px rgba(0, 0, 0, 0.6),
+    0 0 28px var(--gold-glow-soft);
+  overflow: hidden;
+  transition:
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@mixin collector-card-hover {
+  &:hover {
+    box-shadow:
+      inset 0 0 0 1px rgba(200, 169, 107, 0.12),
+      0 0 0 1px rgba(0, 0, 0, 0.8),
+      0 16px 48px rgba(0, 0, 0, 0.65),
+      0 0 40px var(--gold-glow);
+    transform: translateY(-3px);
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow:
+      inset 0 0 0 1px rgba(200, 169, 107, 0.18),
+      0 8px 28px rgba(0, 0, 0, 0.55),
+      0 0 32px var(--gold-glow-strong);
+  }
+}
+
+@mixin glass-panel($blur: 20px) {
   background: var(--glass-bg);
   backdrop-filter: blur($blur);
   -webkit-backdrop-filter: blur($blur);
@@ -13,13 +54,21 @@
 }
 
 @mixin heading-display {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+@mixin label-caps {
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold);
 }
 
 @mixin fade-in-up($delay: 0s) {
-  animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) $delay both;
+  animation: fadeInUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) $delay both;
 }
 
 @keyframes fadeInUp {
@@ -36,20 +85,36 @@
 @keyframes pulseGold {
   0%,
   100% {
-    box-shadow: 0 0 0 0 var(--gold-glow);
+    box-shadow:
+      0 0 0 0 var(--gold-glow-soft),
+      0 0 20px var(--gold-glow-soft);
   }
   50% {
-    box-shadow: 0 0 24px 8px var(--gold-glow);
+    box-shadow:
+      0 0 0 4px var(--gold-glow-soft),
+      0 0 36px var(--gold-glow);
   }
 }
 
-@keyframes floatLeaf {
+@keyframes shimmerGold {
   0%,
   100% {
-    transform: translateY(0) rotate(0deg);
+    opacity: 0.4;
   }
   50% {
-    transform: translateY(-12px) rotate(4deg);
+    opacity: 0.85;
+  }
+}
+
+@keyframes floatMist {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(-18px);
+    opacity: 0.55;
   }
 }
 
@@ -59,7 +124,7 @@
     opacity: 0;
   }
   60% {
-    transform: scale(1.08);
+    transform: scale(1.06);
   }
   100% {
     transform: scale(1);

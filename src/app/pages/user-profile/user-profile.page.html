@@ -5,8 +5,8 @@
     <div class="page-shell profile-page">
       <app-step-header [currentStep]="6" [totalSteps]="6"></app-step-header>
 
-      <div class="avatar-hero" [style.background]="user.animal.gradient">
-        <div class="card-image-frame">
+      <div class="avatar-hero">
+        <div class="card-image-frame collectible-stage">
           <app-animal-avatar [animal]="user.animal" variant="card"></app-animal-avatar>
         </div>
       </div>
@@ -35,7 +35,7 @@
       </div>
 
       <app-primary-button
-        label="Aller dans la Jungle"
+        label="Entrer dans la Jungle"
         variant="green"
         (pressed)="enterJungle()"
       ></app-primary-button>

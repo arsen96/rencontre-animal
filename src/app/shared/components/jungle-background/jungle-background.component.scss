@@ -10,86 +10,82 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  background: var(--black-deep);
 
   .layer.gradient {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(61, 122, 92, 0.45) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(201, 162, 39, 0.12) 0%, transparent 50%),
-      linear-gradient(180deg, #0f2419 0%, #1a3d2e 40%, #0f2419 100%);
+      radial-gradient(ellipse 90% 55% at 50% -10%, rgba(200, 169, 107, 0.09) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 80% 90%, rgba(16, 32, 24, 0.55) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 45% at 10% 70%, rgba(16, 32, 24, 0.4) 0%, transparent 45%),
+      linear-gradient(180deg, var(--black-deep) 0%, var(--jungle-deep) 45%, var(--black-deep) 100%);
   }
 
-  .layer.vines {
+  .layer.fog {
     position: absolute;
     inset: 0;
-    opacity: 0.15;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5c-8 12-5 25 0 35 5-10 8-23 0-35z' fill='%233d7a5c'/%3E%3C/svg%3E");
-    background-size: 80px 80px;
+    background:
+      radial-gradient(ellipse 100% 40% at 50% 100%, rgba(16, 32, 24, 0.5) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 30% at 30% 20%, rgba(200, 169, 107, 0.04) 0%, transparent 50%);
+    animation: floatMist 12s ease-in-out infinite;
   }
 
-  .leaf {
+  .layer.texture {
     position: absolute;
-    font-size: 2rem;
-    opacity: 0.35;
-    animation: floatLeaf 6s ease-in-out infinite;
-
-    &.leaf-1 {
-      top: 12%;
-      left: 8%;
-      animation-delay: 0s;
-    }
-
-    &.leaf-2 {
-      top: 25%;
-      right: 10%;
-      animation-delay: 1.5s;
-    }
-
-    &.leaf-3 {
-      bottom: 20%;
-      left: 15%;
-      font-size: 2.5rem;
-      animation-delay: 3s;
-    }
+    inset: 0;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 4c-6 10-4 20 0 28 4-8 6-18 0-28z' fill='%23C8A96B'/%3E%3C/svg%3E");
+    background-size: 120px 120px;
   }
 
   .glow {
     position: absolute;
     border-radius: 50%;
-    filter: blur(60px);
+    filter: blur(80px);
+    pointer-events: none;
 
     &.glow-1 {
-      width: 200px;
-      height: 200px;
-      top: -50px;
-      right: -30px;
-      background: rgba(201, 162, 39, 0.2);
+      width: 280px;
+      height: 280px;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(200, 169, 107, 0.12);
+      animation: shimmerGold 8s ease-in-out infinite;
     }
 
     &.glow-2 {
-      width: 160px;
-      height: 160px;
-      bottom: 10%;
-      left: -40px;
-      background: rgba(61, 122, 92, 0.35);
+      width: 220px;
+      height: 220px;
+      bottom: 5%;
+      right: -60px;
+      background: rgba(16, 32, 24, 0.7);
     }
+
+    &.glow-3 {
+      width: 180px;
+      height: 180px;
+      bottom: 30%;
+      left: -50px;
+      background: rgba(200, 169, 107, 0.06);
+    }
+  }
+
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 85% 75% at 50% 50%, transparent 35%, rgba(0, 0, 0, 0.55) 100%);
+    pointer-events: none;
   }
 
   &.subtle {
-    .leaf,
     .glow {
-      opacity: 0.2;
+      opacity: 0.65;
     }
-  }
-}
 
-@keyframes floatLeaf {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-12px) rotate(4deg);
+    .layer.fog {
+      opacity: 0.7;
+    }
   }
 }

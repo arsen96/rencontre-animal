@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
 @import './theme/mixins.scss';
 
@@ -19,11 +19,25 @@
 
 html,
 body {
-  background: var(--jungle-deep);
+  background: var(--black-deep);
+  color: var(--text-primary);
 }
 
 ion-content.jungle-content {
   --background: transparent;
+}
+
+ion-header ion-toolbar {
+  --background: rgba(11, 11, 11, 0.82);
+  --border-color: rgba(200, 169, 107, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+ion-title {
+  font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .page-shell {
@@ -37,24 +51,43 @@ ion-content.jungle-content {
 
 .page-title {
   @include heading-display;
-  font-size: 1.75rem;
-  color: var(--cream);
+  font-size: 2rem;
+  color: var(--text-primary);
   margin: 0 0 8px;
-  line-height: 1.2;
+  line-height: 1.15;
+  text-shadow: 0 0 40px var(--gold-glow-soft);
 }
 
 .page-subtitle {
-  color: var(--beige);
+  color: var(--text-secondary);
   font-size: 0.95rem;
   margin: 0 0 24px;
-  opacity: 0.9;
-  line-height: 1.5;
+  line-height: 1.55;
+  font-weight: 400;
 }
 
 .glass-card {
   @include glass-panel();
-  border-radius: 20px;
+  border-radius: var(--card-radius);
   padding: 20px;
+}
+
+.collectible-stage {
+  @include collectible-stage;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(200, 169, 107, 0.08) 0%, transparent 70%);
+    z-index: 0;
+  }
+}
+
+.collector-card {
+  @include collector-card-frame(var(--card-radius-lg));
 }
 
 .choice-chip {
@@ -62,24 +95,25 @@ ion-content.jungle-content {
   width: 100%;
   padding: 16px 20px;
   margin-bottom: 12px;
-  border-radius: 16px;
-  border: 2px solid transparent;
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--cream);
-  font-size: 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(200, 169, 107, 0.15);
+  background: rgba(11, 11, 11, 0.65);
+  color: var(--text-primary);
+  font-size: 0.95rem;
   font-weight: 600;
   text-align: center;
-  transition: all 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
 
   &.selected {
     border-color: var(--gold);
-    background: rgba(201, 162, 39, 0.15);
-    box-shadow: 0 0 20px var(--gold-glow);
+    background: rgba(200, 169, 107, 0.08);
+    box-shadow: 0 0 24px var(--gold-glow-soft), inset 0 0 20px rgba(200, 169, 107, 0.05);
   }
 
   &:active {
     transform: scale(0.98);
+    box-shadow: 0 0 28px var(--gold-glow);
   }
 }
 
@@ -87,20 +121,17 @@ ion-content.jungle-content {
   margin-bottom: 16px;
 
   label {
+    @include label-caps;
     display: block;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: var(--beige);
     margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
   }
 
   ion-input,
-  ion-select {
-    --background: rgba(255, 255, 255, 0.08);
-    --color: var(--cream);
-    --placeholder-color: rgba(245, 239, 227, 0.45);
+  ion-select,
+  ion-textarea {
+    --background: rgba(11, 11, 11, 0.75);
+    --color: var(--text-primary);
+    --placeholder-color: rgba(196, 184, 164, 0.45);
     --padding-start: 16px;
     --padding-end: 16px;
     border-radius: 14px;
@@ -109,11 +140,17 @@ ion-content.jungle-content {
 }
 
 .link-muted {
-  color: var(--beige);
+  color: var(--text-secondary);
   font-size: 0.85rem;
-  text-decoration: underline;
-  opacity: 0.85;
+  text-decoration: none;
+  border-bottom: 1px solid var(--gold-muted);
+  opacity: 0.9;
   cursor: pointer;
+  transition: color 0.25s ease;
+
+  &:hover {
+    color: var(--gold-light);
+  }
 }
 
 .step-dots {
@@ -126,13 +163,14 @@ ion-content.jungle-content {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
+    background: rgba(200, 169, 107, 0.15);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 
     &.active {
-      width: 24px;
+      width: 28px;
       border-radius: 4px;
-      background: var(--gold);
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      box-shadow: 0 0 12px var(--gold-glow);
     }
   }
 }

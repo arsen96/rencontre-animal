@@ -2,7 +2,7 @@
 
 .landing {
   justify-content: space-between;
-  padding-top: 15vh;
+  padding-top: 14vh;
   text-align: center;
 }
 
@@ -10,41 +10,44 @@
   @include fade-in-up(0.1s);
 
   .logo-ring {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 24px;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto 28px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    @include collectible-stage;
+    @include collector-card-frame(50%);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 40px var(--gold-glow);
-    animation: pulseGold 3s ease-in-out infinite;
+    animation: pulseGold 4s ease-in-out infinite;
 
     .logo-emoji {
-      font-size: 3.5rem;
+      font-size: 3.25rem;
+      filter: drop-shadow(0 0 20px var(--gold-glow));
     }
   }
 
   .brand {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.25rem;
-    color: var(--cream);
+    @include heading-display;
+    font-size: 2.5rem;
+    color: var(--text-primary);
     margin: 0 0 16px;
-    line-height: 1.15;
+    line-height: 1.1;
+    text-shadow: 0 0 48px var(--gold-glow-soft);
   }
 
   .tagline {
-    color: var(--beige);
-    font-size: 1.05rem;
-    line-height: 1.55;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
     max-width: 300px;
     margin: 0 auto;
-    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.02em;
   }
 }
 
 .cta-block {
   @include fade-in-up(0.35s);
-  padding-bottom: 24px;
+  padding-bottom: 28px;
 }

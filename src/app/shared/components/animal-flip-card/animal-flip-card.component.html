@@ -6,17 +6,17 @@
 >
   <div class="flip-inner">
     <div class="flip-face flip-front">
-      <div class="card-image" [style.background]="animal.gradient">
+      <div class="card-image collectible-stage">
         <app-animal-avatar [animal]="animal" variant="card"></app-animal-avatar>
       </div>
       <div class="card-caption">
         <span class="name">{{ animal.name }}</span>
-        <span class="hint">Voir la fiche</span>
+        <span class="hint">Révéler la fiche</span>
       </div>
     </div>
 
     <div class="flip-face flip-back">
-      <p class="fiche-title">Fiche personnalité</p>
+      <p class="fiche-title">Fiche collector</p>
       <h3 class="animal-name">{{ animal.name }}</h3>
       <p class="personality">{{ animal.personality }}</p>
       <div class="traits">

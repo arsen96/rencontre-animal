@@ -10,28 +10,29 @@
 .bubble {
   max-width: 82%;
   padding: 10px 14px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(11, 11, 11, 0.75);
   border: 1px solid var(--glass-border);
 
   p {
     margin: 0 0 4px;
-    color: var(--cream);
-    font-size: 0.95rem;
+    color: var(--text-primary);
+    font-size: 0.92rem;
     line-height: 1.45;
     word-break: break-word;
   }
 
   time {
-    font-size: 0.65rem;
-    color: var(--beige);
-    opacity: 0.75;
+    font-size: 0.62rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
   }
 
   &.mine {
-    background: linear-gradient(135deg, var(--jungle-mid), var(--jungle-green));
-    border-color: rgba(90, 158, 120, 0.5);
+    background: linear-gradient(135deg, rgba(36, 61, 50, 0.9) 0%, rgba(16, 32, 24, 0.95) 100%);
+    border-color: var(--gold-border);
     border-bottom-right-radius: 4px;
+    box-shadow: 0 0 12px var(--gold-glow-soft);
   }
 
   &:not(.mine) {
@@ -40,5 +41,5 @@
 }
 
 .bubble-row:not(.mine) .bubble {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(11, 11, 11, 0.8);
 }

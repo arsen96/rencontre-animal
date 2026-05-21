@@ -1,7 +1,3 @@
-:host {
-  display: contents;
-}
-
 .animal-image,
 .animal-emoji {
   display: block;
@@ -21,12 +17,15 @@
   &.variant-card {
     width: auto;
     height: auto;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 92%;
+    max-height: 92%;
     object-fit: contain;
     object-position: center;
-    border-radius: 10px;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+    position: relative;
+    z-index: 1;
+    filter:
+      drop-shadow(0 0 28px rgba(200, 169, 107, 0.22))
+      drop-shadow(0 16px 32px rgba(0, 0, 0, 0.65));
   }
 
   &.variant-circle {
@@ -34,6 +33,8 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+    border: 1px solid var(--gold-border);
+    box-shadow: 0 0 16px var(--gold-glow-soft);
   }
 
   &.variant-inline.size-xs {
@@ -41,6 +42,7 @@
     height: 24px;
     border-radius: 50%;
     object-fit: cover;
+    border: 1px solid var(--gold-border);
   }
 
   &.variant-inline.size-sm {
@@ -48,6 +50,7 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    border: 1px solid var(--gold-border);
   }
 
   &.variant-inline.size-md {
@@ -62,12 +65,14 @@
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid var(--gold-border);
+    box-shadow: 0 0 20px var(--gold-glow-soft);
   }
 
   &.variant-inline.size-xl {
     width: 100%;
     max-height: 200px;
-    border-radius: 24px;
+    border-radius: 16px;
     object-fit: contain;
   }
 }
@@ -83,6 +88,7 @@
 
   &.variant-card {
     font-size: 3.5rem;
+    filter: drop-shadow(0 0 20px var(--gold-glow));
   }
 
   &.variant-circle {
@@ -113,12 +119,8 @@
     font-size: 5rem;
   }
 
-  &.variant-inline.size-md {
-    font-size: 2.75rem;
-  }
-
   &.variant-fill.size-xl {
     font-size: 7rem;
-    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+    filter: drop-shadow(0 0 24px var(--gold-glow));
   }
 }

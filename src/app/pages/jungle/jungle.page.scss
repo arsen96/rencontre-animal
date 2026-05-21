@@ -1,10 +1,19 @@
+@import '../../../theme/mixins.scss';
+
 .jungle-header ion-toolbar {
-  --background: transparent;
-  --color: var(--cream);
+  --background: rgba(11, 11, 11, 0.75);
+  --color: var(--text-primary);
+  backdrop-filter: blur(16px);
 
   ion-title {
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
+    @include heading-display;
+    font-size: 1.25rem;
+    color: var(--gold-light);
+  }
+
+  ion-button,
+  ion-icon {
+    color: var(--gold);
   }
 
   .chats-btn {
@@ -14,10 +23,12 @@
       position: absolute;
       top: 4px;
       right: 4px;
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       min-width: 18px;
       height: 18px;
       border-radius: 9px;
+      --background: var(--gold);
+      --color: var(--black-deep);
     }
   }
 }
@@ -29,7 +40,7 @@
 .deck-container {
   position: relative;
   height: calc(100% - 100px);
-  max-height: 560px;
+  max-height: 580px;
   margin: 0 auto;
 }
 
@@ -40,27 +51,34 @@
   right: 0;
   display: flex;
   justify-content: center;
-  gap: 32px;
+  gap: 36px;
   z-index: 20;
   padding: 0 24px;
 
   .action-btn {
-    width: 64px;
-    height: 64px;
+    width: 68px;
+    height: 68px;
     --border-radius: 50%;
-    font-size: 1.75rem;
+    font-size: 1.65rem;
+    --background: rgba(11, 11, 11, 0.85);
+    backdrop-filter: blur(12px);
+    transition: box-shadow 0.3s ease, transform 0.25s ease;
 
     &.pass {
-      --background: rgba(248, 113, 113, 0.2);
-      --color: #f87171;
-      border: 2px solid #f87171;
+      --color: var(--text-secondary);
+      border: 1px solid rgba(196, 184, 164, 0.35);
     }
 
     &.like {
-      --background: rgba(74, 222, 128, 0.2);
-      --color: #4ade80;
-      border: 2px solid #4ade80;
-      animation: pulseGold 2.5s ease-in-out infinite;
+      --color: var(--gold-light);
+      border: 1px solid var(--gold-border);
+      box-shadow: 0 0 24px var(--gold-glow-soft);
+      animation: pulseGold 3s ease-in-out infinite;
+    }
+
+    &:active {
+      transform: scale(0.94);
+      box-shadow: 0 0 32px var(--gold-glow);
     }
   }
 }
@@ -70,28 +88,19 @@
   padding: 80px 24px;
 
   .emoji {
-    font-size: 4rem;
+    font-size: 3.5rem;
     display: block;
     margin-bottom: 16px;
+    filter: drop-shadow(0 0 16px var(--gold-glow-soft));
   }
 
   h2 {
-    font-family: 'Playfair Display', serif;
-    color: var(--cream);
+    @include heading-display;
+    color: var(--text-primary);
     margin: 0 0 8px;
   }
 
   p {
-    color: var(--beige);
-  }
-}
-
-@keyframes pulseGold {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 20px 6px rgba(74, 222, 128, 0.25);
+    color: var(--text-secondary);
   }
 }

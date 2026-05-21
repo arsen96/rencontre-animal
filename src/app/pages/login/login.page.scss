@@ -5,20 +5,21 @@
   margin-bottom: 32px;
 
   .btn-google {
-    --background: #ffffff;
-    --color: #333;
+    --background: rgba(244, 240, 232, 0.95);
+    --color: var(--black-deep);
     --border-radius: 14px;
     height: 52px;
     font-weight: 700;
   }
 
   .btn-sms {
-    --border-color: var(--gold);
-    --color: var(--cream);
+    --border-color: var(--gold-border);
+    --color: var(--gold-light);
     --border-radius: 14px;
-    --background: rgba(255, 255, 255, 0.05);
+    --background: rgba(11, 11, 11, 0.75);
     height: 52px;
     font-weight: 700;
+    box-shadow: 0 0 16px var(--gold-glow-soft);
   }
 }
 

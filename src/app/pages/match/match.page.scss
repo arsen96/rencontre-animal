@@ -1,3 +1,5 @@
+@import '../../../theme/mixins.scss';
+
 .match-page {
   --background: transparent;
 }
@@ -15,8 +17,10 @@
 
 .confetti {
   position: absolute;
-  font-size: 2rem;
-  animation: floatLeaf 4s ease-in-out infinite;
+  font-size: 1.75rem;
+  opacity: 0.5;
+  animation: floatMist 5s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px var(--gold-glow-soft));
 
   &.c2 {
     top: 15%;
@@ -32,62 +36,64 @@
 }
 
 .match-card {
-  @import '../../../theme/mixins.scss';
-  @include glass-panel(20px);
-  border-radius: 28px;
+  @include collector-card-frame(28px);
   padding: 40px 28px;
   width: 100%;
   max-width: 340px;
-  animation: matchPop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: matchPop 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
   margin-bottom: 32px;
+  background: linear-gradient(165deg, var(--jungle-dark) 0%, var(--black-deep) 100%);
 }
 
 .match-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  @include heading-display;
+  font-size: 2.1rem;
   color: var(--gold-light);
   margin: 0 0 8px;
-  text-shadow: 0 0 30px var(--gold-glow);
+  text-shadow: 0 0 32px var(--gold-glow);
 }
 
 .match-sub {
-  color: var(--beige);
+  color: var(--text-secondary);
   margin: 0 0 28px;
   font-style: italic;
+  letter-spacing: 0.04em;
 }
 
 .avatars {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 20px;
 
   .avatar {
-    width: 80px;
-    height: 80px;
+    width: 84px;
+    height: 84px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid var(--gold);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--gold-border);
+    box-shadow: 0 0 28px var(--gold-glow-soft);
     overflow: hidden;
+    background: var(--black-deep);
 
     &.you {
-      background: linear-gradient(135deg, var(--jungle-mid), var(--jungle-dark));
+      background: var(--black-deep);
     }
   }
 
   .heart-pulse {
-    font-size: 1.75rem;
-    animation: pulseGold 1.2s ease-in-out infinite;
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 12px var(--gold-glow));
+    animation: pulseGold 1.4s ease-in-out infinite;
   }
 }
 
 .match-name {
-  color: var(--cream);
-  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-size: 1.05rem;
   margin: 0 0 6px;
 
   strong {
@@ -96,9 +102,10 @@
 }
 
 .match-animal {
-  color: var(--beige);
-  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
   margin: 0;
+  letter-spacing: 0.03em;
 }
 
 .match-actions {
@@ -107,28 +114,4 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-@keyframes matchPop {
-  0% {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.06);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes floatLeaf {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-14px);
-  }
 }
