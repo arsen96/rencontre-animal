@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
 
 @import './theme/mixins.scss';
+@import './theme/jungle-background.scss';
 
 @import '@ionic/angular/css/core.css';
 @import '@ionic/angular/css/normalize.css';
@@ -21,6 +22,21 @@ html,
 body {
   background: var(--black-deep);
   color: var(--text-primary);
+}
+
+/* Fallback when jungle-background is not mounted */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    #060606 0%,
+    var(--emerald-deep) 40%,
+    var(--black-deep) 100%
+  );
+  pointer-events: none;
 }
 
 ion-content.jungle-content {

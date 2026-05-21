@@ -1,0 +1,311 @@
+/* Luxury night-jungle backdrop — global styles for app-jungle-background */
+
+$leaf-monstera: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 320'%3E%3Cpath fill='%23081210' d='M120 8c-48 42-72 108-58 188 8 42 28 78 58 108 12-52 8-118-18-168 14-42 12-96 18-128z'/%3E%3Cpath fill='%230a1612' opacity='0.7' d='M120 40c-22 38-32 88-20 140 14 48 38 82 52 100-6-44-2-96 20-140-18-28-32-68-52-100z'/%3E%3C/svg%3E");
+$leaf-palm: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Cpath fill='%230a1410' d='M100 20 L30 120 Q50 200 100 260 Q150 200 170 120 Z'/%3E%3Cpath fill='%230d1a14' opacity='0.6' d='M100 50 L55 130 Q70 190 100 230 Q130 190 145 130 Z'/%3E%3C/svg%3E");
+$leaf-fern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 240'%3E%3Cellipse fill='%2308100e' cx='90' cy='120' rx='70' ry='100'/%3E%3Cpath fill='none' stroke='%230d1814' stroke-width='3' d='M90 30 Q60 90 40 160 M90 30 Q120 90 140 160 M90 30 Q90 100 90 200'/%3E%3C/svg%3E");
+$vine-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 400'%3E%3Cpath fill='none' stroke='%230d1a14' stroke-width='4' opacity='0.9' d='M60 0 Q20 80 50 160 T40 320 T70 400'/%3E%3Cpath fill='none' stroke='%23152820' stroke-width='2' opacity='0.5' d='M65 0 Q90 100 55 200 T75 400'/%3E%3C/svg%3E");
+
+app-jungle-background {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.jungle-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--black-deep);
+
+  .layer,
+  .glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .base-depth {
+    background:
+      radial-gradient(ellipse 120% 80% at 50% 110%, rgba(8, 28, 22, 0.55) 0%, transparent 55%),
+      radial-gradient(ellipse 90% 60% at 15% 0%, rgba(10, 36, 28, 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse 85% 55% at 88% 5%, rgba(12, 40, 32, 0.2) 0%, transparent 48%),
+      linear-gradient(
+        180deg,
+        #060606 0%,
+        var(--emerald-deep) 28%,
+        var(--jungle-deep) 52%,
+        #080f0c 78%,
+        var(--black-deep) 100%
+      );
+  }
+
+  .organic-texture {
+    opacity: 0.35;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    mix-blend-mode: soft-light;
+  }
+
+  .leaves-back {
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-repeat: no-repeat;
+      background-size: contain;
+      opacity: 0.22;
+      filter: blur(1px);
+    }
+
+    &::before {
+      width: min(55vw, 280px);
+      height: min(70vw, 360px);
+      top: -8%;
+      left: -18%;
+      background-image: $leaf-monstera;
+      transform: rotate(-18deg);
+    }
+
+    &::after {
+      width: min(50vw, 260px);
+      height: min(65vw, 340px);
+      top: -5%;
+      right: -20%;
+      background-image: $leaf-palm;
+      transform: rotate(22deg) scaleX(-1);
+    }
+  }
+
+  .leaves-mid {
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-repeat: no-repeat;
+      background-size: contain;
+      opacity: 0.16;
+    }
+
+    &::before {
+      width: min(42vw, 200px);
+      height: min(50vw, 240px);
+      bottom: 8%;
+      left: -10%;
+      background-image: $leaf-fern;
+      transform: rotate(8deg);
+    }
+
+    &::after {
+      width: min(38vw, 180px);
+      height: min(48vw, 220px);
+      bottom: 12%;
+      right: -8%;
+      background-image: $leaf-monstera;
+      transform: rotate(-12deg) scale(0.85);
+    }
+  }
+
+  .vegetation {
+    background:
+      radial-gradient(ellipse 50% 35% at 0% 60%, rgba(14, 42, 32, 0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 45% 30% at 100% 55%, rgba(12, 38, 30, 0.3) 0%, transparent 68%),
+      radial-gradient(ellipse 70% 25% at 50% 85%, rgba(10, 32, 26, 0.4) 0%, transparent 65%);
+    opacity: 0.85;
+  }
+
+  .vines {
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 55%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      opacity: 0.14;
+    }
+
+    &::before {
+      left: 0;
+      top: 10%;
+      background-image: $vine-curve;
+      background-position: left top;
+    }
+
+    &::after {
+      right: 0;
+      top: 5%;
+      background-image: $vine-curve;
+      background-position: right top;
+      transform: scaleX(-1);
+    }
+  }
+
+  .light-rays {
+    background:
+      conic-gradient(
+        from 200deg at 30% -5%,
+        transparent 0deg,
+        rgba(200, 169, 107, 0.04) 25deg,
+        transparent 50deg
+      ),
+      conic-gradient(
+        from 160deg at 70% -8%,
+        transparent 0deg,
+        rgba(200, 169, 107, 0.03) 20deg,
+        transparent 45deg
+      ),
+      linear-gradient(175deg, rgba(200, 169, 107, 0.06) 0%, transparent 28%),
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(200, 169, 107, 0.08) 0%, transparent 65%);
+    animation: jungleRayPulse 14s ease-in-out infinite;
+    mix-blend-mode: screen;
+    opacity: 0.7;
+  }
+
+  .fog {
+    inset: auto;
+    width: 100%;
+    height: 100%;
+
+    &.fog-low {
+      bottom: 0;
+      height: 55%;
+      background: linear-gradient(
+        0deg,
+        rgba(8, 20, 16, 0.75) 0%,
+        rgba(11, 11, 11, 0.2) 55%,
+        transparent 100%
+      );
+      animation: jungleMistDrift 18s ease-in-out infinite;
+    }
+
+    &.fog-mid {
+      background:
+        radial-gradient(ellipse 90% 50% at 50% 100%, rgba(16, 32, 24, 0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 40% at 20% 30%, rgba(11, 11, 11, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 65% 38% at 80% 25%, rgba(10, 26, 20, 0.3) 0%, transparent 58%);
+      animation: jungleMistDrift 22s ease-in-out infinite reverse;
+      opacity: 0.65;
+    }
+  }
+
+  .glow {
+    inset: auto;
+    border-radius: 50%;
+    filter: blur(90px);
+
+    &.glow-warm {
+      width: min(90vw, 420px);
+      height: min(50vw, 280px);
+      top: -12%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(200, 169, 107, 0.1);
+      animation: jungleShimmerGold 10s ease-in-out infinite;
+    }
+
+    &.glow-emerald {
+      width: min(70vw, 320px);
+      height: min(45vw, 240px);
+      bottom: -8%;
+      left: -15%;
+      background: rgba(10, 40, 32, 0.45);
+    }
+
+    &.glow-amber {
+      width: min(55vw, 260px);
+      height: min(40vw, 200px);
+      bottom: 15%;
+      right: -12%;
+      background: rgba(200, 169, 107, 0.05);
+      animation: jungleShimmerGold 12s ease-in-out infinite 2s;
+    }
+  }
+
+  .depth-fade {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      transparent 22%,
+      transparent 78%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+    opacity: 0.6;
+  }
+
+  .readability-vignette {
+    background:
+      radial-gradient(
+        ellipse 75% 65% at 50% 48%,
+        transparent 0%,
+        rgba(0, 0, 0, 0.25) 55%,
+        rgba(0, 0, 0, 0.72) 100%
+      ),
+      radial-gradient(ellipse 100% 80% at 50% 50%, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+
+  &.subtle {
+    .leaves-back::before,
+    .leaves-back::after,
+    .leaves-mid::before,
+    .leaves-mid::after {
+      opacity: 0.1;
+    }
+
+    .vines::before,
+    .vines::after {
+      opacity: 0.08;
+    }
+
+    .light-rays {
+      opacity: 0.45;
+    }
+
+    .fog-mid {
+      opacity: 0.45;
+    }
+
+    .glow {
+      opacity: 0.55;
+    }
+
+    .organic-texture {
+      opacity: 0.2;
+    }
+  }
+}
+
+@keyframes jungleMistDrift {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translateX(2%) translateY(-1.5%);
+    opacity: 0.8;
+  }
+}
+
+@keyframes jungleRayPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes jungleShimmerGold {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
