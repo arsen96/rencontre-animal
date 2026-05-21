@@ -1,0 +1,10 @@
+<ion-button
+  [expand]="expand ? 'block' : undefined"
+  [disabled]="disabled"
+  [class.variant-gold]="variant === 'gold'"
+  [class.variant-green]="variant === 'green'"
+  class="primary-btn"
+  (click)="onClick()"
+>
+  {{ label }}
+</ion-button>

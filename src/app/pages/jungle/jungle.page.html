@@ -1,0 +1,46 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-header class="ion-no-border jungle-header">
+  <ion-toolbar>
+    <ion-title>La Jungle</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="chats-btn" (click)="openChats()">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+        @if (unreadChats > 0) {
+          <ion-badge color="warning">{{ unreadChats }}</ion-badge>
+        }
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="jungle-content jungle-page">
+  @if (isEmpty) {
+    <div class="empty-state">
+      <span class="emoji">🌴</span>
+      <h2>Plus de profils pour l'instant</h2>
+      <p>Reviens plus tard — la jungle se repopule !</p>
+    </div>
+  } @else {
+    <div class="deck-container">
+      @for (profile of visibleCards; track profile.id; let i = $index) {
+        <app-swipe-card
+          [profile]="profile"
+          [stackIndex]="i"
+          [interactive]="i === 0"
+          (swiped)="onSwiped($event)"
+          (detailClick)="openDetail($event)"
+        ></app-swipe-card>
+      }
+    </div>
+
+    <div class="action-bar">
+      <ion-button class="action-btn pass" shape="round" (click)="pass()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+      <ion-button class="action-btn like" shape="round" (click)="like()">
+        <ion-icon name="heart"></ion-icon>
+      </ion-button>
+    </div>
+  }
+</ion-content>

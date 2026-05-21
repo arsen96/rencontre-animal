@@ -1,0 +1,41 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Gender } from '../../core/interfaces/user.interface';
+import { UserSessionService } from '../../core/services/user-session.service';
+
+@Component({
+  selector: 'app-gender',
+  templateUrl: './gender.page.html',
+  styleUrls: ['./gender.page.scss'],
+  standalone: false,
+})
+export class GenderPage {
+  selected?: Gender;
+
+  readonly options: { value: Gender; label: string }[] = [
+    { value: 'femelle', label: 'Femelle' },
+    { value: 'male', label: 'Mâle' },
+    { value: 'non-binaire', label: 'Non-binaire' },
+  ];
+
+  constructor(
+    private readonly router: Router,
+    private readonly session: UserSessionService
+  ) {}
+
+  select(value: Gender): void {
+    this.selected = value;
+  }
+
+  get canContinue(): boolean {
+    return !!this.selected;
+  }
+
+  continue(): void {
+    if (!this.selected) {
+      return;
+    }
+    this.session.patchOnboarding({ gender: this.selected });
+    this.router.navigate(['/preferences']);
+  }
+}

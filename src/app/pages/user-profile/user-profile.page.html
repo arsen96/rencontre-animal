@@ -1,0 +1,42 @@
+<app-jungle-background></app-jungle-background>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  @if (user) {
+    <div class="page-shell profile-page">
+      <app-step-header [currentStep]="6" [totalSteps]="6"></app-step-header>
+
+      <div class="avatar-hero" [style.background]="user.animal.gradient">
+        <span class="emoji">{{ user.animal.emoji }}</span>
+      </div>
+
+      <div class="profile-card glass-card">
+        <h1>{{ user.displayName }}</h1>
+        <p class="meta">{{ user.age }} ans · {{ user.profile.height }} cm</p>
+        <p class="animal-type">{{ user.animal.name }} — {{ user.animal.personality }}</p>
+
+        <div class="traits-row">
+          <span><strong>Yeux</strong> {{ user.profile.eyeColor }}</span>
+          <span><strong>Cheveux</strong> {{ user.profile.hairColor }}</span>
+        </div>
+
+        <div class="media-section">
+          <h3>Films</h3>
+          <p>{{ user.profile.movies[0] }}</p>
+          <p>{{ user.profile.movies[1] }}</p>
+        </div>
+
+        <div class="media-section">
+          <h3>Chansons</h3>
+          <p>{{ user.profile.songs[0] }}</p>
+          <p>{{ user.profile.songs[1] }}</p>
+        </div>
+      </div>
+
+      <app-primary-button
+        label="Aller dans la Jungle"
+        variant="green"
+        (pressed)="enterJungle()"
+      ></app-primary-button>
+    </div>
+  }
+</ion-content>

@@ -1,0 +1,23 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  <div class="page-shell">
+    <app-step-header [currentStep]="4" [totalSteps]="6"></app-step-header>
+
+    <h1 class="page-title">Choisis ton animal-avatar</h1>
+    <p class="page-subtitle">Tape sur une carte pour la retourner et découvrir sa personnalité.</p>
+
+    <div class="animal-grid">
+      @for (animal of animals; track animal.id) {
+        <app-animal-flip-card
+          [animal]="animal"
+          [flipped]="isFlipped(animal)"
+          [selected]="isSelected(animal)"
+          (cardClick)="onCardClick($event)"
+        ></app-animal-flip-card>
+      }
+    </div>
+
+    <app-primary-button [disabled]="!canContinue" (pressed)="continue()"></app-primary-button>
+  </div>
+</ion-content>

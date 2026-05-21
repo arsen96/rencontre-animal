@@ -1,0 +1,23 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  <div class="page-shell">
+    <app-step-header [currentStep]="3" [totalSteps]="6"></app-step-header>
+
+    <h1 class="page-title">Que veux-tu rencontrer ?</h1>
+    <p class="page-subtitle">Indique tes préférences de rencontre.</p>
+
+    @for (opt of options; track opt.value) {
+      <button
+        type="button"
+        class="choice-chip"
+        [class.selected]="selected === opt.value"
+        (click)="select(opt.value)"
+      >
+        {{ opt.label }}
+      </button>
+    }
+
+    <app-primary-button [disabled]="!canContinue" (pressed)="continue()"></app-primary-button>
+  </div>
+</ion-content>

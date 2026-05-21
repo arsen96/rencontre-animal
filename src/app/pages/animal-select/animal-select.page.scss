@@ -1,0 +1,12 @@
+.animal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+
+  app-animal-flip-card {
+    display: block;
+  }
+}

@@ -1,2 +1,48 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+:root {
+  --ion-font-family: 'Nunito', sans-serif;
+
+  --jungle-deep: #0f2419;
+  --jungle-dark: #1a3d2e;
+  --jungle-green: #2d5a45;
+  --jungle-mid: #3d7a5c;
+  --jungle-light: #5a9e78;
+
+  --beige: #e8dcc4;
+  --beige-light: #f5efe3;
+  --cream: #faf6ee;
+
+  --brown: #5c4033;
+  --brown-dark: #3e2a22;
+
+  --gold: #c9a227;
+  --gold-light: #e8c547;
+  --gold-glow: rgba(201, 162, 39, 0.45);
+
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+
+  --ion-background-color: var(--jungle-deep);
+  --ion-text-color: var(--cream);
+
+  --ion-color-primary: var(--jungle-mid);
+  --ion-color-primary-rgb: 61, 122, 92;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #366b51;
+  --ion-color-primary-tint: #50876c;
+
+  --ion-color-secondary: var(--gold);
+  --ion-color-secondary-rgb: 201, 162, 39;
+  --ion-color-secondary-contrast: var(--brown-dark);
+  --ion-color-secondary-contrast-rgb: 62, 42, 34;
+  --ion-color-secondary-shade: #b18f22;
+  --ion-color-secondary-tint: #ceab3d;
+
+  --ion-color-tertiary: var(--beige);
+  --ion-color-tertiary-rgb: 232, 220, 196;
+  --ion-color-tertiary-contrast: var(--brown-dark);
+  --ion-color-tertiary-contrast-rgb: 62, 42, 34;
+  --ion-color-tertiary-shade: #ccc2ac;
+  --ion-color-tertiary-tint: #eae0cc;
+}

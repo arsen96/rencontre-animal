@@ -1,0 +1,134 @@
+.match-page {
+  --background: transparent;
+}
+
+.match-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 24px;
+  position: relative;
+  text-align: center;
+}
+
+.confetti {
+  position: absolute;
+  font-size: 2rem;
+  animation: floatLeaf 4s ease-in-out infinite;
+
+  &.c2 {
+    top: 15%;
+    right: 12%;
+    animation-delay: 1s;
+  }
+
+  &.c3 {
+    bottom: 25%;
+    left: 10%;
+    animation-delay: 2s;
+  }
+}
+
+.match-card {
+  @import '../../../theme/mixins.scss';
+  @include glass-panel(20px);
+  border-radius: 28px;
+  padding: 40px 28px;
+  width: 100%;
+  max-width: 340px;
+  animation: matchPop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  margin-bottom: 32px;
+}
+
+.match-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--gold-light);
+  margin: 0 0 8px;
+  text-shadow: 0 0 30px var(--gold-glow);
+}
+
+.match-sub {
+  color: var(--beige);
+  margin: 0 0 28px;
+  font-style: italic;
+}
+
+.avatars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    border: 3px solid var(--gold);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+
+    &.you {
+      background: linear-gradient(135deg, var(--jungle-mid), var(--jungle-dark));
+    }
+  }
+
+  .heart-pulse {
+    font-size: 1.75rem;
+    animation: pulseGold 1.2s ease-in-out infinite;
+  }
+}
+
+.match-name {
+  color: var(--cream);
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+
+  strong {
+    color: var(--gold-light);
+  }
+}
+
+.match-animal {
+  color: var(--beige);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.match-actions {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@keyframes matchPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes floatLeaf {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}

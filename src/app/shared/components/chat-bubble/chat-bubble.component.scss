@@ -1,0 +1,44 @@
+.bubble-row {
+  display: flex;
+  margin-bottom: 10px;
+
+  &.mine {
+    justify-content: flex-end;
+  }
+}
+
+.bubble {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+
+  p {
+    margin: 0 0 4px;
+    color: var(--cream);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    word-break: break-word;
+  }
+
+  time {
+    font-size: 0.65rem;
+    color: var(--beige);
+    opacity: 0.75;
+  }
+
+  &.mine {
+    background: linear-gradient(135deg, var(--jungle-mid), var(--jungle-green));
+    border-color: rgba(90, 158, 120, 0.5);
+    border-bottom-right-radius: 4px;
+  }
+
+  &:not(.mine) {
+    border-bottom-left-radius: 4px;
+  }
+}
+
+.bubble-row:not(.mine) .bubble {
+  background: rgba(255, 255, 255, 0.08);
+}

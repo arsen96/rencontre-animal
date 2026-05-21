@@ -1,0 +1,35 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+import { JungleBackgroundComponent } from './components/jungle-background/jungle-background.component';
+import { PrimaryButtonComponent } from './components/primary-button/primary-button.component';
+import { StepHeaderComponent } from './components/step-header/step-header.component';
+import { AnimalFlipCardComponent } from './components/animal-flip-card/animal-flip-card.component';
+import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
+import { ProfileDetailModalComponent } from './components/profile-detail-modal/profile-detail-modal.component';
+import { ChatBubbleComponent } from './components/chat-bubble/chat-bubble.component';
+
+@NgModule({
+  declarations: [
+    JungleBackgroundComponent,
+    PrimaryButtonComponent,
+    StepHeaderComponent,
+    AnimalFlipCardComponent,
+    SwipeCardComponent,
+    ProfileDetailModalComponent,
+    ChatBubbleComponent,
+  ],
+  imports: [CommonModule, IonicModule],
+  exports: [
+    JungleBackgroundComponent,
+    PrimaryButtonComponent,
+    StepHeaderComponent,
+    AnimalFlipCardComponent,
+    SwipeCardComponent,
+    ProfileDetailModalComponent,
+    ChatBubbleComponent,
+    CommonModule,
+    IonicModule,
+  ],
+})
+export class SharedModule {}

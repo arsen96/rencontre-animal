@@ -1,0 +1,48 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-header class="ion-no-border chat-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    @if (conversation) {
+      <ion-title>
+        <span class="title-emoji">{{ participantEmoji }}</span>
+        {{ participantName }}
+      </ion-title>
+    }
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #chatContent class="jungle-content chat-page" [fullscreen]="true">
+  <div class="symmetry-hint glass-card">
+    <ion-icon name="chatbubbles-outline"></ion-icon>
+    <span>Chat ouvert — vous pouvez tous les deux écrire à tout moment</span>
+  </div>
+
+  <div class="messages">
+    @for (msg of messages; track msg.id) {
+      <app-chat-bubble [message]="msg" [isMine]="isMine(msg)"></app-chat-bubble>
+    }
+  </div>
+</ion-content>
+
+<ion-footer class="chat-footer ion-no-border">
+  <ion-toolbar>
+    <div class="composer">
+      <ion-textarea
+        [(ngModel)]="draft"
+        placeholder="Écris un message…"
+        [autoGrow]="true"
+        rows="1"
+        maxlength="500"
+        (keydown)="onKeydown($event)"
+      ></ion-textarea>
+      <ion-button class="send-btn" [disabled]="!draft.trim()" (click)="send()">
+        <ion-icon name="send"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,97 @@
+.jungle-header ion-toolbar {
+  --background: transparent;
+  --color: var(--cream);
+
+  ion-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+  }
+
+  .chats-btn {
+    position: relative;
+
+    ion-badge {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 0.65rem;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+    }
+  }
+}
+
+.jungle-page {
+  --padding-top: 8px;
+}
+
+.deck-container {
+  position: relative;
+  height: calc(100% - 100px);
+  max-height: 560px;
+  margin: 0 auto;
+}
+
+.action-bar {
+  position: fixed;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  z-index: 20;
+  padding: 0 24px;
+
+  .action-btn {
+    width: 64px;
+    height: 64px;
+    --border-radius: 50%;
+    font-size: 1.75rem;
+
+    &.pass {
+      --background: rgba(248, 113, 113, 0.2);
+      --color: #f87171;
+      border: 2px solid #f87171;
+    }
+
+    &.like {
+      --background: rgba(74, 222, 128, 0.2);
+      --color: #4ade80;
+      border: 2px solid #4ade80;
+      animation: pulseGold 2.5s ease-in-out infinite;
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 24px;
+
+  .emoji {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    margin: 0 0 8px;
+  }
+
+  p {
+    color: var(--beige);
+  }
+}
+
+@keyframes pulseGold {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px 6px rgba(74, 222, 128, 0.25);
+  }
+}

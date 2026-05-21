@@ -1,0 +1,28 @@
+.primary-btn {
+  --border-radius: 16px;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  height: 52px;
+  margin-top: 8px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+
+  &.variant-gold {
+    --background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    --color: var(--brown-dark);
+    --box-shadow: 0 8px 24px var(--gold-glow);
+  }
+
+  &.variant-green {
+    --background: linear-gradient(135deg, var(--jungle-light), var(--jungle-mid));
+    --color: var(--cream);
+  }
+
+  &:not([disabled]):active {
+    transform: scale(0.97);
+  }
+
+  &[disabled] {
+    opacity: 0.4;
+  }
+}

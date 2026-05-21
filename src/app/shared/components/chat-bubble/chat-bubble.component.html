@@ -1,0 +1,6 @@
+<div class="bubble-row" [class.mine]="isMine">
+  <div class="bubble" [class.mine]="isMine">
+    <p>{{ message.text }}</p>
+    <time>{{ message.sentAt | date: 'HH:mm' }}</time>
+  </div>
+</div>

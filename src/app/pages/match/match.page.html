@@ -1,0 +1,43 @@
+<app-jungle-background></app-jungle-background>
+
+<ion-content class="jungle-content match-page" [fullscreen]="true">
+  @if (match) {
+    <div class="match-shell">
+      <span class="confetti">✨</span>
+      <span class="confetti c2">🌿</span>
+      <span class="confetti c3">💚</span>
+
+      <div class="match-card">
+        <h1 class="match-title">Vous avez matché !</h1>
+        <p class="match-sub">La jungle vous unit</p>
+
+        <div class="avatars">
+          <div class="avatar you">
+            <span>{{ currentAnimalEmoji }}</span>
+          </div>
+          <div class="heart-pulse">❤️</div>
+          <div class="avatar them" [style.background]="match.user.animal.gradient">
+            <span>{{ match.user.animal.emoji }}</span>
+          </div>
+        </div>
+
+        <p class="match-name">
+          Toi &amp; <strong>{{ match.user.displayName }}</strong>
+        </p>
+        <p class="match-animal">{{ match.user.animal.name }} · {{ match.user.animal.personality }}</p>
+      </div>
+
+      <div class="match-actions">
+        <app-primary-button
+          label="Envoyer un message"
+          (pressed)="openChat()"
+        ></app-primary-button>
+        <app-primary-button
+          label="Continuer à swiper"
+          variant="green"
+          (pressed)="continueSwiping()"
+        ></app-primary-button>
+      </div>
+    </div>
+  }
+</ion-content>

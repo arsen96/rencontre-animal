@@ -1,0 +1,5 @@
+<div class="step-dots">
+  @for (step of steps; track step) {
+    <span [class.active]="step <= currentStep"></span>
+  }
+</div>

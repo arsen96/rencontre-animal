@@ -1,0 +1,108 @@
+.chats-header ion-toolbar {
+  --background: transparent;
+  --color: var(--cream);
+
+  ion-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+  }
+}
+
+.chats-page {
+  --padding-top: 8px;
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 24px;
+
+  .emoji {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    margin: 0 0 8px;
+  }
+
+  p {
+    color: var(--beige);
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+
+  ion-button {
+    --border-color: var(--gold);
+    --color: var(--gold-light);
+  }
+}
+
+.conv-list {
+  background: transparent;
+  padding: 0 12px;
+}
+
+.conv-item {
+  --background: rgba(255, 255, 255, 0.06);
+  --border-radius: 16px;
+  margin-bottom: 10px;
+  border: 1px solid var(--glass-border);
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-right: 12px;
+  }
+
+  ion-label {
+    h2 {
+      color: var(--cream);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    p {
+      color: var(--beige);
+      font-size: 0.85rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    min-width: 48px;
+
+    .time {
+      font-size: 0.7rem;
+      color: var(--beige);
+      opacity: 0.8;
+    }
+
+    .badge {
+      background: var(--gold);
+      color: var(--brown-dark);
+      font-size: 0.7rem;
+      font-weight: 800;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+    }
+  }
+}

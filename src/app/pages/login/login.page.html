@@ -1,0 +1,25 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  <div class="page-shell">
+    <h1 class="page-title">Bienvenue dans la jungle</h1>
+    <p class="page-subtitle">Connecte-toi pour commencer l'aventure (démo sans compte réel).</p>
+
+    <div class="auth-buttons">
+      <ion-button expand="block" class="btn-google" (click)="continueGoogle()">
+        <ion-icon slot="start" name="logo-google"></ion-icon>
+        Continuer avec Google
+      </ion-button>
+
+      <ion-button expand="block" fill="outline" class="btn-sms" (click)="continueSms()">
+        <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
+        Connexion par SMS
+      </ion-button>
+    </div>
+
+    <div class="links">
+      <a class="link-muted">Conditions générales</a>
+      <a class="link-muted">J'ai perdu mon compte</a>
+    </div>
+  </div>
+</ion-content>

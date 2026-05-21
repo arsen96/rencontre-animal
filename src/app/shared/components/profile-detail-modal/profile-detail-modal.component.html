@@ -1,0 +1,51 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>{{ profile.displayName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+  <div class="hero" [style.background]="profile.animal.gradient">
+    <span class="emoji">{{ profile.animal.emoji }}</span>
+  </div>
+
+  <div class="details glass-card">
+    <h2>{{ profile.displayName }}, {{ profile.age }}</h2>
+    <p class="animal">{{ profile.animal.name }} — {{ profile.animal.personality }}</p>
+    @if (profile.bio) {
+      <p class="bio">{{ profile.bio }}</p>
+    }
+
+    <div class="grid">
+      <div class="item">
+        <span class="label">Yeux</span>
+        <span>{{ profile.profile.eyeColor }}</span>
+      </div>
+      <div class="item">
+        <span class="label">Cheveux</span>
+        <span>{{ profile.profile.hairColor }}</span>
+      </div>
+      <div class="item">
+        <span class="label">Taille</span>
+        <span>{{ profile.profile.height }} cm</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Films</h3>
+      <p>{{ profile.profile.movies[0] }}</p>
+      <p>{{ profile.profile.movies[1] }}</p>
+    </div>
+
+    <div class="section">
+      <h3>Chansons</h3>
+      <p>{{ profile.profile.songs[0] }}</p>
+      <p>{{ profile.profile.songs[1] }}</p>
+    </div>
+  </div>
+</ion-content>

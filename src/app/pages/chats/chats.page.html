@@ -1,0 +1,43 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-header class="ion-no-border chats-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="backToJungle()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Mes conversations</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="jungle-content chats-page">
+  @if (isEmpty) {
+    <div class="empty">
+      <span class="emoji">💬</span>
+      <h2>Aucune conversation</h2>
+      <p>Match avec quelqu'un dans la Jungle pour démarrer un chat.</p>
+      <ion-button fill="outline" (click)="backToJungle()">Retour à la Jungle</ion-button>
+    </div>
+  } @else {
+    <ion-list lines="none" class="conv-list">
+      @for (conv of conversations; track conv.id) {
+        <ion-item button detail (click)="openChat(conv)" class="conv-item">
+          <div class="avatar" slot="start" [style.background]="conv.participant.animal.gradient">
+            <span>{{ conv.participant.animal.emoji }}</span>
+          </div>
+          <ion-label>
+            <h2>{{ conv.participant.displayName }}</h2>
+            <p>{{ lastPreview(conv) }}</p>
+          </ion-label>
+          <div slot="end" class="meta">
+            <span class="time">{{ lastTime(conv) }}</span>
+            @if (conv.unreadCount > 0) {
+              <span class="badge">{{ conv.unreadCount }}</span>
+            }
+          </div>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>

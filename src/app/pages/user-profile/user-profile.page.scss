@@ -1,0 +1,72 @@
+.profile-page {
+  padding-top: 16px;
+}
+
+.avatar-hero {
+  height: 200px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+
+  .emoji {
+    font-size: 6rem;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+  }
+}
+
+.profile-card {
+  margin-bottom: 24px;
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    color: var(--cream);
+    margin: 0 0 4px;
+  }
+
+  .meta {
+    color: var(--beige);
+    margin: 0 0 8px;
+  }
+
+  .animal-type {
+    color: var(--gold-light);
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+
+  .traits-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    color: var(--beige);
+
+    strong {
+      color: var(--gold);
+      margin-right: 4px;
+    }
+  }
+
+  .media-section {
+    margin-bottom: 14px;
+
+    h3 {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin: 0 0 6px;
+    }
+
+    p {
+      color: var(--cream);
+      margin: 0 0 2px;
+      font-size: 0.95rem;
+    }
+  }
+}
