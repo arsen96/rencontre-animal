@@ -101,7 +101,7 @@ export const MOCK_DISCOVERY_PROFILES: User[] = [
     gender: 'male',
     meetPreference: 'femelle',
     birthDate: '1997-12-09',
-    animal: animal('ours'),
+    animal: animal('singe'),
     profile: {
       movies: ['Forrest Gump', 'Into the Wild'],
       songs: ['Holocene', 'Skinny Love'],

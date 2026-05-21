@@ -6,7 +6,9 @@
       <app-step-header [currentStep]="6" [totalSteps]="6"></app-step-header>
 
       <div class="avatar-hero" [style.background]="user.animal.gradient">
-        <span class="emoji">{{ user.animal.emoji }}</span>
+        <div class="card-image-frame">
+          <app-animal-avatar [animal]="user.animal" variant="card"></app-animal-avatar>
+        </div>
       </div>
 
       <div class="profile-card glass-card">

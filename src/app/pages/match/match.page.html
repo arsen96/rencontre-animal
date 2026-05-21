@@ -12,12 +12,14 @@
         <p class="match-sub">La jungle vous unit</p>
 
         <div class="avatars">
-          <div class="avatar you">
-            <span>{{ currentAnimalEmoji }}</span>
+          <div class="avatar you" [style.background]="currentAnimal?.gradient">
+            @if (currentAnimal) {
+              <app-animal-avatar [animal]="currentAnimal" size="lg" variant="circle"></app-animal-avatar>
+            }
           </div>
           <div class="heart-pulse">❤️</div>
           <div class="avatar them" [style.background]="match.user.animal.gradient">
-            <span>{{ match.user.animal.emoji }}</span>
+            <app-animal-avatar [animal]="match.user.animal" size="lg" variant="circle"></app-animal-avatar>
           </div>
         </div>
 

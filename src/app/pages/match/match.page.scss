@@ -70,9 +70,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
     border: 3px solid var(--gold);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 
     &.you {
       background: linear-gradient(135deg, var(--jungle-mid), var(--jungle-dark));

@@ -1,0 +1,9 @@
+@if (animal.imageUrl) {
+  <img
+    [src]="animal.imageUrl"
+    [alt]="animal.name"
+    [class]="'animal-image size-' + size + ' variant-' + variant"
+  />
+} @else {
+  <span [class]="'animal-emoji size-' + size + ' variant-' + variant">{{ animal.emoji }}</span>
+}

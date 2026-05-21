@@ -11,7 +11,9 @@
 
 <ion-content class="modal-content">
   <div class="hero" [style.background]="profile.animal.gradient">
-    <span class="emoji">{{ profile.animal.emoji }}</span>
+    <div class="card-image-frame">
+      <app-animal-avatar [animal]="profile.animal" variant="card"></app-animal-avatar>
+    </div>
   </div>
 
   <div class="details glass-card">

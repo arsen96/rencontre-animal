@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Animal } from '../../core/interfaces/animal.interface';
 import { Match } from '../../core/interfaces/match.interface';
 import { ChatService } from '../../core/services/chat.service';
 import { UserSessionService } from '../../core/services/user-session.service';
@@ -12,7 +13,7 @@ import { UserSessionService } from '../../core/services/user-session.service';
 })
 export class MatchPage implements OnInit {
   match: Match | null = null;
-  currentAnimalEmoji = '🦁';
+  currentAnimal?: Animal;
 
   constructor(
     private readonly router: Router,
@@ -23,7 +24,7 @@ export class MatchPage implements OnInit {
   ngOnInit(): void {
     const nav = this.router.getCurrentNavigation();
     this.match = nav?.extras?.state?.['match'] ?? history.state?.['match'] ?? null;
-    this.currentAnimalEmoji = this.session.currentUser?.animal.emoji ?? '🦁';
+    this.currentAnimal = this.session.currentUser?.animal;
 
     if (!this.match) {
       this.router.navigate(['/jungle']);

@@ -1,6 +1,6 @@
 :host {
   display: block;
-  height: 168px;
+  height: 240px;
 }
 
 .flip-card {
@@ -26,6 +26,8 @@
   border-radius: 18px;
   transform: rotateY(0deg);
   -webkit-transform: rotateY(0deg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .flip-card.flipped .flip-inner {
@@ -41,36 +43,47 @@
   border-radius: 18px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 12px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .flip-front {
   transform: rotateY(0deg);
   -webkit-transform: rotateY(0deg);
   z-index: 2;
+  display: flex;
+  flex-direction: column;
 
-  .emoji {
-    font-size: 2.75rem;
-    margin-bottom: 6px;
-    line-height: 1;
+  .card-image {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px 6px;
+  }
+
+  .card-caption {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 8px 12px 10px;
+    text-align: center;
+    background: rgba(15, 36, 25, 0.65);
+    border-top: 1px solid var(--glass-border);
   }
 
   .name {
+    display: block;
     font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--cream);
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
 
   .hint {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: rgba(245, 239, 227, 0.75);
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -84,6 +97,11 @@
   border: 1px solid var(--glass-border);
   text-align: center;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 12px;
 
   .fiche-title {
     margin: 0 0 6px;

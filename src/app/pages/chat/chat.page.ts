@@ -7,6 +7,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { Animal } from '../../core/interfaces/animal.interface';
 import { Conversation } from '../../core/interfaces/conversation.interface';
 import { ChatMessage } from '../../core/interfaces/message.interface';
 import { ChatService } from '../../core/services/chat.service';
@@ -57,8 +58,8 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
     return this.conversation?.participant.displayName ?? '';
   }
 
-  get participantEmoji(): string {
-    return this.conversation?.participant.animal.emoji ?? '';
+  get participantAnimal(): Animal | undefined {
+    return this.conversation?.participant.animal;
   }
 
   isMine(message: ChatMessage): boolean {

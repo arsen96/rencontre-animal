@@ -8,6 +8,7 @@ import { AnimalFlipCardComponent } from './components/animal-flip-card/animal-fl
 import { SwipeCardComponent } from './components/swipe-card/swipe-card.component';
 import { ProfileDetailModalComponent } from './components/profile-detail-modal/profile-detail-modal.component';
 import { ChatBubbleComponent } from './components/chat-bubble/chat-bubble.component';
+import { AnimalAvatarComponent } from './components/animal-avatar/animal-avatar.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ChatBubbleComponent } from './components/chat-bubble/chat-bubble.compon
     PrimaryButtonComponent,
     StepHeaderComponent,
     AnimalFlipCardComponent,
+    AnimalAvatarComponent,
     SwipeCardComponent,
     ProfileDetailModalComponent,
     ChatBubbleComponent,
@@ -25,6 +27,7 @@ import { ChatBubbleComponent } from './components/chat-bubble/chat-bubble.compon
     PrimaryButtonComponent,
     StepHeaderComponent,
     AnimalFlipCardComponent,
+    AnimalAvatarComponent,
     SwipeCardComponent,
     ProfileDetailModalComponent,
     ChatBubbleComponent,

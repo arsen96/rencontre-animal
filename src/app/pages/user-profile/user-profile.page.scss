@@ -3,17 +3,24 @@
 }
 
 .avatar-hero {
-  height: 200px;
+  aspect-ratio: 4 / 5;
+  max-height: 320px;
   border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  padding: 16px;
 
-  .emoji {
-    font-size: 6rem;
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+  .card-image-frame {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

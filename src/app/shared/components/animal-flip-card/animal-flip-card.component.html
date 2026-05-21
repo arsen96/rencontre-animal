@@ -5,15 +5,19 @@
   (click)="onClick()"
 >
   <div class="flip-inner">
-    <div class="flip-face flip-front" [style.background]="animal.gradient">
-      <span class="emoji">{{ animal.emoji }}</span>
-      <span class="name">{{ animal.name }}</span>
-      <span class="hint">Voir la fiche</span>
+    <div class="flip-face flip-front">
+      <div class="card-image" [style.background]="animal.gradient">
+        <app-animal-avatar [animal]="animal" variant="card"></app-animal-avatar>
+      </div>
+      <div class="card-caption">
+        <span class="name">{{ animal.name }}</span>
+        <span class="hint">Voir la fiche</span>
+      </div>
     </div>
 
     <div class="flip-face flip-back">
       <p class="fiche-title">Fiche personnalité</p>
-      <h3 class="animal-name">{{ animal.name }} {{ animal.emoji }}</h3>
+      <h3 class="animal-name">{{ animal.name }}</h3>
       <p class="personality">{{ animal.personality }}</p>
       <div class="traits">
         @for (trait of animal.traits; track trait) {

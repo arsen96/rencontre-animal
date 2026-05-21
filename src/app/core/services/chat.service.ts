@@ -106,6 +106,6 @@ export class ChatService {
   }
 
   getParticipantLabel(user: User): string {
-    return `${user.animal.emoji} ${user.displayName}`;
+    return user.displayName;
   }
 }

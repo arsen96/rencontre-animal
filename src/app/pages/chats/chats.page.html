@@ -24,7 +24,7 @@
       @for (conv of conversations; track conv.id) {
         <ion-item button detail (click)="openChat(conv)" class="conv-item">
           <div class="avatar" slot="start" [style.background]="conv.participant.animal.gradient">
-            <span>{{ conv.participant.animal.emoji }}</span>
+            <app-animal-avatar [animal]="conv.participant.animal" size="sm" variant="circle"></app-animal-avatar>
           </div>
           <ion-label>
             <h2>{{ conv.participant.displayName }}</h2>

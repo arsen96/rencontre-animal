@@ -9,7 +9,14 @@
     </ion-buttons>
     @if (conversation) {
       <ion-title>
-        <span class="title-emoji">{{ participantEmoji }}</span>
+        @if (participantAnimal) {
+          <app-animal-avatar
+            [animal]="participantAnimal"
+            size="xs"
+            variant="inline"
+            class="title-avatar"
+          ></app-animal-avatar>
+        }
         {{ participantName }}
       </ion-title>
     }
