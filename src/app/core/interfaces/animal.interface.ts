@@ -4,6 +4,7 @@ export interface Animal {
   emoji: string;
   imageUrl?: string;
   personality: string;
+  description: string;
   traits: string[];
   gradient: string;
 }

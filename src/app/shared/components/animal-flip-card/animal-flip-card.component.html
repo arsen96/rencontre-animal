@@ -16,13 +16,16 @@
     </div>
 
     <div class="flip-face flip-back">
-      <p class="fiche-title">Fiche collector</p>
-      <h3 class="animal-name">{{ animal.name }}</h3>
-      <p class="personality">{{ animal.personality }}</p>
-      <div class="traits">
-        @for (trait of animal.traits; track trait) {
-          <span>{{ trait }}</span>
-        }
+      <div class="flip-back-inner">
+        <p class="fiche-title">Fiche collector</p>
+        <h3 class="animal-name">{{ animal.name }}</h3>
+        <p class="personality">{{ animal.personality }}</p>
+        <p class="description">{{ animal.description }}</p>
+        <div class="traits">
+          @for (trait of animal.traits; track trait) {
+            <span>{{ trait }}</span>
+          }
+        </div>
       </div>
     </div>
   </div>
