@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="fgL" x1="0" y1="0.2" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#2a5240"/>
+      <stop offset="100%" stop-color="#0a100c"/>
+    </linearGradient>
+    <linearGradient id="fgR" x1="1" y1="0.2" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#254535"/>
+      <stop offset="100%" stop-color="#080c0a"/>
+    </linearGradient>
+    <filter id="fgShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#fgShadow)">
+    <!-- Foreground left frame -->
+    <path fill="url(#fgL)" d="M-25 320 C40 240 55 420 45 580 C35 720 20 820 10 844 L-30 844 C0 650 5 450 -25 320Z"/>
+    <path fill="#1e3d30" opacity="0.9" d="M0 480 C35 420 50 580 42 720 C35 800 28 844 20 844 L-5 844 C2 640 5 520 0 480Z"/>
+
+    <!-- Foreground right frame -->
+    <path fill="url(#fgR)" d="M415 300 L350 460 Q330 600 345 720 L365 844 L390 844 L390 380 C395 340 410 310 415 300Z"/>
+    <path fill="#1c382c" opacity="0.88" d="M390 500 L340 620 Q325 720 335 820 L355 844 L375 844 L382 560 C386 520 388 480 390 500Z"/>
+
+    <!-- Bottom undergrowth  corners only -->
+    <ellipse cx="55" cy="820" rx="95" ry="65" fill="#0a1612" opacity="0.95"/>
+    <ellipse cx="335" cy="825" rx="100" ry="68" fill="#081410" opacity="0.92"/>
+
+    <!-- Vines  organic curves -->
+    <path fill="none" stroke="#1e3828" stroke-width="6" opacity="0.75" stroke-linecap="round" d="M28 0 Q8 220 32 450 T20 750"/>
+    <path fill="none" stroke="#254535" stroke-width="4" opacity="0.55" d="M48 0 Q68 200 42 420 T58 680"/>
+    <path fill="none" stroke="#1a3228" stroke-width="5" opacity="0.65" stroke-linecap="round" d="M362 0 Q382 240 358 480 T370 760"/>
+
+    <!-- Subtle gold catch light -->
+    <path fill="none" stroke="#c8a96b" stroke-width="1" opacity="0.22" d="M32 200 Q22 350 38 520"/>
+    <path fill="none" stroke="#c8a96b" stroke-width="0.8" opacity="0.18" d="M358 220 Q368 380 352 540"/>
+  </g>
+</svg>

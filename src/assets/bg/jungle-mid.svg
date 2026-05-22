@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="massL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e3d30"/>
+      <stop offset="60%" stop-color="#142820"/>
+      <stop offset="100%" stop-color="#0a120e"/>
+    </linearGradient>
+    <linearGradient id="massR" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a382c"/>
+      <stop offset="55%" stop-color="#12241c"/>
+      <stop offset="100%" stop-color="#080e0b"/>
+    </linearGradient>
+    <linearGradient id="shadow" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.65"/>
+    </linearGradient>
+    <filter id="organic" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+    <filter id="sideBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="2.5"/>
+    </filter>
+  </defs>
+
+  <!-- Center tunnel mask built into composition  foliage only on sides -->
+  <g filter="url(#organic)">
+    <!-- Left mid-ground mass -->
+    <path fill="url(#massL)" opacity="0.88" d="M-40 200 C30 120 70 280 55 420 C42 560 25 700 15 844 L-20 844 C5 600 8 380 -40 200Z"/>
+    <path fill="#1a352a" opacity="0.75" d="M5 260 C55 200 85 380 72 540 C58 680 45 780 38 844 L8 844 C12 520 15 350 5 260Z"/>
+    <path fill="#223d32" opacity="0.55" d="M40 180 C95 140 110 320 95 500 C82 640 68 760 62 830 L28 830 C35 480 38 300 40 180Z"/>
+
+    <!-- Right mid-ground -->
+    <path fill="url(#massR)" opacity="0.85" d="M430 180 L355 320 Q325 480 340 620 Q355 740 370 844 L390 844 L390 220 C400 190 420 160 430 180Z"/>
+    <path fill="#183228" opacity="0.7" d="M390 240 L335 400 Q312 540 328 680 L348 820 L372 835 L378 380 C382 310 386 260 390 240Z"/>
+
+    <!-- Mid trunks with shadow -->
+    <path fill="#0d1814" opacity="0.8" d="M22 400 L32 400 L28 680 L18 680Z"/>
+    <path fill="#0c1612" opacity="0.75" d="M358 420 L368 420 L364 700 L354 700Z"/>
+
+    <!-- Hanging mid foliage  sides only -->
+    <path fill="#1a3328" opacity="0.5" d="M8 0 Q25 160 15 300 L0 280 Q5 120 8 0Z"/>
+    <path fill="#183026" opacity="0.45" d="M382 0 Q365 150 375 290 L390 270 Q388 100 382 0Z"/>
+  </g>
+
+  <!-- Ground shadow layer -->
+  <rect width="390" height="844" fill="url(#shadow)" opacity="0.4"/>
+
+  <!-- Atmospheric haze on sides -->
+  <ellipse cx="70" cy="500" rx="120" ry="200" fill="#142820" opacity="0.25" filter="url(#sideBlur)"/>
+  <ellipse cx="320" cy="520" rx="115" ry="190" fill="#12241c" opacity="0.22" filter="url(#sideBlur)"/>
+</svg>
