@@ -1,57 +1,36 @@
 <div class="jungle-bg" [class.subtle]="variant === 'subtle'">
-  <div class="parallax-stack">
-    <!-- 0 — Void / fond lointain (obscurité + tunnel) -->
-    <div class="layer px-void" [style.transform]="parallaxVoid" aria-hidden="true">
+  <div class="bg-stack">
+    <div class="layer px-void" aria-hidden="true">
       <div class="depth-void"></div>
       <div class="depth-silhouettes"></div>
     </div>
 
-    <!-- 1 — Arrière-plan lointain -->
-    <div class="layer px-far" [style.transform]="parallaxFar" aria-hidden="true">
+    <div class="layer px-far" aria-hidden="true">
       <div class="jungle-layer jungle-layer-far"></div>
     </div>
 
-    <!-- Brume profonde -->
-    <div class="layer vol-fog vol-fog-deep" [style.transform]="parallaxFogFar" aria-hidden="true"></div>
+    <div class="layer vol-fog vol-fog-deep" aria-hidden="true"></div>
 
-    <!-- 2 — Milieu -->
-    <div class="layer px-mid" [style.transform]="parallaxMid" aria-hidden="true">
+    <div class="layer px-mid" aria-hidden="true">
       <div class="jungle-layer jungle-layer-mid"></div>
       <div class="layer side-veg side-veg-mid" aria-hidden="true"></div>
     </div>
 
-    <div class="layer vol-fog vol-fog-mid" [style.transform]="parallaxFogMid" aria-hidden="true"></div>
+    <div class="layer vol-fog vol-fog-mid" aria-hidden="true"></div>
 
-    <!-- Lumière diffuse dans la profondeur (centre) -->
-    <div class="layer depth-light" [style.transform]="parallaxLight" aria-hidden="true"></div>
+    <div class="layer depth-light" aria-hidden="true"></div>
     <div class="layer depth-rays" aria-hidden="true"></div>
 
-    <!-- 3 — Avant-plan -->
-    <div class="layer px-front" [style.transform]="parallaxFront" aria-hidden="true">
+    <div class="layer px-front" aria-hidden="true">
       <div class="jungle-layer jungle-layer-near"></div>
       <div class="layer side-veg side-veg-near" aria-hidden="true"></div>
     </div>
 
-    <div class="layer vol-fog vol-fog-front" [style.transform]="parallaxFogNear" aria-hidden="true"></div>
+    <div class="layer vol-fog vol-fog-front" aria-hidden="true"></div>
 
     <div class="layer ground-haze" aria-hidden="true"></div>
     <div class="layer amb-texture" aria-hidden="true"></div>
 
-    <div class="particles" aria-hidden="true">
-      @for (p of particles; track p.id) {
-        <span
-          class="particle"
-          [style.left.%]="p.x"
-          [style.top.%]="p.y"
-          [style.width.px]="p.size"
-          [style.height.px]="p.size"
-          [style.animation-delay.s]="p.delay"
-          [style.animation-duration.s]="p.duration"
-        ></span>
-      }
-    </div>
-
-    <!-- Tunnel central sombre — UI au centre -->
     <div class="layer depth-tunnel-mask" aria-hidden="true"></div>
     <div class="layer amb-ui-clear" aria-hidden="true"></div>
     <div class="layer amb-vignette" aria-hidden="true"></div>

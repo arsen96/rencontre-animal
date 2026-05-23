@@ -1,4 +1,4 @@
-/* Cinematic multi-plane jungle depth — far / mid / near + atmospheric CSS */
+/* Jungle background — static layers (no animations, better mobile performance) */
 
 $jungle-far: url('../assets/bg/jungle-far.svg');
 $jungle-mid: url('../assets/bg/jungle-mid.svg');
@@ -16,33 +16,20 @@ app-jungle-background {
 .jungle-bg {
   position: absolute;
   inset: 0;
-  background: #050505;
+  background:
+    linear-gradient(90deg, rgba(15, 35, 28, 0.55) 0%, transparent 28%, transparent 72%, rgba(15, 35, 28, 0.55) 100%),
+    radial-gradient(ellipse 90% 70% at 50% 40%, #0f1f18 0%, #060806 50%, #030303 100%);
   overflow: hidden;
 
-  .parallax-stack {
+  .bg-stack {
     position: absolute;
-    inset: -14%;
-    width: 128%;
-    height: 128%;
-    left: -14%;
-    top: -14%;
-    perspective: 1100px;
-    transform-style: preserve-3d;
+    inset: 0;
   }
 
   .layer {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    will-change: transform, opacity;
-  }
-
-  .px-void,
-  .px-far,
-  .px-mid,
-  .px-front {
-    transition: transform 0.1s ease-out;
-    transform-style: preserve-3d;
   }
 
   .px-void {
@@ -61,7 +48,6 @@ app-jungle-background {
     z-index: 5;
   }
 
-  /* —— Plan 0 : vide profond / tunnel —— */
   .depth-void {
     position: absolute;
     inset: 0;
@@ -79,10 +65,8 @@ app-jungle-background {
       radial-gradient(ellipse 16% 11% at 78% 24%, rgba(18, 40, 32, 0.3) 0%, transparent 68%),
       radial-gradient(ellipse 14% 10% at 50% 18%, rgba(15, 35, 28, 0.25) 0%, transparent 65%);
     filter: blur(12px);
-    animation: farSilhouetteDrift 28s ease-in-out infinite;
   }
 
-  /* —— Plans SVG —— */
   .jungle-layer {
     position: absolute;
     inset: 0;
@@ -94,30 +78,26 @@ app-jungle-background {
   .jungle-layer-far {
     background-image: $jungle-far;
     opacity: 0.92;
-    filter: blur(5px) brightness(0.55) saturate(0.9) contrast(1.05);
-    transform: scale(1.08);
-    animation: layerFloatFar 24s ease-in-out infinite;
+    filter: blur(3px) brightness(0.78) saturate(1.1);
+    transform: scale(1.06);
   }
 
   .jungle-layer-mid {
     background-image: $jungle-mid;
-    opacity: 0.88;
-    filter: blur(1px) brightness(0.72) saturate(1.05);
-    mask-image: radial-gradient(ellipse 42% 55% at 50% 48%, transparent 0%, black 72%);
-    -webkit-mask-image: radial-gradient(ellipse 42% 55% at 50% 48%, transparent 0%, black 72%);
-    animation: layerFloatMid 16s ease-in-out infinite;
+    opacity: 0.95;
+    filter: brightness(0.88) saturate(1.15);
+    mask-image: radial-gradient(ellipse 30% 42% at 50% 48%, transparent 0%, black 78%);
+    -webkit-mask-image: radial-gradient(ellipse 30% 42% at 50% 48%, transparent 0%, black 78%);
   }
 
   .jungle-layer-near {
     background-image: $jungle-near;
-    opacity: 0.94;
-    filter: brightness(0.82) saturate(1.1) contrast(1.08);
-    mask-image: radial-gradient(ellipse 38% 50% at 50% 50%, transparent 0%, black 68%);
-    -webkit-mask-image: radial-gradient(ellipse 38% 50% at 50% 50%, transparent 0%, black 68%);
-    animation: layerFloatNear 12s ease-in-out infinite;
+    opacity: 1;
+    filter: brightness(0.92) saturate(1.15);
+    mask-image: radial-gradient(ellipse 28% 40% at 50% 50%, transparent 0%, black 75%);
+    -webkit-mask-image: radial-gradient(ellipse 28% 40% at 50% 50%, transparent 0%, black 75%);
   }
 
-  /* Organic side vegetation (CSS — évite look vectoriel plat) */
   .side-veg {
     &::before,
     &::after {
@@ -130,21 +110,19 @@ app-jungle-background {
 
   .side-veg-mid {
     &::before {
-      width: 38vw;
-      height: 55vh;
+      width: 42vw;
+      height: 58vh;
       left: -18%;
       top: 18%;
-      background: radial-gradient(ellipse at 70% 40%, rgba(30, 58, 46, 0.45) 0%, rgba(12, 24, 18, 0.2) 50%, transparent 72%);
-      animation: sideVegSwayL 22s ease-in-out infinite;
+      background: radial-gradient(ellipse at 70% 40%, rgba(30, 58, 46, 0.65) 0%, rgba(12, 24, 18, 0.35) 50%, transparent 72%);
     }
 
     &::after {
-      width: 36vw;
-      height: 52vh;
+      width: 40vw;
+      height: 55vh;
       right: -16%;
       top: 20%;
-      background: radial-gradient(ellipse at 30% 42%, rgba(28, 52, 42, 0.42) 0%, rgba(10, 22, 16, 0.18) 48%, transparent 70%);
-      animation: sideVegSwayR 26s ease-in-out infinite;
+      background: radial-gradient(ellipse at 30% 42%, rgba(28, 52, 42, 0.62) 0%, rgba(10, 22, 16, 0.32) 48%, transparent 70%);
     }
   }
 
@@ -156,7 +134,6 @@ app-jungle-background {
       bottom: 8%;
       background: radial-gradient(ellipse at 65% 30%, rgba(22, 48, 38, 0.55) 0%, rgba(8, 16, 12, 0.35) 45%, transparent 68%);
       filter: blur(10px);
-      animation: sideVegSwayL 18s ease-in-out infinite reverse;
     }
 
     &::after {
@@ -166,11 +143,9 @@ app-jungle-background {
       bottom: 10%;
       background: radial-gradient(ellipse at 35% 32%, rgba(20, 44, 36, 0.52) 0%, rgba(6, 14, 10, 0.32) 42%, transparent 65%);
       filter: blur(10px);
-      animation: sideVegSwayR 20s ease-in-out infinite reverse;
     }
   }
 
-  /* —— Brume volumétrique —— */
   .vol-fog {
     mix-blend-mode: screen;
   }
@@ -182,7 +157,6 @@ app-jungle-background {
       radial-gradient(ellipse 90% 40% at 50% 35%, rgba(12, 28, 22, 0.35) 0%, transparent 58%);
     filter: blur(20px);
     opacity: 0.7;
-    animation: fogPulseDeep 18s ease-in-out infinite;
   }
 
   .vol-fog-mid {
@@ -193,7 +167,6 @@ app-jungle-background {
       radial-gradient(ellipse 50% 25% at 50% 70%, rgba(14, 32, 24, 0.3) 0%, transparent 50%);
     filter: blur(28px);
     opacity: 0.65;
-    animation: fogDriftMid 22s ease-in-out infinite;
   }
 
   .vol-fog-front {
@@ -203,17 +176,15 @@ app-jungle-background {
       radial-gradient(ellipse 40% 22% at 50% 55%, rgba(8, 18, 14, 0.25) 0%, transparent 50%);
     filter: blur(16px);
     opacity: 0.55;
-    animation: fogDriftFront 14s ease-in-out infinite;
   }
 
-  /* Lumière diffuse — profondeur centrale */
   .depth-light {
     z-index: 4;
     background:
       radial-gradient(ellipse 35% 28% at 50% 32%, rgba(200, 169, 107, 0.12) 0%, transparent 70%),
       radial-gradient(ellipse 55% 45% at 50% 48%, rgba(26, 52, 42, 0.15) 0%, transparent 75%);
     mix-blend-mode: screen;
-    animation: depthLightPulse 10s ease-in-out infinite;
+    opacity: 0.9;
   }
 
   .depth-rays {
@@ -237,53 +208,37 @@ app-jungle-background {
   .amb-texture {
     z-index: 7;
     opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 200px;
     mix-blend-mode: overlay;
   }
 
-  .particles {
-    z-index: 6;
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(230, 210, 160, 0.5) 0%, rgba(200, 169, 107, 0.15) 50%, transparent 72%);
-      box-shadow: 0 0 8px rgba(200, 169, 107, 0.25);
-      animation: particleFloat linear infinite;
-    }
-  }
-
-  /* Tunnel central — regard vers la profondeur */
   .depth-tunnel-mask {
     z-index: 8;
     background:
       radial-gradient(
-        ellipse 36% 48% at 50% 46%,
-        rgba(3, 5, 4, 0.15) 0%,
-        rgba(5, 8, 6, 0.55) 42%,
-        rgba(2, 3, 2, 0.75) 68%,
-        transparent 100%
+        ellipse 32% 40% at 50% 46%,
+        rgba(3, 5, 4, 0.05) 0%,
+        rgba(5, 8, 6, 0.28) 45%,
+        transparent 72%
       );
   }
 
   .amb-ui-clear {
     z-index: 9;
     background: radial-gradient(
-      ellipse 50% 44% at 50% 48%,
-      rgba(5, 5, 5, 0.08) 0%,
-      rgba(5, 5, 5, 0.28) 52%,
-      rgba(3, 3, 3, 0.45) 100%
+      ellipse 48% 40% at 50% 48%,
+      rgba(5, 5, 5, 0.02) 0%,
+      rgba(5, 5, 5, 0.12) 55%,
+      transparent 100%
     );
   }
 
   .amb-vignette {
     z-index: 10;
     background:
-      radial-gradient(ellipse 95% 85% at 50% 50%, transparent 0%, transparent 38%, rgba(0, 0, 0, 0.25) 68%, rgba(0, 0, 0, 0.55) 100%),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0%, transparent 22%, transparent 78%, rgba(0, 0, 0, 0.35) 100%);
+      radial-gradient(ellipse 95% 85% at 50% 50%, transparent 0%, transparent 45%, rgba(0, 0, 0, 0.15) 75%, rgba(0, 0, 0, 0.35) 100%),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.2) 100%);
   }
 
   &.subtle {
@@ -313,125 +268,5 @@ app-jungle-background {
         rgba(3, 3, 3, 0.6) 100%
       );
     }
-  }
-}
-
-@keyframes layerFloatFar {
-  0%,
-  100% {
-    transform: scale(1.08) translate(0, 0);
-  }
-  50% {
-    transform: scale(1.1) translate(-1.5%, -1%);
-  }
-}
-
-@keyframes layerFloatMid {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(1.8%, 1.2%);
-  }
-}
-
-@keyframes layerFloatNear {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(-2.5%, 1.5%);
-  }
-}
-
-@keyframes farSilhouetteDrift {
-  0%,
-  100% {
-    transform: translate(0, 0);
-    opacity: 0.38;
-  }
-  50% {
-    transform: translate(1%, -1.5%);
-    opacity: 0.48;
-  }
-}
-
-@keyframes sideVegSwayL {
-  0%,
-  100% {
-    transform: rotate(-2deg) scale(1);
-  }
-  50% {
-    transform: rotate(1deg) scale(1.03);
-  }
-}
-
-@keyframes sideVegSwayR {
-  0%,
-  100% {
-    transform: rotate(2deg) scale(1);
-  }
-  50% {
-    transform: rotate(-1deg) scale(1.02);
-  }
-}
-
-@keyframes fogPulseDeep {
-  0%,
-  100% {
-    opacity: 0.62;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.78;
-    transform: scale(1.02);
-  }
-}
-
-@keyframes fogDriftMid {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(2%, -2%);
-  }
-}
-
-@keyframes fogDriftFront {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translateY(-3%);
-    opacity: 0.62;
-  }
-}
-
-@keyframes depthLightPulse {
-  0%,
-  100% {
-    opacity: 0.85;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes particleFloat {
-  0% {
-    opacity: 0;
-    transform: translateY(0) scale(0.7);
-  }
-  15% {
-    opacity: 0.4;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-35px) scale(1.1);
   }
 }
