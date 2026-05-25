@@ -21,7 +21,12 @@
   </div>
 
   @if (expandedAnimal) {
-    <div class="animal-overlay" (click)="closeExpanded()">
+    <div
+      class="animal-overlay"
+      [class.is-entering]="overlayEntering"
+      [class.is-closing]="overlayClosing"
+      (click)="closeExpanded()"
+    >
       <div class="animal-overlay-backdrop"></div>
 
       <div class="animal-overlay-panel" (click)="$event.stopPropagation()">

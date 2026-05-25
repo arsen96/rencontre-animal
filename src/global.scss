@@ -107,6 +107,33 @@ app-animal-flip-card.overlay-preview .flip-card.expanded {
     border-radius: 28px;
   }
 
+  .flip-face {
+    transition:
+      opacity 0.58s ease,
+      transform 1.02s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0.58s;
+  }
+
+  &.flipped {
+    .flip-front {
+      transform: rotateY(82deg) scale(0.93);
+    }
+
+    .flip-back {
+      transform: rotateY(0deg) scale(1);
+    }
+  }
+
+  &:not(.flipped) {
+    .flip-front {
+      transform: rotateY(0deg) scale(1);
+    }
+
+    .flip-back {
+      transform: rotateY(-82deg) scale(0.93);
+    }
+  }
+
   .flip-front {
     .card-image {
       padding: 32px 24px 20px;

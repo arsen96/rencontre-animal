@@ -26,7 +26,6 @@
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
-  animation: overlayFadeIn 0.28s ease both;
 }
 
 .animal-overlay-backdrop {
@@ -45,7 +44,8 @@
   flex-direction: column;
   align-items: stretch;
   gap: 14px;
-  animation: overlayPanelIn 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: center center;
+  will-change: transform, opacity;
 }
 
 .overlay-close {
@@ -69,6 +69,26 @@ app-animal-flip-card.overlay-preview {
   height: min(76vh, 780px);
 }
 
+.animal-overlay.is-entering {
+  .animal-overlay-backdrop {
+    animation: overlayBackdropIn 0.3s ease both;
+  }
+
+  .animal-overlay-panel {
+    animation: overlayPanelZoomIn 0.62s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+.animal-overlay.is-closing {
+  .animal-overlay-backdrop {
+    animation: overlayBackdropOut 0.3s ease both;
+  }
+
+  .animal-overlay-panel {
+    animation: overlayPanelZoomOut 0.48s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+}
+
 .overlay-note {
   margin: 0;
   text-align: center;
@@ -83,7 +103,7 @@ app-animal-flip-card.overlay-preview {
   }
 }
 
-@keyframes overlayFadeIn {
+@keyframes overlayBackdropIn {
   from {
     opacity: 0;
   }
@@ -92,14 +112,38 @@ app-animal-flip-card.overlay-preview {
   }
 }
 
-@keyframes overlayPanelIn {
+@keyframes overlayBackdropOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes overlayPanelZoomIn {
   from {
     opacity: 0;
-    transform: translateY(18px) scale(0.82);
+    transform: translateY(26px) scale(0.68);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.02);
   }
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes overlayPanelZoomOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(18px) scale(0.78);
   }
 }
 

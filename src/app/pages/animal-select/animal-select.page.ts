@@ -15,7 +15,11 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   selectedId?: string;
   expandedAnimal?: Animal;
   overlayFlipped = false;
+  overlayEntering = false;
+  overlayClosing = false;
   private overlayFlipTimer?: number;
+  private overlayEnterTimer?: number;
+  private overlayCloseTimer?: number;
 
   constructor(
     private readonly mockData: MockDataService,
@@ -28,7 +32,7 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.clearOverlayTimer();
+    this.clearOverlayTimers();
   }
 
   get canContinue(): boolean {
@@ -36,14 +40,23 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   }
 
   onCardClick(animal: Animal): void {
+    if (this.expandedAnimal && !this.overlayClosing) {
+      return;
+    }
+
     this.selectedId = animal.id;
     this.session.patchOnboarding({ selectedAnimal: animal });
     this.expandedAnimal = animal;
     this.overlayFlipped = false;
-    this.clearOverlayTimer();
+    this.overlayClosing = false;
+    this.overlayEntering = true;
+    this.clearOverlayTimers();
     this.overlayFlipTimer = window.setTimeout(() => {
       this.overlayFlipped = true;
-    }, 70);
+    }, 260);
+    this.overlayEnterTimer = window.setTimeout(() => {
+      this.overlayEntering = false;
+    }, 760);
   }
 
   isSelected(animal: Animal): boolean {
@@ -52,9 +65,18 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
 
   closeExpanded(event?: Event): void {
     event?.stopPropagation();
+    if (!this.expandedAnimal || this.overlayClosing) {
+      return;
+    }
+
+    this.clearOverlayTimers();
+    this.overlayEntering = false;
+    this.overlayClosing = true;
     this.overlayFlipped = false;
-    this.expandedAnimal = undefined;
-    this.clearOverlayTimer();
+    this.overlayCloseTimer = window.setTimeout(() => {
+      this.expandedAnimal = undefined;
+      this.overlayClosing = false;
+    }, 760);
   }
 
   continue(): void {
@@ -63,10 +85,20 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
     }
   }
 
-  private clearOverlayTimer(): void {
+  private clearOverlayTimers(): void {
     if (this.overlayFlipTimer) {
       window.clearTimeout(this.overlayFlipTimer);
       this.overlayFlipTimer = undefined;
+    }
+
+    if (this.overlayEnterTimer) {
+      window.clearTimeout(this.overlayEnterTimer);
+      this.overlayEnterTimer = undefined;
+    }
+
+    if (this.overlayCloseTimer) {
+      window.clearTimeout(this.overlayCloseTimer);
+      this.overlayCloseTimer = undefined;
     }
   }
 }

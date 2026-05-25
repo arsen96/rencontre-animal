@@ -26,6 +26,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'ours',
     name: 'Ours',
     emoji: '🐻',
+    imageUrl: 'assets/animals/ours.jpg',
     personality: 'Calme, indépendant',
     description:
       "L'ours est un solitaire fier qui préfère la tranquillité à l'agitation. Patient et calme, il sait pourtant imposer le respect par sa force lorsqu'il est provoqué. Attaché à ses habitudes, loyal envers ceux qu'il respecte, il cache sous son apparence bourrue une nature sensible qui apprécie les plaisirs simples.",
@@ -33,12 +34,13 @@ export const MOCK_ANIMALS: Animal[] = [
     accent: 'rgba(145, 104, 72, 0.14)',
   }),
   createAnimal({
-    id: 'cordeau',
-    name: 'Cordeau',
-    emoji: '🪢',
+    id: 'corbeau',
+    name: 'Corbeau',
+    emoji: '�',
+    imageUrl: 'assets/animals/corbeau.jpg',
     personality: 'Méthodique, précis',
     description:
-      "Le cordeau est méthodique et rigoureux, attaché à l'ordre et à la clarté. Il ne laisse rien au hasard et sert souvent de repère à ceux qui l'entourent. Derrière sa discipline se cache pourtant une vraie souplesse : il sait s'adapter aux contours du monde sans jamais perdre son cap.",
+      "Le corbeau est méthodique et rigoureux, attaché à l'ordre et à la clarté. Il ne laisse rien au hasard et sert souvent de repère à ceux qui l'entourent. Derrière sa discipline se cache pourtant une vraie souplesse : il sait s'adapter aux contours du monde sans jamais perdre son cap.",
     traits: ['Précis', 'Fiable', 'Rigoureux'],
     accent: 'rgba(194, 154, 102, 0.12)',
   }),
@@ -57,6 +59,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'dauphin',
     name: 'Dauphin',
     emoji: '🐬',
+    imageUrl: 'assets/animals/dauphin.jpg',
     personality: 'Libre, joyeux',
     description:
       "Le dauphin est porté par la curiosité, la connexion et la joie de vivre. Sociable et joueur, il diffuse la bonne humeur tout en gardant une grande sensibilité. Intelligent et intuitif, il apaise les tensions sans conflit et reste fidèle à ceux qu'il aime.",
@@ -67,6 +70,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'hyene',
     name: 'Hyène',
     emoji: '🐾',
+    imageUrl: 'assets/animals/hyen.jpg',
     personality: 'Rusée, résistante',
     description:
       "La hyène est une survivante au regard acéré et à la volonté farouche. Observatrice et stratégique, elle sait attendre, s'adapter et frapper au bon moment. Solidaire avec les siens, elle avance malgré les jugements avec une intelligence brute et une force silencieuse.",
@@ -77,6 +81,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'souris',
     name: 'Souris',
     emoji: '🐭',
+    imageUrl: 'assets/animals/souris.jpg',
     personality: 'Discrète, vive',
     description:
       "La souris évolue dans l'ombre, attentive à tout ce qui se passe autour d'elle. Petite mais rapide, elle se faufile là où d'autres échouent grâce à son intelligence et à son instinct. Souvent sous-estimée, elle cache une détermination silencieuse et une fidélité profonde.",
@@ -87,6 +92,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'rat',
     name: 'Rat',
     emoji: '🐀',
+    imageUrl: 'assets/animals/rat.jpg',
     personality: 'Adaptable, rusé',
     description:
       "Le rat est un survivant né, capable de tirer parti de chaque situation. Intelligent et opportuniste, il observe, analyse puis agit avec une précision déconcertante. Fidèle à son clan et audacieux dans ses choix, il avance dans les coulisses avec une efficacité redoutable.",
@@ -97,6 +103,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'chien',
     name: 'Chien',
     emoji: '🐶',
+    imageUrl: 'assets/animals/chien.jpg',
     personality: 'Loyal, protecteur',
     description:
       "Le chien est un pilier affectueux sur lequel on peut toujours compter. Il veille sur ceux qu'il aime avec tendresse, écoute sans juger et ressent sans qu'on lui parle. Sa fidélité est sans faille, mais si l'on menace les siens, il devient un gardien redoutable.",
@@ -118,6 +125,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'leopard',
     name: 'Léopard',
     emoji: '🐆',
+    imageUrl: 'assets/animals/leopard.jpg',
     personality: 'Silencieux, fier',
     description:
       "Le léopard avance seul, dans l'ombre, sans jamais chercher l'approbation. Agilité, précision et sang-froid font de lui un stratège naturel qui choisit soigneusement ses combats. Mystérieux et perçant, il inspire le respect sans avoir besoin de rugir.",
@@ -128,7 +136,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'chimpanze',
     name: 'Chimpanzé',
     emoji: '🐵',
-    imageUrl: 'assets/animals/singe.jpg',
+    imageUrl: 'assets/animals/chimpanze.jpg',
     personality: 'Curieux, sociable',
     description:
       "Le chimpanzé est un esprit vif, joueur et toujours en mouvement. Très sociable, il vit dans la complicité, le rire et l'émotion, mais derrière son espièglerie se cache une grande lucidité. Il déteste l'injustice et puise sa force dans le lien, l'intelligence et le cœur.",
@@ -139,6 +147,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'manchot',
     name: 'Manchot',
     emoji: '🐧',
+    imageUrl: 'assets/animals/manchot.jpg',
     personality: 'Solidaire, tendre',
     description:
       "Le manchot avance d'un pas parfois maladroit, mais toujours déterminé. Le groupe est sa force et la chaleur des autres son refuge, même au cœur des tempêtes. Sous son apparence comique se cache un courage silencieux, une fidélité rare et une profonde dignité.",
@@ -149,6 +158,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'gorille',
     name: 'Gorille',
     emoji: '🦍',
+    imageUrl: 'assets/animals/gorille.jpg',
     personality: 'Calme, protecteur',
     description:
       "Le gorille inspire le respect par sa seule présence. Sa force est immense, mais il préfère la sérénité à la confrontation et veille sur les siens avec une douceur surprenante. Pacifique, réfléchi et profondément loyal, il devient redoutable seulement lorsqu'on menace ce qu'il aime.",
@@ -159,6 +169,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'crocodile',
     name: 'Crocodile',
     emoji: '🐊',
+    imageUrl: 'assets/animals/crocodile.jpg',
     personality: 'Implacable, maîtrisé',
     description:
       "Le crocodile choisit l'ombre, la discrétion et le bon moment. Calme en apparence, il cache une puissance fulgurante et une maîtrise remarquable de ses émotions. Stratège et fidèle à sa nature, il agit avec une précision froide lorsque l'instant est venu.",
@@ -169,6 +180,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'paresseux',
     name: 'Paresseux',
     emoji: '🦥',
+    imageUrl: 'assets/animals/paresseux.jpg',
     personality: 'Paisible, sage',
     description:
       "Le paresseux avance à son rythme, sans se laisser emporter par le tumulte du monde. Sa lenteur est un choix, pas une faiblesse : il prend le temps d'observer, de ressentir et d'aller à l'essentiel. Beaucoup le jugent trop vite, mais ceux qui s'approchent découvrent une force douce, patiente et étonnamment solide.",
@@ -179,6 +191,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'hibou',
     name: 'Hibou',
     emoji: '🦉',
+    imageUrl: 'assets/animals/hiboux.jpg',
     personality: 'Lucide, sage',
     description:
       "Gardien de la nuit, le hibou voit ce que les autres ne perçoivent pas. Solitaire, il se sent chez lui dans le silence et préfère comprendre plutôt que briller. Quand il agit, c'est avec une précision tranquille, guidée par l'observation, la patience et la vérité.",
@@ -189,6 +202,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'panda',
     name: 'Panda',
     emoji: '🐼',
+    imageUrl: 'assets/animals/panda.jpg',
     personality: 'Discret, harmonieux',
     description:
       "Le panda préfère les forêts calmes aux lieux bruyants et les routines simples aux excès. Derrière sa douceur apparente se cache une grande sensibilité, une force tranquille et une vraie justesse. Il choisit l'harmonie plutôt que la confrontation, sans jamais renoncer à se défendre si on le pousse trop loin.",
@@ -199,6 +213,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'kangourou',
     name: 'Kangourou',
     emoji: '🦘',
+    imageUrl: 'assets/animals/kangourou.jpg',
     personality: 'Libre, protecteur',
     description:
       "Le kangourou est un être libre qui avance par bonds, guidé par son instinct et son besoin d'espace. Toujours en mouvement, il reste pourtant attentif à ceux qu'il protège. Sa vraie force est dans l'équilibre : rapide mais réfléchi, indépendant mais profondément fidèle.",
@@ -209,6 +224,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'tortue',
     name: 'Tortue',
     emoji: '🐢',
+    imageUrl: 'assets/animals/tortue.jpg',
     personality: 'Patiente, stable',
     description:
       "La tortue avance lentement, mais sûrement, en donnant du sens à chacun de ses pas. Elle observe sans juger, se protège sans fuir et rappelle que la vraie solidité est souvent invisible. Sa force réside dans la patience, la simplicité et la sagesse du temps long.",
@@ -219,6 +235,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'elephant',
     name: 'Éléphant',
     emoji: '🐘',
+    imageUrl: 'assets/animals/elephant.jpg',
     personality: 'Paisible, loyal',
     description:
       "L'éléphant impressionne par sa taille, mais choisit la douceur plutôt que l'abus de force. Il n'oublie ni les liens, ni les blessures, et avance avec une dignité tranquille. Loyal envers les siens, il protège le groupe avec fermeté et ne devient redoutable que lorsqu'on le provoque.",
@@ -229,6 +246,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'sanglier',
     name: 'Sanglier',
     emoji: '🐗',
+    imageUrl: 'assets/animals/sanglier.jpg',
     personality: 'Authentique, curieux',
     description:
       "Le sanglier est proche de la terre et des choses vraies. Derrière son allure rustique se cache un esprit vif, sociable et plein de ressources. Il ne cherche pas à plaire, mais sait observer, comprendre vite et rester pleinement lui-même, sans masque ni honte.",
