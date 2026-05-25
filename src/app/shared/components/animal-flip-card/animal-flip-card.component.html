@@ -2,6 +2,8 @@
   class="flip-card"
   [class.flipped]="flipped"
   [class.selected]="selected"
+  [class.expanded]="expanded"
+  [class.non-interactive]="!clickable"
   (click)="onClick()"
 >
   <div class="flip-inner">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Animal } from '../../core/interfaces/animal.interface';
 import { MockDataService } from '../../core/services/mock-data.service';
@@ -10,10 +10,12 @@ import { UserSessionService } from '../../core/services/user-session.service';
   styleUrls: ['./animal-select.page.scss'],
   standalone: false,
 })
-export class AnimalSelectPage implements OnInit {
+export class AnimalSelectPage implements OnInit, OnDestroy {
   animals: Animal[] = [];
   selectedId?: string;
-  flippedId?: string;
+  expandedAnimal?: Animal;
+  overlayFlipped = false;
+  private overlayFlipTimer?: number;
 
   constructor(
     private readonly mockData: MockDataService,
@@ -25,30 +27,46 @@ export class AnimalSelectPage implements OnInit {
     this.animals = this.mockData.getAnimals();
   }
 
+  ngOnDestroy(): void {
+    this.clearOverlayTimer();
+  }
+
   get canContinue(): boolean {
     return !!this.selectedId;
   }
 
   onCardClick(animal: Animal): void {
-    if (this.flippedId === animal.id) {
-      return;
-    }
-    this.flippedId = animal.id;
     this.selectedId = animal.id;
     this.session.patchOnboarding({ selectedAnimal: animal });
-  }
-
-  isFlipped(animal: Animal): boolean {
-    return this.flippedId === animal.id;
+    this.expandedAnimal = animal;
+    this.overlayFlipped = false;
+    this.clearOverlayTimer();
+    this.overlayFlipTimer = window.setTimeout(() => {
+      this.overlayFlipped = true;
+    }, 70);
   }
 
   isSelected(animal: Animal): boolean {
     return this.selectedId === animal.id;
   }
 
+  closeExpanded(event?: Event): void {
+    event?.stopPropagation();
+    this.overlayFlipped = false;
+    this.expandedAnimal = undefined;
+    this.clearOverlayTimer();
+  }
+
   continue(): void {
     if (this.canContinue) {
       this.router.navigate(['/profile-create']);
+    }
+  }
+
+  private clearOverlayTimer(): void {
+    if (this.overlayFlipTimer) {
+      window.clearTimeout(this.overlayFlipTimer);
+      this.overlayFlipTimer = undefined;
     }
   }
 }

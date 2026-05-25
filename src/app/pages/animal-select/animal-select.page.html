@@ -1,6 +1,6 @@
 <app-jungle-background variant="subtle"></app-jungle-background>
 
-<ion-content class="jungle-content" [fullscreen]="true">
+<ion-content class="jungle-content" [fullscreen]="true" [scrollY]="!expandedAnimal">
   <div class="page-shell">
     <app-step-header [currentStep]="4" [totalSteps]="6"></app-step-header>
 
@@ -11,7 +11,6 @@
       @for (animal of animals; track animal.id) {
         <app-animal-flip-card
           [animal]="animal"
-          [flipped]="isFlipped(animal)"
           [selected]="isSelected(animal)"
           (cardClick)="onCardClick($event)"
         ></app-animal-flip-card>
@@ -20,4 +19,29 @@
 
     <app-primary-button [disabled]="!canContinue" (pressed)="continue()"></app-primary-button>
   </div>
+
+  @if (expandedAnimal) {
+    <div class="animal-overlay" (click)="closeExpanded()">
+      <div class="animal-overlay-backdrop"></div>
+
+      <div class="animal-overlay-panel" (click)="$event.stopPropagation()">
+        <button type="button" class="overlay-close" (click)="closeExpanded($event)">
+          Fermer
+        </button>
+
+        <app-animal-flip-card
+          class="overlay-preview"
+          [animal]="expandedAnimal"
+          [flipped]="overlayFlipped"
+          [selected]="selectedId === expandedAnimal.id"
+          [expanded]="true"
+          [clickable]="false"
+        ></app-animal-flip-card>
+
+        <p class="overlay-note">
+          Animal sélectionné. Appuie sur <strong>Continuer</strong> pour valider ton choix.
+        </p>
+      </div>
+    </div>
+  }
 </ion-content>

@@ -11,9 +11,15 @@ export class AnimalFlipCardComponent {
   @Input() animal!: Animal;
   @Input() selected = false;
   @Input() flipped = false;
+  @Input() expanded = false;
+  @Input() clickable = true;
   @Output() cardClick = new EventEmitter<Animal>();
 
   onClick(): void {
+    if (!this.clickable) {
+      return;
+    }
+
     this.cardClick.emit(this.animal);
   }
 }

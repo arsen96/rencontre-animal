@@ -83,7 +83,7 @@ export const MOCK_DISCOVERY_PROFILES: User[] = [
     gender: 'femelle',
     meetPreference: 'tout',
     birthDate: '1998-06-30',
-    animal: animal('paon'),
+    animal: animal('flamant'),
     profile: {
       movies: ['Black Swan', 'Portrait de la jeune fille en feu'],
       songs: ['Bad Guy', 'Toxic'],
@@ -101,7 +101,7 @@ export const MOCK_DISCOVERY_PROFILES: User[] = [
     gender: 'male',
     meetPreference: 'femelle',
     birthDate: '1997-12-09',
-    animal: animal('singe'),
+    animal: animal('chimpanze'),
     profile: {
       movies: ['Forrest Gump', 'Into the Wild'],
       songs: ['Holocene', 'Skinny Love'],

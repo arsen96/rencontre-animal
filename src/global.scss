@@ -101,6 +101,68 @@ ion-title {
   @include collector-card-frame(var(--card-radius-lg));
 }
 
+app-animal-flip-card.overlay-preview .flip-card.expanded {
+  .flip-inner,
+  .flip-face {
+    border-radius: 28px;
+  }
+
+  .flip-front {
+    .card-image {
+      padding: 32px 24px 20px;
+    }
+
+    .card-caption {
+      padding: 18px 20px 22px;
+    }
+
+    .name {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+
+    .hint {
+      font-size: 0.72rem;
+    }
+  }
+
+  .flip-back-inner {
+    padding: 28px 24px 24px;
+    gap: 12px;
+    align-items: stretch;
+    text-align: left;
+
+    .fiche-title {
+      text-align: center;
+    }
+
+    .animal-name {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      text-align: center;
+    }
+
+    .personality {
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .description {
+      font-size: 0.98rem;
+      line-height: 1.75;
+      margin: 8px 0 12px;
+    }
+
+    .traits {
+      justify-content: center;
+      gap: 8px;
+
+      span {
+        font-size: 0.72rem;
+        padding: 6px 12px;
+      }
+    }
+  }
+}
+
 .choice-chip {
   display: block;
   width: 100%;
