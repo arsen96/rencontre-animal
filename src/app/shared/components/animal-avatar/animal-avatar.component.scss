@@ -17,9 +17,9 @@
   &.variant-card {
     width: auto;
     height: auto;
-    max-width: 92%;
-    max-height: 92%;
-    object-fit: contain;
+    // max-width: 92%;
+    // max-height: 92%;
+    object-fit: cover;
     object-position: center;
     position: relative;
     z-index: 1;

@@ -7,15 +7,42 @@
     <h1 class="page-title">Choisis ta carte collector</h1>
     <p class="page-subtitle">Retourne une carte rare pour révéler l’âme de la créature qui te représente.</p>
 
-    <div class="animal-grid">
-      @for (animal of animals; track animal.id) {
-        <app-animal-flip-card
-          [animal]="animal"
-          [selected]="isSelected(animal)"
-          (cardClick)="onCardClick($event)"
-        ></app-animal-flip-card>
-      }
+    <div class="search-block">
+      <ion-searchbar
+        class="animal-search"
+        placeholder="Rechercher un animal"
+        [value]="searchTerm"
+        [debounce]="0"
+        show-clear-button="focus"
+        (ionInput)="onSearchInput($event)"
+      ></ion-searchbar>
+
+      <p class="search-meta">
+        {{ filteredAnimals.length }} animal@if(filteredAnimals.length > 1){x}
+        @if (searchTerm.trim()) {
+          trouvé@if(filteredAnimals.length > 1){s} pour "{{ searchTerm.trim() }}"
+        } @else {
+          disponible@if(filteredAnimals.length > 1){s}
+        }
+      </p>
     </div>
+
+    @if (filteredAnimals.length > 0) {
+      <div class="animal-grid">
+        @for (animal of filteredAnimals; track animal.id) {
+          <app-animal-flip-card
+            [animal]="animal"
+            [selected]="isSelected(animal)"
+            (cardClick)="onCardClick($event)"
+          ></app-animal-flip-card>
+        }
+      </div>
+    } @else {
+      <div class="animal-empty">
+        <h2>Aucun animal trouvé</h2>
+        <p>Essaie un autre nom ou un trait de personnalité.</p>
+      </div>
+    }
 
     <app-primary-button [disabled]="!canContinue" (pressed)="continue()"></app-primary-button>
   </div>

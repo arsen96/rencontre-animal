@@ -12,6 +12,7 @@ import { UserSessionService } from '../../core/services/user-session.service';
 })
 export class AnimalSelectPage implements OnInit, OnDestroy {
   animals: Animal[] = [];
+  searchTerm = '';
   selectedId?: string;
   expandedAnimal?: Animal;
   overlayFlipped = false;
@@ -37,6 +38,27 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
 
   get canContinue(): boolean {
     return !!this.selectedId;
+  }
+
+  get filteredAnimals(): Animal[] {
+    const query = this.normalizeText(this.searchTerm);
+    if (!query) {
+      return this.animals;
+    }
+
+    return this.animals.filter((animal) =>
+      [
+        animal.name,
+        animal.personality,
+        animal.description,
+        ...animal.traits,
+      ].some((value) => this.normalizeText(value).includes(query))
+    );
+  }
+
+  onSearchInput(event: Event): void {
+    const customEvent = event as CustomEvent<{ value?: string | null }>;
+    this.searchTerm = customEvent.detail?.value?.replace(/^\s+/, '') ?? '';
   }
 
   onCardClick(animal: Animal): void {
@@ -100,5 +122,12 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
       window.clearTimeout(this.overlayCloseTimer);
       this.overlayCloseTimer = undefined;
     }
+  }
+
+  private normalizeText(value: string): string {
+    return value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 }
