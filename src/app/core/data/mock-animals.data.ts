@@ -257,6 +257,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'serpent',
     name: 'Serpent',
     emoji: '🐍',
+    imageUrl: 'assets/animals/serpent.jpg',
     personality: 'Secret, maîtrisé',
     description:
       "Le serpent glisse silencieusement, fascine autant qu'il inquiète et ne choisit jamais ses mouvements au hasard. Sa force est dans l'écoute, la maîtrise de soi et le sens du bon moment. Discret mais immense dans son pouvoir, il incarne la transformation, le renouveau et la précision.",
@@ -267,6 +268,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'aigle',
     name: 'Aigle',
     emoji: '🦅',
+    imageUrl: 'assets/animals/aigle.jpg',
     personality: 'Libre, visionnaire',
     description:
       "L'aigle vole haut, fier et indépendant, toujours en quête de nouvelles perspectives. Sa puissance ne tient pas seulement à ses serres, mais à sa capacité de voir loin et de choisir avec sagesse. Il incarne la liberté, l'audace et une noblesse tranquille.",
@@ -277,6 +279,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'buffle',
     name: 'Buffle',
     emoji: '🐃',
+    imageUrl: 'assets/animals/buffle.jpg',
     personality: 'Stable, endurant',
     description:
       "Le buffle avance avec détermination, sans se laisser distraire par le tumulte. Patient et puissant, il supporte les difficultés sans perdre son calme et protège les siens avec constance. Sa force réside dans la persévérance, l'équilibre et le courage calme.",
@@ -287,6 +290,7 @@ export const MOCK_ANIMALS: Animal[] = [
     id: 'chameau',
     name: 'Chameau',
     emoji: '🐫',
+    imageUrl: 'assets/animals/chameau.jpg',
     personality: 'Patient, résistant',
     description:
       "Le chameau connaît la valeur des longues traversées et de la constance. Il supporte la chaleur, la sécheresse et les épreuves avec une maîtrise sereine. Sans chercher la vitesse, il va loin grâce à son endurance, sa sagesse et son calme intérieur.",
@@ -309,6 +313,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Lapin',
     emoji: '🐇',
     personality: 'Vif, prudent',
+    imageUrl: 'assets/animals/lapin.jpg',
     description:
       "Le lapin est toujours aux aguets, sensible à la moindre menace. Sa rapidité est sa meilleure défense, mais sa vraie force tient aussi à sa sociabilité et à sa capacité d'adaptation. Il incarne la douceur qui reste vigilante, fragile en apparence, solide au fond.",
     traits: ['Prudent', 'Doux', 'Vif'],
