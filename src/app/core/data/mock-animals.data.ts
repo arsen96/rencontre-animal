@@ -324,6 +324,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Perroquet',
     emoji: '🦜',
     personality: 'Vif, expressif',
+    imageUrl: 'assets/animals/perroquet.jpg',
     description:
       "Le perroquet déborde de vie, de curiosité et d'énergie communicative. Intelligent, il observe vite, apprend rapidement et adore partager ce qu'il découvre. Sa liberté d'expression, son humour et sa sensibilité en font une présence aussi lumineuse qu'attachante.",
     traits: ['Expressif', 'Curieux', 'Vif'],
@@ -334,6 +335,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Gazelle',
     emoji: '🦌',
     personality: 'Gracieuse, intuitive',
+    imageUrl: 'assets/animals/gazelle.jpg',
     description:
       "La gazelle incarne la grâce, la vigilance et la finesse. Vive, légère, toujours en mouvement, elle écoute ce que les autres ne perçoivent pas. Discrète mais puissante, elle sait quand fuir, quand s'arrêter et comment laisser une trace sans jamais faire de bruit.",
     traits: ['Gracieuse', 'Intuitive', 'Libre'],
@@ -344,6 +346,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Mandrill',
     emoji: '🐒',
     personality: 'Puissant, vigilant',
+    imageUrl: 'assets/animals/mandrill.jpg',
     description:
       "Le mandrill avance avec assurance, comme un roi silencieux au cœur de la forêt. Puissant et hiérarchique, il tisse des liens forts à travers les regards, les gestes et la présence. Sa force ne cherche pas la guerre : elle cherche l'équilibre, la mémoire et le respect.",
     traits: ['Puissant', 'Vigilant', 'Complexe'],
@@ -354,6 +357,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Requin',
     emoji: '🦈',
     personality: 'Précis, calme',
+    imageUrl: 'assets/animals/requin.jpg',
     description:
       "Le requin glisse comme une énigme dans les profondeurs, froid en apparence, mais parfaitement concentré. Il ne gaspille ni son énergie, ni ses gestes, et transforme chaque mouvement en choix stratégique. Souvent redouté, il incarne surtout la survie lucide et la force essentielle.",
     traits: ['Précis', 'Calme', 'Implacable'],
@@ -364,6 +368,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Koala',
     emoji: '🐨',
     personality: 'Paisible, constant',
+    imageUrl: 'assets/animals/koala.jpg',
     description:
       "Le koala vit au ralenti, loin de l'urgence et du bruit. Chaque geste chez lui semble mesuré, presque méditatif, comme s'il habitait un autre temps. Sous sa douceur discrète se cache un cœur tenace, fidèle à son rythme et indifférent au tumulte du monde.",
     traits: ['Paisible', 'Méditatif', 'Constant'],
@@ -374,6 +379,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Âne',
     emoji: '🫏',
     personality: 'Patient, résistant',
+    imageUrl: 'assets/animals/ane.jpg',
     description:
       "L'âne est une force tranquille, souvent sous-estimée mais profondément fiable. Sa patience n'est pas faiblesse : c'est une manière de juger, de comprendre et d'avancer sans panique. Endurant et prudent, il porte beaucoup sans se plaindre et garde dans le regard une douceur grave.",
     traits: ['Patient', 'Résistant', 'Prudent'],
@@ -384,6 +390,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Hérisson',
     emoji: '🦔',
     personality: 'Prudent, curieux',
+    imageUrl: 'assets/animals/herisson.jpg',
     description:
       "Le hérisson avance dans le silence, discret et timide, toujours prêt à se protéger si le danger approche. Sous ses piquants bat pourtant un cœur calme, curieux et capable de s'ouvrir à ceux qui savent attendre. Il incarne une douceur protégée, vulnérable mais libre.",
     traits: ['Prudent', 'Curieux', 'Libre'],
@@ -394,6 +401,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Flamant',
     emoji: '🦩',
     personality: 'Élégant, sensible',
+    imageUrl: 'assets/animals/flamant.jpg',
     description:
       "Le flamant rose est naturellement remarquable, fier sans arrogance. Il choisit la beauté, le silence et l'équilibre, même là où le monde semble plus chaotique. Il sait ce qu'il vaut et avance lentement, non par faiblesse, mais par goût du geste juste.",
     traits: ['Élégant', 'Paisible', 'Sensible'],
@@ -404,6 +412,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Tigre',
     emoji: '🐅',
     personality: 'Puissant, majestueux',
+    imageUrl: 'assets/animals/tigre.jpg',
     description:
       "Le tigre est une puissance silencieuse, à la fois explosive et souveraine. Solitaire, fier, imprévisible, il sait quand se faire invisible et quand imposer sa présence. Son regard brûle d'une intensité brute qui force naturellement l'admiration.",
     traits: ['Majestueux', 'Sauvage', 'Intense'],
@@ -414,6 +423,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Cheval',
     emoji: '🐎',
     personality: 'Libre, loyal',
+    imageUrl: 'assets/animals/cheval.jpg',
     description:
       "Le cheval est la liberté en mouvement, porté par un élan indomptable. Puissant et sensible à la fois, il partage sa force avec loyauté sans jamais se trahir lui-même. Son regard appelle l'aventure, la confiance et le goût profond de la vie.",
     traits: ['Libre', 'Loyal', 'Vibrant'],
@@ -424,6 +434,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Puma',
     emoji: '🐆',
     personality: 'Discret, agile',
+    imageUrl: 'assets/animals/puma.jpg',
     description:
       "Le puma préfère l'observation à la brutalité. Solitaire, souple et déterminé, il avance sans bruit en gardant toujours le contrôle de son énergie. Il évite l'affrontement inutile, mais agit avec une précision foudroyante lorsqu'il le faut vraiment.",
     traits: ['Discret', 'Agile', 'Déterminé'],
@@ -434,6 +445,7 @@ export const MOCK_ANIMALS: Animal[] = [
     name: 'Coyote',
     emoji: '🐺',
     personality: 'Rusé, rebelle',
+    imageUrl: 'assets/animals/coyote.jpg',
     description:
       "Le coyote aime les chemins de traverse, les situations à retourner et les règles à contourner. Joueur, moqueur parfois, il manie l'humour comme une arme et garde toujours un coup d'avance. Curieux, indépendant et stratège, il observe tout, apprend vite et n'oublie jamais.",
     traits: ['Rusé', 'Rebelle', 'Stratégique'],

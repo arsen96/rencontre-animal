@@ -40,6 +40,29 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
     return !!this.selectedId;
   }
 
+  get searchMetaLabel(): string {
+    const count = this.filteredAnimals.length;
+    const query = this.searchTerm.trim();
+
+    if (query) {
+      if (count === 0) {
+        return '';
+      }
+
+      if (count === 1) {
+        return `1 animal trouvé pour « ${query} »`;
+      }
+
+      return `${count} animaux trouvés pour « ${query} »`;
+    }
+
+    if (count === 1) {
+      return '1 animal disponible';
+    }
+
+    return `${count} animaux disponibles`;
+  }
+
   get filteredAnimals(): Animal[] {
     const query = this.normalizeText(this.searchTerm);
     if (!query) {

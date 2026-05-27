@@ -17,14 +17,9 @@
         (ionInput)="onSearchInput($event)"
       ></ion-searchbar>
 
-      <p class="search-meta">
-        {{ filteredAnimals.length }} animal@if(filteredAnimals.length > 1){x}
-        @if (searchTerm.trim()) {
-          trouvé@if(filteredAnimals.length > 1){s} pour "{{ searchTerm.trim() }}"
-        } @else {
-          disponible@if(filteredAnimals.length > 1){s}
-        }
-      </p>
+      @if (searchMetaLabel) {
+        <p class="search-meta">{{ searchMetaLabel }}</p>
+      }
     </div>
 
     @if (filteredAnimals.length > 0) {
