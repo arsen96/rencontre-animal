@@ -16,6 +16,10 @@
         <p class="meta">{{ user.age }} ans · {{ user.profile.height }} cm</p>
         <p class="animal-type">{{ user.animal.name }} — {{ user.animal.personality }}</p>
 
+        @if (user.bio) {
+          <p class="bio">{{ user.bio }}</p>
+        }
+
         <div class="traits-row">
           <span><strong>Yeux</strong> {{ user.profile.eyeColor }}</span>
           <span><strong>Cheveux</strong> {{ user.profile.hairColor }}</span>
@@ -33,6 +37,11 @@
           <p>{{ user.profile.songs[1] }}</p>
         </div>
       </div>
+
+      <button type="button" class="edit-profile-btn" (click)="editProfile()">
+        <ion-icon name="create-outline"></ion-icon>
+        Modifier mon profil
+      </button>
 
       <app-primary-button
         label="Entrer dans la Jungle"

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { OnboardingState } from '../interfaces/onboarding.interface';
-import { User } from '../interfaces/user.interface';
+import { User, UserProfile } from '../interfaces/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserSessionService {
@@ -25,6 +25,27 @@ export class UserSessionService {
 
   setCurrentUser(user: User): void {
     this.currentUserSubject.next(user);
+  }
+
+  updateProfile(patch: {
+    displayName?: string;
+    bio?: string;
+    profile?: Partial<UserProfile>;
+  }): User | null {
+    const current = this.currentUser;
+    if (!current) {
+      return null;
+    }
+
+    const updated: User = {
+      ...current,
+      displayName: patch.displayName?.trim() || current.displayName,
+      bio: patch.bio?.trim() || undefined,
+      profile: { ...current.profile, ...patch.profile },
+    };
+
+    this.setCurrentUser(updated);
+    return updated;
   }
 
   buildUserFromOnboarding(displayName = 'Explorateur·rice'): User | null {

@@ -2,12 +2,18 @@
 
 <ion-content class="jungle-content" [fullscreen]="true">
   <div class="page-shell scrollable">
-    <app-step-header [currentStep]="5" [totalSteps]="6"></app-step-header>
+    @if (!isEdit) {
+      <app-step-header [currentStep]="5" [totalSteps]="6"></app-step-header>
+    }
 
-    <h1 class="page-title">Crée ton profil</h1>
+    <h1 class="page-title">{{ isEdit ? 'Modifier ton profil' : 'Crée ton profil' }}</h1>
     <p class="page-subtitle">Quelques détails pour te démarquer dans la jungle.</p>
 
     <div class="glass-card form-block">
+      <div class="form-field">
+        <label>Ton prénom</label>
+        <ion-input [(ngModel)]="displayName" placeholder="Ex. Alex"></ion-input>
+      </div>
       <div class="form-field">
         <label>Couleur des yeux</label>
         <ion-select [(ngModel)]="eyeColor" interface="action-sheet" placeholder="Choisir">
@@ -60,7 +66,7 @@
     </div>
 
     <app-primary-button
-      label="Valider mon profil"
+      [label]="isEdit ? 'Enregistrer' : 'Valider mon profil'"
       [disabled]="!canContinue"
       (pressed)="submit()"
     ></app-primary-button>

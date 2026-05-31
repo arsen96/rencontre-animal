@@ -51,6 +51,10 @@ export class JunglePage implements OnInit, OnDestroy {
     this.router.navigate(['/chats']);
   }
 
+  openProfile(): void {
+    this.router.navigate(['/user-profile']);
+  }
+
   get visibleCards(): User[] {
     return this.deck.slice(0, 3);
   }

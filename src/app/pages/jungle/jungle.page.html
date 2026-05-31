@@ -4,6 +4,9 @@
   <ion-toolbar>
     <ion-title>La Jungle</ion-title>
     <ion-buttons slot="end">
+      <ion-button class="profile-btn" (click)="openProfile()">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
       <ion-button class="chats-btn" (click)="openChats()">
         <ion-icon name="chatbubbles-outline"></ion-icon>
         @if (unreadChats > 0) {

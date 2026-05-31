@@ -18,13 +18,25 @@ export class UserProfilePage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.user = this.session.currentUser;
-    if (!this.user) {
-      this.router.navigate(['/landing']);
-    }
+    this.refreshUser();
+  }
+
+  ionViewWillEnter(): void {
+    this.refreshUser();
   }
 
   enterJungle(): void {
     this.router.navigate(['/jungle']);
+  }
+
+  editProfile(): void {
+    this.router.navigate(['/profile-create'], { queryParams: { edit: 1 } });
+  }
+
+  private refreshUser(): void {
+    this.user = this.session.currentUser;
+    if (!this.user) {
+      this.router.navigate(['/landing']);
+    }
   }
 }

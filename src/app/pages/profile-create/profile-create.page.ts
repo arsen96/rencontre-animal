@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserSessionService } from '../../core/services/user-session.service';
 
 @Component({
@@ -8,7 +8,8 @@ import { UserSessionService } from '../../core/services/user-session.service';
   styleUrls: ['./profile-create.page.scss'],
   standalone: false,
 })
-export class ProfileCreatePage {
+export class ProfileCreatePage implements OnInit {
+  displayName = '';
   movie1 = '';
   movie2 = '';
   song1 = '';
@@ -17,14 +18,39 @@ export class ProfileCreatePage {
   hairColor = '';
   height?: number;
   bio = '';
+  isEdit = false;
 
   readonly eyeColors = ['Verts', 'Bleus', 'Marrons', 'Noisette', 'Gris', 'Ambre'];
   readonly hairColors = ['Blonds', 'Bruns', 'Noirs', 'Roux', 'Châtains', 'Auburn'];
 
   constructor(
     private readonly session: UserSessionService,
+    private readonly route: ActivatedRoute,
     private readonly router: Router
   ) {}
+
+  ngOnInit(): void {
+    if (this.route.snapshot.queryParamMap.get('edit') !== '1') {
+      return;
+    }
+
+    const user = this.session.currentUser;
+    if (!user) {
+      return;
+    }
+
+    this.isEdit = true;
+    const noDash = (value: string): string => (value === '—' ? '' : value);
+    this.displayName = user.displayName === 'Toi' ? '' : user.displayName;
+    this.movie1 = noDash(user.profile.movies[0]);
+    this.movie2 = noDash(user.profile.movies[1]);
+    this.song1 = noDash(user.profile.songs[0]);
+    this.song2 = noDash(user.profile.songs[1]);
+    this.eyeColor = noDash(user.profile.eyeColor);
+    this.hairColor = noDash(user.profile.hairColor);
+    this.height = user.profile.height;
+    this.bio = user.bio ?? '';
+  }
 
   get canContinue(): boolean {
     return !!(
@@ -42,6 +68,22 @@ export class ProfileCreatePage {
       return;
     }
 
+    if (this.isEdit) {
+      this.session.updateProfile({
+        displayName: this.displayName.trim(),
+        bio: this.bio.trim(),
+        profile: {
+          movies: [this.movie1.trim() || '—', this.movie2.trim() || '—'],
+          songs: [this.song1.trim() || '—', this.song2.trim() || '—'],
+          eyeColor: this.eyeColor,
+          hairColor: this.hairColor,
+          height: this.height!,
+        },
+      });
+      this.router.navigate(['/user-profile']);
+      return;
+    }
+
     this.session.patchOnboarding({
       bio: this.bio.trim(),
       profile: {
@@ -53,7 +95,7 @@ export class ProfileCreatePage {
       },
     });
 
-    this.session.buildUserFromOnboarding('Toi');
+    this.session.buildUserFromOnboarding(this.displayName.trim() || 'Toi');
     this.router.navigate(['/user-profile']);
   }
 }
