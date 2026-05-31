@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Animal } from '../interfaces/animal.interface';
 import { OnboardingState } from '../interfaces/onboarding.interface';
 import { User, UserProfile } from '../interfaces/user.interface';
 
@@ -44,6 +45,17 @@ export class UserSessionService {
       profile: { ...current.profile, ...patch.profile },
     };
 
+    this.setCurrentUser(updated);
+    return updated;
+  }
+
+  updateAnimal(animal: Animal): User | null {
+    const current = this.currentUser;
+    if (!current) {
+      return null;
+    }
+
+    const updated: User = { ...current, animal };
     this.setCurrentUser(updated);
     return updated;
   }

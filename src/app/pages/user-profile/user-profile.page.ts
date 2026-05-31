@@ -33,6 +33,10 @@ export class UserProfilePage implements OnInit {
     this.router.navigate(['/profile-create'], { queryParams: { edit: 1 } });
   }
 
+  changeAnimal(): void {
+    this.router.navigate(['/animal-select'], { queryParams: { edit: 1 } });
+  }
+
   private refreshUser(): void {
     this.user = this.session.currentUser;
     if (!this.user) {

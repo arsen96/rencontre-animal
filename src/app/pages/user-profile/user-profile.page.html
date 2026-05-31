@@ -9,6 +9,10 @@
         <div class="card-image-frame collectible-stage">
           <app-animal-avatar [animal]="user.animal" variant="card"></app-animal-avatar>
         </div>
+        <button type="button" class="change-animal-btn" (click)="changeAnimal()">
+          <ion-icon name="swap-horizontal-outline"></ion-icon>
+          Changer d'animal
+        </button>
       </div>
 
       <div class="profile-card glass-card">

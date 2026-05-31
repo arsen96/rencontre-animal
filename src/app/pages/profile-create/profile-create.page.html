@@ -9,6 +9,18 @@
     <h1 class="page-title">{{ isEdit ? 'Modifier ton profil' : 'Crée ton profil' }}</h1>
     <p class="page-subtitle">Quelques détails pour te démarquer dans la jungle.</p>
 
+    @if (isEdit && animal) {
+      <div class="edit-animal">
+        <div class="card-image-frame collectible-stage">
+          <app-animal-avatar [animal]="animal" variant="card"></app-animal-avatar>
+        </div>
+        <button type="button" class="change-animal-btn" (click)="changeAnimal()">
+          <ion-icon name="swap-horizontal-outline"></ion-icon>
+          Changer d'animal
+        </button>
+      </div>
+    }
+
     <div class="glass-card form-block">
       <div class="form-field">
         <label>Ton prénom</label>

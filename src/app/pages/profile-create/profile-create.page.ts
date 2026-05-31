@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Animal } from '../../core/interfaces/animal.interface';
 import { UserSessionService } from '../../core/services/user-session.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class ProfileCreatePage implements OnInit {
   height?: number;
   bio = '';
   isEdit = false;
+  animal?: Animal;
 
   readonly eyeColors = ['Verts', 'Bleus', 'Marrons', 'Noisette', 'Gris', 'Ambre'];
   readonly hairColors = ['Blonds', 'Bruns', 'Noirs', 'Roux', 'Châtains', 'Auburn'];
@@ -40,6 +42,7 @@ export class ProfileCreatePage implements OnInit {
     }
 
     this.isEdit = true;
+    this.animal = user.animal;
     const noDash = (value: string): string => (value === '—' ? '' : value);
     this.displayName = user.displayName === 'Toi' ? '' : user.displayName;
     this.movie1 = noDash(user.profile.movies[0]);
@@ -61,6 +64,22 @@ export class ProfileCreatePage implements OnInit {
       this.height > 100 &&
       this.height < 250
     );
+  }
+
+  changeAnimal(): void {
+    const current = this.session.currentUser;
+    this.session.updateProfile({
+      displayName: this.displayName.trim(),
+      bio: this.bio.trim(),
+      profile: {
+        movies: [this.movie1.trim() || '—', this.movie2.trim() || '—'],
+        songs: [this.song1.trim() || '—', this.song2.trim() || '—'],
+        eyeColor: this.eyeColor || current?.profile.eyeColor || '—',
+        hairColor: this.hairColor || current?.profile.hairColor || '—',
+        height: this.height ?? current?.profile.height ?? 0,
+      },
+    });
+    this.router.navigate(['/animal-select'], { queryParams: { edit: 1 } });
   }
 
   submit(): void {

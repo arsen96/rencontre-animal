@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Animal } from '../../core/interfaces/animal.interface';
 import { MockDataService } from '../../core/services/mock-data.service';
 import { UserSessionService } from '../../core/services/user-session.service';
@@ -14,6 +14,7 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   animals: Animal[] = [];
   searchTerm = '';
   selectedId?: string;
+  isEdit = false;
   expandedAnimal?: Animal;
   overlayFlipped = false;
   overlayEntering = false;
@@ -25,11 +26,16 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   constructor(
     private readonly mockData: MockDataService,
     private readonly session: UserSessionService,
+    private readonly route: ActivatedRoute,
     private readonly router: Router
   ) {}
 
   ngOnInit(): void {
     this.animals = this.mockData.getAnimals();
+    this.isEdit = this.route.snapshot.queryParamMap.get('edit') === '1';
+    if (this.isEdit && this.session.currentUser) {
+      this.selectedId = this.session.currentUser.animal.id;
+    }
   }
 
   ngOnDestroy(): void {
@@ -125,9 +131,20 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   }
 
   continue(): void {
-    if (this.canContinue) {
-      this.router.navigate(['/profile-create']);
+    if (!this.canContinue) {
+      return;
     }
+
+    if (this.isEdit) {
+      const animal = this.animals.find((a) => a.id === this.selectedId);
+      if (animal) {
+        this.session.updateAnimal(animal);
+      }
+      this.router.navigate(['/jungle']);
+      return;
+    }
+
+    this.router.navigate(['/profile-create']);
   }
 
   private clearOverlayTimers(): void {
