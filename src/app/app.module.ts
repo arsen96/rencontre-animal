@@ -17,8 +17,13 @@ import {
   send,
 } from 'ionicons/icons';
 
+import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
+import { provideFirestore, initializeFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { environment } from '../environments/environment';
 
 addIcons({
   'logo-google': logoGoogle,
@@ -42,7 +47,17 @@ addIcons({
     }),
     AppRoutingModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() =>
+      initializeFirestore(getApp(), {
+        ignoreUndefinedProperties: true,
+        experimentalForceLongPolling: true,
+      })
+    ),
+    provideAuth(() => getAuth()),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

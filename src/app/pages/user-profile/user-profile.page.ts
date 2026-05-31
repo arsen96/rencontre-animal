@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { combineLatest, Subscription } from 'rxjs';
 import { User } from '../../core/interfaces/user.interface';
+import { AuthService } from '../../core/services/auth.service';
 import { UserSessionService } from '../../core/services/user-session.service';
 
 @Component({
@@ -9,20 +11,34 @@ import { UserSessionService } from '../../core/services/user-session.service';
   styleUrls: ['./user-profile.page.scss'],
   standalone: false,
 })
-export class UserProfilePage implements OnInit {
+export class UserProfilePage implements OnInit, OnDestroy {
   user: User | null = null;
+  private sub?: Subscription;
 
   constructor(
     private readonly session: UserSessionService,
+    private readonly auth: AuthService,
     private readonly router: Router
   ) {}
 
   ngOnInit(): void {
-    this.refreshUser();
+    this.sub = combineLatest([
+      this.auth.authState$,
+      this.session.currentUser$,
+    ]).subscribe(([firebaseUser, user]) => {
+      if (user) {
+        this.user = user;
+        return;
+      }
+
+      if (firebaseUser === null) {
+        this.router.navigate(['/landing']);
+      }
+    });
   }
 
-  ionViewWillEnter(): void {
-    this.refreshUser();
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 
   enterJungle(): void {
@@ -37,10 +53,9 @@ export class UserProfilePage implements OnInit {
     this.router.navigate(['/animal-select'], { queryParams: { edit: 1 } });
   }
 
-  private refreshUser(): void {
-    this.user = this.session.currentUser;
-    if (!this.user) {
-      this.router.navigate(['/landing']);
-    }
+  async logout(): Promise<void> {
+    await this.auth.logout();
+    this.session.reset();
+    this.router.navigate(['/landing']);
   }
 }

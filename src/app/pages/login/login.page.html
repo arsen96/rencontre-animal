@@ -1,25 +1,65 @@
 <app-jungle-background variant="subtle"></app-jungle-background>
 
 <ion-content class="jungle-content" [fullscreen]="true">
+  @if (checkingSession) {
+    <div class="session-loading">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  } @else {
   <div class="page-shell">
     <h1 class="page-title">Bienvenue dans la jungle</h1>
-    <p class="page-subtitle">Connecte-toi pour commencer l'aventure (démo sans compte réel).</p>
+    <p class="page-subtitle">
+      {{ isLogin ? 'Connecte-toi pour reprendre l\'aventure.' : 'Crée ton compte pour commencer l\'aventure.' }}
+    </p>
 
-    <div class="auth-buttons">
-      <ion-button expand="block" class="btn-google" (click)="continueGoogle()">
-        <ion-icon slot="start" name="logo-google"></ion-icon>
-        Continuer avec Google
+    <div class="auth-form">
+      <div class="form-field">
+        <label>E-mail</label>
+        <ion-input
+          type="email"
+          autocomplete="email"
+          placeholder="toi@exemple.com"
+          [value]="email"
+          (ionInput)="onEmailInput($event)"
+        ></ion-input>
+      </div>
+
+      <div class="form-field">
+        <label>Mot de passe</label>
+        <ion-input
+          type="password"
+          autocomplete="current-password"
+          placeholder="6 caractères minimum"
+          [value]="password"
+          (ionInput)="onPasswordInput($event)"
+        ></ion-input>
+      </div>
+
+      @if (error) {
+        <p class="auth-error">{{ error }}</p>
+      }
+
+      <ion-button
+        expand="block"
+        class="btn-submit"
+        [disabled]="!canSubmit"
+        (click)="submit()"
+      >
+        @if (loading) {
+          <ion-spinner name="crescent"></ion-spinner>
+        } @else {
+          {{ isLogin ? 'Se connecter' : 'Créer mon compte' }}
+        }
       </ion-button>
 
-      <ion-button expand="block" fill="outline" class="btn-sms" (click)="continueSms()">
-        <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
-        Connexion par SMS
-      </ion-button>
+      <button type="button" class="toggle-mode" (click)="toggleMode()">
+        {{ isLogin ? "Pas encore de compte ? S'inscrire" : 'Déjà un compte ? Se connecter' }}
+      </button>
     </div>
 
     <div class="links">
       <a class="link-muted">Conditions générales</a>
-      <a class="link-muted">J'ai perdu mon compte</a>
     </div>
   </div>
+  }
 </ion-content>

@@ -81,6 +81,17 @@
   }
 }
 
+.logout-btn {
+  display: block;
+  margin: 14px auto 0;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .profile-card {
   margin-bottom: 24px;
 

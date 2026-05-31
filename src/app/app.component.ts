@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './core/services/auth.service';
+import { UserSessionService } from './core/services/user-session.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,14 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
+  constructor(
+    private readonly auth: AuthService,
+    private readonly session: UserSessionService
+  ) {
+    this.auth.authState$.subscribe((firebaseUser) => {
+      if (firebaseUser && !this.session.currentUser) {
+        this.session.restoreFromFirestore(firebaseUser.uid);
+      }
+    });
+  }
 }

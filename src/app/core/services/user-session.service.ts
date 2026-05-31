@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { Animal } from '../interfaces/animal.interface';
 import { OnboardingState } from '../interfaces/onboarding.interface';
 import { User, UserProfile } from '../interfaces/user.interface';
+import { AuthService } from './auth.service';
+import { UserDataService } from './user-data.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserSessionService {
@@ -11,6 +13,11 @@ export class UserSessionService {
 
   readonly onboarding$ = this.onboardingSubject.asObservable();
   readonly currentUser$ = this.currentUserSubject.asObservable();
+
+  constructor(
+    private readonly auth: AuthService,
+    private readonly userData: UserDataService
+  ) {}
 
   get onboarding(): OnboardingState {
     return this.onboardingSubject.value;
@@ -46,6 +53,7 @@ export class UserSessionService {
     };
 
     this.setCurrentUser(updated);
+    this.persist(updated);
     return updated;
   }
 
@@ -57,7 +65,26 @@ export class UserSessionService {
 
     const updated: User = { ...current, animal };
     this.setCurrentUser(updated);
+    this.persist(updated);
     return updated;
+  }
+
+  async restoreFromFirestore(uid: string): Promise<User | null> {
+    const user = await this.userData.getUser(uid);
+    if (user) {
+      this.setCurrentUser(user);
+    }
+    return user;
+  }
+
+  private persist(user: User): void {
+    const uid = this.auth.uid;
+    if (!uid) {
+      return;
+    }
+    this.userData
+      .saveUser(uid, user)
+      .catch((error) => console.error('Firestore saveUser failed', error));
   }
 
   buildUserFromOnboarding(displayName = 'Explorateur·rice'): User | null {
@@ -78,7 +105,7 @@ export class UserSessionService {
     const age = this.computeAge(o.birthYear, o.birthMonth, o.birthDay);
 
     const user: User = {
-      id: 'current-user',
+      id: this.auth.uid ?? 'current-user',
       displayName,
       age,
       gender: o.gender,
@@ -96,6 +123,7 @@ export class UserSessionService {
     };
 
     this.setCurrentUser(user);
+    this.persist(user);
     return user;
   }
 
