@@ -9,4 +9,5 @@ export interface OnboardingState {
   meetPreference?: MeetPreference;
   selectedAnimal?: Animal;
   profile?: Partial<UserProfile>;
+  bio?: string;
 }

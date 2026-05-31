@@ -16,6 +16,7 @@ export class ProfileCreatePage {
   eyeColor = '';
   hairColor = '';
   height?: number;
+  bio = '';
 
   readonly eyeColors = ['Verts', 'Bleus', 'Marrons', 'Noisette', 'Gris', 'Ambre'];
   readonly hairColors = ['Blonds', 'Bruns', 'Noirs', 'Roux', 'Châtains', 'Auburn'];
@@ -27,10 +28,7 @@ export class ProfileCreatePage {
 
   get canContinue(): boolean {
     return !!(
-      this.movie1.trim() &&
-      this.movie2.trim() &&
-      this.song1.trim() &&
-      this.song2.trim() &&
+      this.bio.trim() &&
       this.eyeColor &&
       this.hairColor &&
       this.height &&
@@ -45,6 +43,7 @@ export class ProfileCreatePage {
     }
 
     this.session.patchOnboarding({
+      bio: this.bio.trim(),
       profile: {
         movies: [this.movie1.trim(), this.movie2.trim()],
         songs: [this.song1.trim(), this.song2.trim()],

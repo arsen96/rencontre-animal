@@ -36,9 +36,7 @@ export class UserSessionService {
       !o.gender ||
       !o.meetPreference ||
       !o.selectedAnimal ||
-      !o.profile?.movies?.[0] ||
-      !o.profile?.songs?.[0] ||
-      o.profile.height == null
+      o.profile?.height == null
     ) {
       return null;
     }
@@ -55,12 +53,13 @@ export class UserSessionService {
       birthDate,
       animal: o.selectedAnimal,
       profile: {
-        movies: [o.profile.movies![0], o.profile.movies![1] || '—'],
-        songs: [o.profile.songs![0], o.profile.songs![1] || '—'],
+        movies: [o.profile.movies?.[0] || '—', o.profile.movies?.[1] || '—'],
+        songs: [o.profile.songs?.[0] || '—', o.profile.songs?.[1] || '—'],
         eyeColor: o.profile.eyeColor || '—',
         hairColor: o.profile.hairColor || '—',
         height: o.profile.height,
       },
+      bio: o.bio?.trim() || undefined,
     };
 
     this.setCurrentUser(user);

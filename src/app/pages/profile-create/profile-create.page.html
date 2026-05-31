@@ -9,22 +9,6 @@
 
     <div class="glass-card form-block">
       <div class="form-field">
-        <label>Film préféré 1</label>
-        <ion-input [(ngModel)]="movie1" placeholder="Ex. Le Roi Lion"></ion-input>
-      </div>
-      <div class="form-field">
-        <label>Film préféré 2</label>
-        <ion-input [(ngModel)]="movie2" placeholder="Ex. Avatar"></ion-input>
-      </div>
-      <div class="form-field">
-        <label>Chanson préférée 1</label>
-        <ion-input [(ngModel)]="song1" placeholder="Ex. Roar"></ion-input>
-      </div>
-      <div class="form-field">
-        <label>Chanson préférée 2</label>
-        <ion-input [(ngModel)]="song2" placeholder="Ex. Jungle"></ion-input>
-      </div>
-      <div class="form-field">
         <label>Couleur des yeux</label>
         <ion-select [(ngModel)]="eyeColor" interface="action-sheet" placeholder="Choisir">
           @for (c of eyeColors; track c) {
@@ -43,6 +27,35 @@
       <div class="form-field">
         <label>Taille (cm)</label>
         <ion-input type="number" [(ngModel)]="height" placeholder="175"></ion-input>
+      </div>
+      <div class="form-field">
+        <label>Ta phrase d'accroche</label>
+        <ion-textarea
+          [(ngModel)]="bio"
+          placeholder="Ex. Amoureuse des couchers de soleil et des balades en forêt."
+          [autoGrow]="true"
+          [maxlength]="160"
+          rows="2"
+        ></ion-textarea>
+      </div>
+
+      <p class="form-section-hint">Pour aller plus loin (facultatif)</p>
+
+      <div class="form-field">
+        <label>Film préféré 1 </label>
+        <ion-input [(ngModel)]="movie1" placeholder="Ex. Le Roi Lion"></ion-input>
+      </div>
+      <div class="form-field">
+        <label>Film préféré 2 </label>
+        <ion-input [(ngModel)]="movie2" placeholder="Ex. Avatar"></ion-input>
+      </div>
+      <div class="form-field">
+        <label>Chanson préférée 1 </label>
+        <ion-input [(ngModel)]="song1" placeholder="Ex. Roar"></ion-input>
+      </div>
+      <div class="form-field">
+        <label>Chanson préférée 2 </label>
+        <ion-input [(ngModel)]="song2" placeholder="Ex. Jungle"></ion-input>
       </div>
     </div>
 
