@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { User } from '../../core/interfaces/user.interface';
+import { AuthService } from '../../core/services/auth.service';
 import { ChatService } from '../../core/services/chat.service';
 import { SwipeService } from '../../core/services/swipe.service';
+import { UserSessionService } from '../../core/services/user-session.service';
 import {
   ProfileDetailModalComponent,
 } from '../../shared/components/profile-detail-modal/profile-detail-modal.component';
@@ -30,11 +32,13 @@ export class JunglePage implements OnInit, OnDestroy {
     private readonly swipeService: SwipeService,
     private readonly chatService: ChatService,
     private readonly modalCtrl: ModalController,
+    private readonly auth: AuthService,
+    private readonly session: UserSessionService,
     private readonly router: Router
   ) {}
 
   ngOnInit(): void {
-    this.swipeService.initDeck();
+    this.swipeService.initDeck(this.session.currentUser?.ageRange);
     this.swipeService.deck$.subscribe((deck) => {
       this.deck = deck;
     });
@@ -53,6 +57,12 @@ export class JunglePage implements OnInit, OnDestroy {
 
   openProfile(): void {
     this.router.navigate(['/user-profile']);
+  }
+
+  async logout(): Promise<void> {
+    await this.auth.logout();
+    this.session.reset();
+    this.router.navigate(['/landing']);
   }
 
   get visibleCards(): User[] {

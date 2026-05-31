@@ -11,6 +11,11 @@ export interface UserProfile {
   height: number;
 }
 
+export interface AgeRange {
+  min: number;
+  max: number;
+}
+
 export interface User {
   id: string;
   displayName: string;
@@ -21,5 +26,6 @@ export interface User {
   animal: Animal;
   profile: UserProfile;
   bio?: string;
+  ageRange?: AgeRange;
   distanceKm?: number;
 }

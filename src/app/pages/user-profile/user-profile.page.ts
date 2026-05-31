@@ -13,6 +13,7 @@ import { UserSessionService } from '../../core/services/user-session.service';
 })
 export class UserProfilePage implements OnInit, OnDestroy {
   user: User | null = null;
+  ageRange: { lower: number; upper: number } = { lower: 18, upper: 45 };
   private sub?: Subscription;
 
   constructor(
@@ -28,6 +29,9 @@ export class UserProfilePage implements OnInit, OnDestroy {
     ]).subscribe(([firebaseUser, user]) => {
       if (user) {
         this.user = user;
+        if (user.ageRange) {
+          this.ageRange = { lower: user.ageRange.min, upper: user.ageRange.max };
+        }
         return;
       }
 
@@ -43,6 +47,17 @@ export class UserProfilePage implements OnInit, OnDestroy {
 
   enterJungle(): void {
     this.router.navigate(['/jungle']);
+  }
+
+  onAgeRangeChange(event: CustomEvent): void {
+    const value = event.detail?.value as { lower: number; upper: number } | undefined;
+    if (!value || !this.user) {
+      return;
+    }
+    this.ageRange = value;
+    this.session.updateProfile({
+      ageRange: { min: value.lower, max: value.upper },
+    });
   }
 
   editProfile(): void {

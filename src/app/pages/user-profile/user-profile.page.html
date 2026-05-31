@@ -42,6 +42,20 @@
         </div>
       </div>
 
+      <div class="profile-card glass-card age-range-card">
+        <h3>Tranche d'âge à rencontrer</h3>
+        <p class="age-range-value">{{ ageRange.lower }} – {{ ageRange.upper }} ans</p>
+        <ion-range
+          [(ngModel)]="ageRange"
+          (ionChange)="onAgeRangeChange($event)"
+          [dualKnobs]="true"
+          [min]="18"
+          [max]="80"
+          [pin]="true"
+          [snaps]="true"
+        ></ion-range>
+      </div>
+
       <button type="button" class="edit-profile-btn" (click)="editProfile()">
         <ion-icon name="create-outline"></ion-icon>
         Modifier mon profil

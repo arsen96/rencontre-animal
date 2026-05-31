@@ -53,6 +53,29 @@
   }
 }
 
+.age-range-card {
+  margin-bottom: 16px;
+
+  h3 {
+    @include label-caps;
+    margin: 0 0 6px;
+  }
+
+  .age-range-value {
+    color: var(--gold-light);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin: 0 0 4px;
+  }
+
+  ion-range {
+    --bar-background-active: var(--gold-light);
+    --knob-background: var(--gold-light);
+    padding-inline: 4px;
+  }
+}
+
 .edit-profile-btn {
   display: flex;
   align-items: center;

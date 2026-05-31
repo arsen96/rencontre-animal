@@ -14,6 +14,7 @@ import {
   informationCircleOutline,
   locationOutline,
   logoGoogle,
+  logOutOutline,
   send,
 } from 'ionicons/icons';
 
@@ -32,6 +33,7 @@ addIcons({
   'information-circle-outline': informationCircleOutline,
   'location-outline': locationOutline,
   'arrow-back': arrowBack,
+  'log-out-outline': logOutOutline,
   send,
   close,
   heart,

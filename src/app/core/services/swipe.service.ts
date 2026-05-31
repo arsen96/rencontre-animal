@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MOCK_DISCOVERY_PROFILES } from '../data/mock-profiles.data';
 import { Match } from '../interfaces/match.interface';
-import { User } from '../interfaces/user.interface';
+import { AgeRange, User } from '../interfaces/user.interface';
 import { ChatService } from './chat.service';
 
 @Injectable({ providedIn: 'root' })
@@ -25,8 +25,14 @@ export class SwipeService {
     return this.deck.length;
   }
 
-  initDeck(): void {
-    this.deck = [...MOCK_DISCOVERY_PROFILES].sort(() => Math.random() - 0.5);
+  initDeck(ageRange?: AgeRange): void {
+    let profiles = [...MOCK_DISCOVERY_PROFILES];
+    if (ageRange) {
+      profiles = profiles.filter(
+        (p) => p.age >= ageRange.min && p.age <= ageRange.max
+      );
+    }
+    this.deck = profiles.sort(() => Math.random() - 0.5);
     this.likeCount = 0;
     this.deckSubject.next([...this.deck]);
     this.lastMatchSubject.next(null);

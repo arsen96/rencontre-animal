@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { authRedirectGuard } from './core/guards/auth-redirect.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   {
     path: 'landing',
+    canActivate: [authRedirectGuard],
     loadChildren: () =>
       import('./pages/landing/landing.module').then((m) => m.LandingPageModule),
   },
   {
     path: 'login',
+    canActivate: [authRedirectGuard],
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },

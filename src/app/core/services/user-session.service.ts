@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Animal } from '../interfaces/animal.interface';
 import { OnboardingState } from '../interfaces/onboarding.interface';
-import { User, UserProfile } from '../interfaces/user.interface';
+import { AgeRange, User, UserProfile } from '../interfaces/user.interface';
 import { AuthService } from './auth.service';
 import { UserDataService } from './user-data.service';
 
@@ -39,6 +39,7 @@ export class UserSessionService {
     displayName?: string;
     bio?: string;
     profile?: Partial<UserProfile>;
+    ageRange?: AgeRange;
   }): User | null {
     const current = this.currentUser;
     if (!current) {
@@ -50,6 +51,7 @@ export class UserSessionService {
       displayName: patch.displayName?.trim() || current.displayName,
       bio: patch.bio?.trim() || undefined,
       profile: { ...current.profile, ...patch.profile },
+      ageRange: patch.ageRange ?? current.ageRange,
     };
 
     this.setCurrentUser(updated);
