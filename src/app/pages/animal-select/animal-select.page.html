@@ -42,6 +42,13 @@
     <app-primary-button [disabled]="!canContinue" (pressed)="continue()"></app-primary-button>
   </div>
 
+  @if (canContinue && !expandedAnimal) {
+    <button type="button" class="floating-continue" (click)="continue()">
+      <ion-icon name="arrow-forward"></ion-icon>
+      Continuer
+    </button>
+  }
+
   @if (expandedAnimal) {
     <div
       class="animal-overlay"

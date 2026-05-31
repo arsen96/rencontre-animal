@@ -18,6 +18,50 @@
   }
 }
 
+.floating-continue {
+  position: fixed;
+  left: 50%;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-border);
+  background: rgba(11, 11, 11, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--gold-light);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45), 0 0 16px var(--gold-glow-soft);
+  animation: floatingCtaIn 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  ion-icon {
+    font-size: 1.05rem;
+  }
+
+  &:active {
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45), 0 0 24px var(--gold-glow);
+  }
+}
+
+@keyframes floatingCtaIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 .animal-overlay {
   position: fixed;
   inset: 0;
