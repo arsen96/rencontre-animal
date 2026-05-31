@@ -19,30 +19,8 @@ ion-toolbar {
   --background: var(--black-deep);
 }
 
-.hero {
-  aspect-ratio: 4 / 5;
-  max-height: 360px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  @include collectible-stage;
-
-  .card-image-frame {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-  }
-}
-
 .details {
-  margin: -20px 16px 24px;
+  margin: 16px 16px 24px;
   @include collector-card-frame(var(--card-radius-lg));
   padding: 24px 20px;
 

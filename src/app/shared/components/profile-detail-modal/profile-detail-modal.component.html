@@ -10,12 +10,6 @@
 </ion-header>
 
 <ion-content class="modal-content">
-  <div class="hero">
-    <div class="card-image-frame">
-      <app-animal-avatar [animal]="profile.animal" variant="card"></app-animal-avatar>
-    </div>
-  </div>
-
   <div class="details">
     <h2>{{ profile.displayName }}, {{ profile.age }}</h2>
     <p class="animal">{{ profile.animal.name }} — {{ profile.animal.personality }}</p>

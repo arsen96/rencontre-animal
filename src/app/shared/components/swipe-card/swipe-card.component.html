@@ -14,7 +14,7 @@
   <div class="stamp pass" [style.opacity]="passOpacity">PASS</div>
 
   <div class="card-visual collectible-stage">
-    <div class="card-image-frame">
+    <div class="card-image-frame" (click)="openDetailFromImage($event)">
       <app-animal-avatar [animal]="profile.animal" variant="card"></app-animal-avatar>
     </div>
     <button type="button" class="detail-btn" (click)="openDetail($event)">

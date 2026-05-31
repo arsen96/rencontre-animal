@@ -35,6 +35,7 @@ export class SwipeCardComponent implements OnDestroy {
   private startX = 0;
   private startY = 0;
   private active = false;
+  private moved = false;
 
   private readonly onMove = (e: PointerEvent) => this.handleMove(e);
   private readonly onUp = (e: PointerEvent) => this.handleEnd(e);
@@ -57,6 +58,7 @@ export class SwipeCardComponent implements OnDestroy {
     }
     this.active = true;
     this.dragging = true;
+    this.moved = false;
     this.startX = event.clientX;
     this.startY = event.clientY;
     (event.target as HTMLElement).setPointerCapture?.(event.pointerId);
@@ -65,6 +67,14 @@ export class SwipeCardComponent implements OnDestroy {
   }
 
   openDetail(event: Event): void {
+    event.stopPropagation();
+    this.detailClick.emit(this.profile);
+  }
+
+  openDetailFromImage(event: Event): void {
+    if (this.moved || this.exiting) {
+      return;
+    }
     event.stopPropagation();
     this.detailClick.emit(this.profile);
   }
@@ -84,6 +94,9 @@ export class SwipeCardComponent implements OnDestroy {
     this.offsetX = event.clientX - this.startX;
     this.offsetY = (event.clientY - this.startY) * 0.35;
     this.rotation = this.offsetX * 0.06;
+    if (Math.abs(this.offsetX) > 6 || Math.abs(event.clientY - this.startY) > 6) {
+      this.moved = true;
+    }
   }
 
   private handleEnd(event: PointerEvent): void {
