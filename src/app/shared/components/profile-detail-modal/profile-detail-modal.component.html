@@ -16,6 +16,12 @@
     @if (profile.bio) {
       <p class="bio">{{ profile.bio }}</p>
     }
+    @if (profile.city) {
+      <p class="location">
+        <ion-icon name="location-outline"></ion-icon>
+        {{ profile.city }}
+      </p>
+    }
 
     <div class="grid">
       <div class="item">

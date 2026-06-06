@@ -82,6 +82,51 @@
   }
 }
 
+.city-card {
+  margin-bottom: 16px;
+
+  h3 {
+    @include label-caps;
+    margin: 0 0 6px;
+  }
+
+  .section-hint {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin: 0 0 12px;
+    line-height: 1.45;
+  }
+
+  .city-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    background: rgba(11, 11, 11, 0.35);
+
+    ion-icon {
+      color: var(--gold-light);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    ion-input {
+      --padding-start: 0;
+      --padding-end: 0;
+      --color: var(--text-primary);
+      --placeholder-color: var(--text-secondary);
+    }
+  }
+
+  .city-error {
+    margin: 10px 0 0;
+    color: #ff8a8a;
+    font-size: 0.82rem;
+  }
+}
+
 .connection-list {
   display: flex;
   flex-direction: column;

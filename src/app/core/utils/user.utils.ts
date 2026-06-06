@@ -30,7 +30,8 @@ export function isProfileComplete(user: User): boolean {
     user.gender &&
     user.meetPreference &&
     user.animal?.id &&
-    user.profile?.height
+    user.profile?.height &&
+    user.city?.trim()
   );
 }
 

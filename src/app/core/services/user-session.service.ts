@@ -39,6 +39,7 @@ export class UserSessionService {
   updateProfile(patch: {
     displayName?: string;
     bio?: string;
+    city?: string;
     profile?: Partial<UserProfile>;
     ageRange?: AgeRange;
   }): User | null {
@@ -51,6 +52,8 @@ export class UserSessionService {
       ...current,
       displayName: patch.displayName?.trim() || current.displayName,
       bio: patch.bio?.trim() || undefined,
+      city:
+        patch.city !== undefined ? patch.city.trim() || undefined : current.city,
       profile: { ...current.profile, ...patch.profile },
       ageRange: patch.ageRange ?? current.ageRange,
     };

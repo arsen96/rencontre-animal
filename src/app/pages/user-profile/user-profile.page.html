@@ -17,7 +17,12 @@
 
       <div class="profile-card glass-card">
         <h1>{{ user.displayName }}</h1>
-        <p class="meta">{{ user.age }} ans · {{ user.profile.height }} cm</p>
+        <p class="meta">
+          {{ user.age }} ans · {{ user.profile.height }} cm
+          @if (user.city) {
+            · {{ user.city }}
+          }
+        </p>
         <p class="animal-type">{{ user.animal.name }} — {{ user.animal.personality }}</p>
 
         @if (user.bio) {
@@ -40,6 +45,24 @@
           <p>{{ user.profile.songs[0] }}</p>
           <p>{{ user.profile.songs[1] }}</p>
         </div>
+      </div>
+
+      <div class="profile-card glass-card city-card">
+        <h3>Ma ville</h3>
+        <p class="section-hint">Obligatoire pour apparaître dans la Jungle et voir les autres profils.</p>
+        <div class="city-field">
+          <ion-icon name="location-outline"></ion-icon>
+          <ion-input
+            [value]="city"
+            placeholder="Ex. Paris, Lyon, Marseille…"
+            maxlength="80"
+            (ionInput)="onCityChange($any($event).detail.value ?? '')"
+            (ionBlur)="saveCity()"
+          ></ion-input>
+        </div>
+        @if (cityRequiredHint) {
+          <p class="city-error">Indique ta ville pour entrer dans la Jungle.</p>
+        }
       </div>
 
       <div class="profile-card glass-card connections-card">
@@ -158,6 +181,7 @@
       <app-primary-button
         label="Entrer dans la Jungle"
         variant="green"
+        [disabled]="!canEnterJungle"
         (pressed)="enterJungle()"
       ></app-primary-button>
 

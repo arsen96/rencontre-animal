@@ -26,6 +26,7 @@ export interface User {
   animal: Animal;
   profile: UserProfile;
   bio?: string;
+  city?: string;
   ageRange?: AgeRange;
   distanceKm?: number;
 }

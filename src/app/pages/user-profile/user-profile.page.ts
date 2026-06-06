@@ -19,6 +19,8 @@ import { ProfileDetailModalComponent } from '../../shared/components/profile-det
 })
 export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   user: User | null = null;
+  city = '';
+  cityRequiredHint = false;
   ageRange: { lower: number; upper: number } = { lower: 18, upper: 45 };
   matches: Match[] = [];
   receivedLikes: User[] = [];
@@ -44,6 +46,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     ]).subscribe(([firebaseUser, user]) => {
       if (user) {
         this.user = user;
+        this.city = user.city ?? '';
         if (user.ageRange) {
           this.ageRange = { lower: user.ageRange.min, upper: user.ageRange.max };
         }
@@ -64,8 +67,38 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     this.sub?.unsubscribe();
   }
 
+  get canEnterJungle(): boolean {
+    return this.city.trim().length > 0;
+  }
+
   enterJungle(): void {
+    const trimmedCity = this.city.trim();
+    if (!trimmedCity) {
+      this.cityRequiredHint = true;
+      return;
+    }
+
+    this.cityRequiredHint = false;
+    this.session.updateProfile({ city: trimmedCity });
     this.router.navigate(['/jungle']);
+  }
+
+  onCityChange(value: string): void {
+    this.city = value;
+    if (this.city.trim()) {
+      this.cityRequiredHint = false;
+    }
+  }
+
+  saveCity(): void {
+    const trimmedCity = this.city.trim();
+    if (!trimmedCity) {
+      this.cityRequiredHint = true;
+      return;
+    }
+
+    this.cityRequiredHint = false;
+    this.session.updateProfile({ city: trimmedCity });
   }
 
   onAgeRangeChange(event: CustomEvent): void {
