@@ -56,13 +56,18 @@
           <div class="connection-list connection-list--scroll">
             @for (match of matches; track match.id) {
               <div class="connection-row">
-                <div class="connection-avatar">
+                <button
+                  type="button"
+                  class="connection-avatar"
+                  [attr.aria-label]="'Voir le profil de ' + match.user.displayName"
+                  (click)="openProfileDetail(match.user)"
+                >
                   <app-animal-avatar
                     [animal]="match.user.animal"
                     size="sm"
                     variant="inline"
                   ></app-animal-avatar>
-                </div>
+                </button>
                 <div class="connection-info">
                   <strong>{{ match.user.displayName }}</strong>
                   <span>{{ match.user.animal.name }}</span>
@@ -91,13 +96,18 @@
           <div class="connection-list connection-list--scroll">
             @for (profile of receivedLikes; track profile.id) {
               <div class="connection-row">
-                <div class="connection-avatar">
+                <button
+                  type="button"
+                  class="connection-avatar"
+                  [attr.aria-label]="'Voir le profil de ' + profile.displayName"
+                  (click)="openProfileDetail(profile)"
+                >
                   <app-animal-avatar
                     [animal]="profile.animal"
                     size="sm"
                     variant="inline"
                   ></app-animal-avatar>
-                </div>
+                </button>
                 <div class="connection-info">
                   <strong>{{ profile.displayName }}</strong>
                   <span>{{ profile.age }} ans · {{ profile.animal.name }}</span>

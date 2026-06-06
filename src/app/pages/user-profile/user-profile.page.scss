@@ -126,6 +126,16 @@
   justify-content: center;
   overflow: hidden;
   border-radius: 50%;
+  padding: 0;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: var(--black-deep);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+
+  &:active {
+    transform: scale(0.94);
+    box-shadow: 0 0 12px var(--gold-glow-soft);
+  }
 }
 
 .connection-info {

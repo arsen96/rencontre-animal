@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ViewWillEnter } from '@ionic/angular';
+import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { combineLatest, Subscription } from 'rxjs';
 import { Match } from '../../core/interfaces/match.interface';
 import { User } from '../../core/interfaces/user.interface';
@@ -9,6 +9,7 @@ import { ChatService } from '../../core/services/chat.service';
 import { SwipeDataService } from '../../core/services/swipe-data.service';
 import { SwipeService } from '../../core/services/swipe.service';
 import { UserSessionService } from '../../core/services/user-session.service';
+import { ProfileDetailModalComponent } from '../../shared/components/profile-detail-modal/profile-detail-modal.component';
 
 @Component({
   selector: 'app-user-profile',
@@ -32,6 +33,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly swipeData: SwipeDataService,
     private readonly swipeService: SwipeService,
     private readonly chatService: ChatService,
+    private readonly modalCtrl: ModalController,
     private readonly router: Router
   ) {}
 
@@ -88,6 +90,15 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   openMatchChat(match: Match): void {
     const conversation = this.chatService.ensureConversation(match);
     this.router.navigate(['/chat', conversation.id]);
+  }
+
+  async openProfileDetail(profile: User): Promise<void> {
+    const modal = await this.modalCtrl.create({
+      component: ProfileDetailModalComponent,
+      componentProps: { profile },
+      cssClass: 'profile-detail-modal',
+    });
+    await modal.present();
   }
 
   async acceptLike(profile: User): Promise<void> {
