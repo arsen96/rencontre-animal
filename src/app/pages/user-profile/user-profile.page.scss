@@ -53,6 +53,164 @@
   }
 }
 
+.connections-card {
+  margin-bottom: 16px;
+
+  h3 {
+    @include label-caps;
+    margin: 0 0 6px;
+  }
+
+  .section-hint {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin: 0 0 14px;
+    line-height: 1.45;
+  }
+
+  .empty-hint {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .connections-loading {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+  }
+}
+
+.connection-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &--scroll {
+    max-height: min(280px, 42vh);
+    overflow-y: auto;
+    padding-right: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 175, 55, 0.35) transparent;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.35);
+      border-radius: 999px;
+    }
+  }
+}
+
+.connection-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  min-height: 56px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  background: rgba(11, 11, 11, 0.35);
+}
+
+.connection-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.connection-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  strong {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+  }
+}
+
+.message-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-border);
+  background: rgba(11, 11, 11, 0.55);
+  color: var(--gold-light);
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 0.9rem;
+  }
+}
+
+.like-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+
+  ion-icon {
+    font-size: 1.15rem;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &.pass {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+  }
+
+  &.like {
+    border-color: rgba(255, 80, 120, 0.35);
+    background: rgba(255, 80, 120, 0.12);
+    color: #ff6b8a;
+  }
+
+  &:not(:disabled):active {
+    transform: scale(0.94);
+  }
+}
+
 .age-range-card {
   margin-bottom: 16px;
 

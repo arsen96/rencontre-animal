@@ -11,6 +11,7 @@ import { Animal } from '../../core/interfaces/animal.interface';
 import { Conversation } from '../../core/interfaces/conversation.interface';
 import { ChatMessage } from '../../core/interfaces/message.interface';
 import { ChatService } from '../../core/services/chat.service';
+import { UserSessionService } from '../../core/services/user-session.service';
 
 @Component({
   selector: 'app-chat',
@@ -25,33 +26,38 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
   messages: ChatMessage[] = [];
   draft = '';
   conversationId = '';
+  loading = true;
 
   private sub?: Subscription;
+  private bootstrapped = false;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
+    private readonly session: UserSessionService,
     readonly chatService: ChatService
   ) {}
 
   ngOnInit(): void {
     this.conversationId = this.route.snapshot.paramMap.get('conversationId') ?? '';
 
-    this.loadConversation();
-
     this.sub = this.chatService.conversations$.subscribe(() => {
-      this.loadConversation();
+      if (!this.bootstrapped) {
+        return;
+      }
+      this.loadConversation(false);
       this.scrollToBottom();
     });
   }
 
-  ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+  ionViewWillEnter(): void {
+    void this.bootstrapChat();
   }
 
-  ionViewWillEnter(): void {
-    this.chatService.markAsRead(this.conversationId);
-    this.scrollToBottom();
+  ngOnDestroy(): void {
+    this.chatService.setActiveConversation(null);
+    this.chatService.unsubscribeFromMessages(this.conversationId);
+    this.sub?.unsubscribe();
   }
 
   get participantName(): string {
@@ -70,9 +76,13 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
     if (!this.draft.trim() || !this.conversationId) {
       return;
     }
-    this.chatService.sendMessage(this.conversationId, this.draft);
-    this.draft = '';
-    setTimeout(() => this.scrollToBottom(), 50);
+
+    void this.chatService.sendMessage(this.conversationId, this.draft).then((message) => {
+      if (message) {
+        this.draft = '';
+        setTimeout(() => this.scrollToBottom(), 50);
+      }
+    });
   }
 
   onKeydown(event: KeyboardEvent): void {
@@ -86,12 +96,40 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
     this.router.navigate(['/chats']);
   }
 
-  private loadConversation(): void {
+  private async bootstrapChat(): Promise<void> {
+    this.loading = true;
+
+    const user = await this.session.ensureCurrentUser();
+    if (!user) {
+      this.router.navigate(['/landing']);
+      return;
+    }
+
+    await this.chatService.syncFromFirestore(user.id);
+
     const conv = this.chatService.getById(this.conversationId);
     if (!conv) {
       this.router.navigate(['/chats']);
       return;
     }
+
+    this.bootstrapped = true;
+    this.chatService.setActiveConversation(this.conversationId);
+    this.chatService.subscribeToMessages(conv.matchId, conv.id);
+    this.loadConversation(false);
+    this.loading = false;
+    this.scrollToBottom();
+  }
+
+  private loadConversation(redirectIfMissing = true): void {
+    const conv = this.chatService.getById(this.conversationId);
+    if (!conv) {
+      if (redirectIfMissing) {
+        this.router.navigate(['/chats']);
+      }
+      return;
+    }
+
     this.conversation = conv;
     this.messages = [...conv.messages];
   }

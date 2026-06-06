@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Animal } from '../../core/interfaces/animal.interface';
 import { Match } from '../../core/interfaces/match.interface';
+import { AuthService } from '../../core/services/auth.service';
 import { ChatService } from '../../core/services/chat.service';
+import { SwipeDataService } from '../../core/services/swipe-data.service';
 import { UserSessionService } from '../../core/services/user-session.service';
 
 @Component({
@@ -18,7 +20,9 @@ export class MatchPage implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly session: UserSessionService,
-    private readonly chatService: ChatService
+    private readonly chatService: ChatService,
+    private readonly swipeData: SwipeDataService,
+    private readonly auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +32,11 @@ export class MatchPage implements OnInit {
 
     if (!this.match) {
       this.router.navigate(['/jungle']);
+      return;
     }
+
+    this.chatService.ensureConversation(this.match);
+    void this.markSeen();
   }
 
   continueSwiping(): void {
@@ -45,5 +53,18 @@ export class MatchPage implements OnInit {
       conversationId = conv.id;
     }
     this.router.navigate(['/chat', conversationId]);
+  }
+
+  private async markSeen(): Promise<void> {
+    const uid = this.auth.uid;
+    if (!uid || !this.match) {
+      return;
+    }
+
+    try {
+      await this.swipeData.markMatchSeen(uid, this.match.id);
+    } catch (error) {
+      console.error('Failed to mark match as seen', error);
+    }
   }
 }

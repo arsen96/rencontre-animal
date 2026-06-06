@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './core/services/auth.service';
+import { ChatService } from './core/services/chat.service';
 import { UserSessionService } from './core/services/user-session.service';
 
 @Component({
@@ -11,7 +12,8 @@ import { UserSessionService } from './core/services/user-session.service';
 export class AppComponent {
   constructor(
     private readonly auth: AuthService,
-    private readonly session: UserSessionService
+    private readonly session: UserSessionService,
+    private readonly chatService: ChatService
   ) {
     this.auth.authState$.subscribe((firebaseUser) => {
       if (firebaseUser && !this.session.currentUser) {
@@ -19,6 +21,7 @@ export class AppComponent {
       }
       if (!firebaseUser) {
         this.session.reset();
+        this.chatService.clear();
       }
     });
   }

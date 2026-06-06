@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { User } from '../../core/interfaces/user.interface';
 import { AuthService } from '../../core/services/auth.service';
 import { ChatService } from '../../core/services/chat.service';
+import { SwipeDataService } from '../../core/services/swipe-data.service';
 import { SwipeService } from '../../core/services/swipe.service';
 import { UserSessionService } from '../../core/services/user-session.service';
 import {
@@ -24,7 +25,7 @@ import {
 export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
   deck: User[] = [];
   unreadChats = 0;
-  loadingDeck = false;
+  loadingDeck = true;
   passedProfilesCount = 0;
   @ViewChildren(SwipeCardComponent) cardComponents!: QueryList<SwipeCardComponent>;
 
@@ -33,6 +34,7 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
 
   constructor(
     private readonly swipeService: SwipeService,
+    private readonly swipeData: SwipeDataService,
     private readonly chatService: ChatService,
     private readonly modalCtrl: ModalController,
     private readonly auth: AuthService,
@@ -70,7 +72,6 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
     }
 
     this.loadDeckInProgress = true;
-    this.loadingDeck = true;
     try {
       const user = await this.session.ensureCurrentUser();
       if (!user) {
@@ -87,9 +88,12 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
         (this.deck.length === 0 && !this.swipeService.hasPassedProfiles);
 
       if (shouldReload) {
+        this.loadingDeck = true;
         await this.swipeService.initDeck(user, this.lastDeckKey !== deckKey);
         this.lastDeckKey = deckKey;
       }
+
+      await this.chatService.syncFromFirestore(user.id);
     } finally {
       this.loadingDeck = false;
       this.loadDeckInProgress = false;
@@ -112,6 +116,7 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
   async logout(): Promise<void> {
     await this.auth.logout();
     this.session.reset();
+    this.chatService.clear();
     this.router.navigate(['/landing']);
   }
 
@@ -137,8 +142,12 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
 
   onSwiped(direction: SwipeDirection): void {
     if (direction === 'right') {
-      void this.swipeService.swipeRight().then((match) => {
+      void this.swipeService.swipeRight().then(async (match) => {
         if (match) {
+          const uid = (await this.session.ensureCurrentUser())?.id;
+          if (uid) {
+            await this.swipeData.markMatchSeen(uid, match.id);
+          }
           this.router.navigate(['/match'], {
             state: { match },
           });

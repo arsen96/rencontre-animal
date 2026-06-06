@@ -21,7 +21,12 @@
 </ion-header>
 
 <ion-content class="jungle-content jungle-page">
-  @if (isEmpty) {
+  @if (loadingDeck) {
+    <div class="deck-loading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Chargement de la jungle…</p>
+    </div>
+  } @else if (isEmpty) {
     <div class="empty-state">
       <span class="emoji">🌴</span>
       <h2>Plus de profils pour l'instant</h2>

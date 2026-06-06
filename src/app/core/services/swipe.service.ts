@@ -194,6 +194,35 @@ export class SwipeService {
     this.lastMatchSubject.next(null);
   }
 
+  async respondToReceivedLike(
+    currentUser: User,
+    profile: User,
+    direction: 'like' | 'pass'
+  ): Promise<Match | null> {
+    const uid = currentUser.id;
+
+    try {
+      await this.swipeData.recordSwipe(uid, profile.id, direction);
+      if (direction === 'pass') {
+        return null;
+      }
+
+      const isMutual = await this.swipeData.hasLikeFrom(profile.id, uid);
+      if (!isMutual) {
+        return null;
+      }
+
+      const match = await this.swipeData.createMatch(uid, profile);
+      const conversation = this.chatService.createFromMatch(match);
+      match.conversationId = conversation.id;
+      this.lastMatchSubject.next(match);
+      return match;
+    } catch (error) {
+      console.error('Failed to respond to received like', error);
+      return null;
+    }
+  }
+
   private matchesDiscoveryFilters(
     profile: User,
     currentUser: User,

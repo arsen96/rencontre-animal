@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Conversation } from '../../core/interfaces/conversation.interface';
+import { AuthService } from '../../core/services/auth.service';
 import { ChatService } from '../../core/services/chat.service';
+import { UserSessionService } from '../../core/services/user-session.service';
 
 @Component({
   selector: 'app-chats',
@@ -10,12 +13,14 @@ import { ChatService } from '../../core/services/chat.service';
   styleUrls: ['./chats.page.scss'],
   standalone: false,
 })
-export class ChatsPage implements OnInit, OnDestroy {
+export class ChatsPage implements OnInit, OnDestroy, ViewWillEnter {
   conversations: Conversation[] = [];
   private sub?: Subscription;
 
   constructor(
     private readonly chatService: ChatService,
+    private readonly session: UserSessionService,
+    private readonly auth: AuthService,
     private readonly router: Router
   ) {}
 
@@ -23,6 +28,19 @@ export class ChatsPage implements OnInit, OnDestroy {
     this.sub = this.chatService.conversations$.subscribe((list) => {
       this.conversations = list;
     });
+  }
+
+  ionViewWillEnter(): void {
+    void this.syncChats();
+  }
+
+  private async syncChats(): Promise<void> {
+    const user = await this.session.ensureCurrentUser();
+    if (!user) {
+      this.router.navigate(['/landing']);
+      return;
+    }
+    await this.chatService.syncFromFirestore(user.id);
   }
 
   ngOnDestroy(): void {
@@ -42,8 +60,7 @@ export class ChatsPage implements OnInit, OnDestroy {
   }
 
   lastPreview(conversation: Conversation): string {
-    const last = this.chatService.getLastMessage(conversation);
-    return last?.text ?? '';
+    return this.chatService.getPreview(conversation);
   }
 
   lastTime(conversation: Conversation): string {

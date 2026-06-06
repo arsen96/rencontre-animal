@@ -42,6 +42,90 @@
         </div>
       </div>
 
+      <div class="profile-card glass-card connections-card">
+        <h3>Mes matchs</h3>
+        <p class="section-hint">Personnes avec qui tu as matché </p>
+
+        @if (loadingConnections) {
+          <div class="connections-loading">
+            <ion-spinner name="crescent"></ion-spinner>
+          </div>
+        } @else if (matches.length === 0) {
+          <p class="empty-hint">Aucun match pour l'instant. Explore la Jungle !</p>
+        } @else {
+          <div class="connection-list connection-list--scroll">
+            @for (match of matches; track match.id) {
+              <div class="connection-row">
+                <div class="connection-avatar">
+                  <app-animal-avatar
+                    [animal]="match.user.animal"
+                    size="sm"
+                    variant="inline"
+                  ></app-animal-avatar>
+                </div>
+                <div class="connection-info">
+                  <strong>{{ match.user.displayName }}</strong>
+                  <span>{{ match.user.animal.name }}</span>
+                </div>
+                <button type="button" class="message-btn" (click)="openMatchChat(match)">
+                  <ion-icon name="chatbubble-outline"></ion-icon>
+                  Message
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="profile-card glass-card connections-card">
+        <h3>Likes reçus</h3>
+        <p class="section-hint">Ils t'ont liké — à toi de répondre.</p>
+
+        @if (loadingConnections) {
+          <div class="connections-loading">
+            <ion-spinner name="crescent"></ion-spinner>
+          </div>
+        } @else if (receivedLikes.length === 0) {
+          <p class="empty-hint">Personne en attente pour l'instant.</p>
+        } @else {
+          <div class="connection-list connection-list--scroll">
+            @for (profile of receivedLikes; track profile.id) {
+              <div class="connection-row">
+                <div class="connection-avatar">
+                  <app-animal-avatar
+                    [animal]="profile.animal"
+                    size="sm"
+                    variant="inline"
+                  ></app-animal-avatar>
+                </div>
+                <div class="connection-info">
+                  <strong>{{ profile.displayName }}</strong>
+                  <span>{{ profile.age }} ans · {{ profile.animal.name }}</span>
+                </div>
+                <div class="like-actions">
+                  <button
+                    type="button"
+                    class="action-chip pass"
+                    [disabled]="respondingTo === profile.id"
+                    (click)="declineLike(profile)"
+                  >
+                    <ion-icon name="close"></ion-icon>
+                  </button>
+                  <button
+                    type="button"
+                    class="action-chip like"
+                    [disabled]="respondingTo === profile.id"
+                    (click)="acceptLike(profile)"
+                  >
+                    <ion-icon name="heart"></ion-icon>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
       <div class="profile-card glass-card age-range-card">
         <h3>Tranche d'âge à rencontrer</h3>
         <p class="age-range-value">{{ ageRange.lower }} – {{ ageRange.upper }} ans</p>
