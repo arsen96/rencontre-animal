@@ -52,6 +52,18 @@
         }
       </ion-button>
 
+      <div class="auth-separator"><span>ou</span></div>
+
+      <button
+        type="button"
+        class="btn-google"
+        [disabled]="loading"
+        (click)="googleLogin()"
+      >
+        <ion-icon name="logo-google"></ion-icon>
+        Continuer avec Google
+      </button>
+
       <button type="button" class="toggle-mode" (click)="toggleMode()">
         {{ isLogin ? "Pas encore de compte ? S'inscrire" : 'Déjà un compte ? Se connecter' }}
       </button>

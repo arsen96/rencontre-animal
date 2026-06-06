@@ -73,6 +73,18 @@ export class JunglePage implements OnInit, OnDestroy {
     return this.deck.length === 0;
   }
 
+  get hasPassedProfiles(): boolean {
+    return this.swipeService.hasPassedProfiles;
+  }
+
+  get passedCount(): number {
+    return this.swipeService.passedCount;
+  }
+
+  restartWithPassed(): void {
+    this.swipeService.restartWithPassed();
+  }
+
   onSwiped(direction: SwipeDirection): void {
     if (direction === 'right') {
       const match = this.swipeService.swipeRight();

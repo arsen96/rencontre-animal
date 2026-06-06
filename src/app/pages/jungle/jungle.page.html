@@ -25,7 +25,16 @@
     <div class="empty-state">
       <span class="emoji">🌴</span>
       <h2>Plus de profils pour l'instant</h2>
-      <p>Reviens plus tard — la jungle se repopule !</p>
+      @if (hasPassedProfiles) {
+        <p>Tu as refusé {{ passedCount }} profil@if (passedCount > 1) {s}. Envie de leur redonner une chance ?</p>
+        <app-primary-button
+          label="Revoir les profils"
+          variant="green"
+          (pressed)="restartWithPassed()"
+        ></app-primary-button>
+      } @else {
+        <p>Reviens plus tard — la jungle se repopule !</p>
+      }
     </div>
   } @else {
     <div class="deck-container">

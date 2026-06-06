@@ -87,6 +87,32 @@ export class LoginPage implements OnInit {
     this.loading = false;
   }
 
+  async googleLogin(): Promise<void> {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+    this.error = '';
+
+    let uid: string;
+    try {
+      const credential = await this.auth.loginWithGoogle();
+      uid = credential.user.uid;
+    } catch (error: unknown) {
+      const code = (error as { code?: string })?.code;
+      if (code !== 'auth/popup-closed-by-user' && code !== 'auth/cancelled-popup-request') {
+        console.error('Google auth error', error);
+        this.error = this.mapError(code);
+      }
+      this.loading = false;
+      return;
+    }
+
+    await this.routeAfterAuth(uid);
+    this.loading = false;
+  }
+
   private async routeAfterAuth(uid: string): Promise<void> {
     let profile = null;
     try {
@@ -117,6 +143,10 @@ export class LoginPage implements OnInit {
         return 'E-mail ou mot de passe incorrect.';
       case 'auth/network-request-failed':
         return 'Problème de connexion réseau.';
+      case 'auth/popup-blocked':
+        return 'La fenêtre Google a été bloquée par le navigateur.';
+      case 'auth/account-exists-with-different-credential':
+        return 'Un compte existe déjà avec cet e-mail (autre méthode de connexion).';
       default:
         return 'Une erreur est survenue. Réessaie.';
     }

@@ -8,6 +8,7 @@ import { ChatService } from './chat.service';
 @Injectable({ providedIn: 'root' })
 export class SwipeService {
   private deck: User[] = [];
+  private passedProfiles: User[] = [];
   private likeCount = 0;
   private readonly deckSubject = new BehaviorSubject<User[]>([]);
   private readonly lastMatchSubject = new BehaviorSubject<Match | null>(null);
@@ -25,6 +26,14 @@ export class SwipeService {
     return this.deck.length;
   }
 
+  get hasPassedProfiles(): boolean {
+    return this.passedProfiles.length > 0;
+  }
+
+  get passedCount(): number {
+    return this.passedProfiles.length;
+  }
+
   initDeck(ageRange?: AgeRange): void {
     let profiles = [...MOCK_DISCOVERY_PROFILES];
     if (ageRange) {
@@ -33,12 +42,27 @@ export class SwipeService {
       );
     }
     this.deck = profiles.sort(() => Math.random() - 0.5);
+    this.passedProfiles = [];
     this.likeCount = 0;
     this.deckSubject.next([...this.deck]);
     this.lastMatchSubject.next(null);
   }
 
+  restartWithPassed(): void {
+    if (this.passedProfiles.length === 0) {
+      return;
+    }
+
+    this.deck = [...this.passedProfiles].sort(() => Math.random() - 0.5);
+    this.passedProfiles = [];
+    this.deckSubject.next([...this.deck]);
+  }
+
   swipeLeft(): void {
+    const profile = this.deck[0];
+    if (profile) {
+      this.passedProfiles.push(profile);
+    }
     this.removeTop();
   }
 

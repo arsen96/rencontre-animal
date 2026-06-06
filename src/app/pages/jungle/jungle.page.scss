@@ -107,5 +107,14 @@
 
   p {
     color: var(--text-secondary);
+    margin: 0 0 24px;
+    max-width: 320px;
+    margin-inline: auto;
+  }
+
+  app-primary-button {
+    display: block;
+    max-width: 320px;
+    margin: 0 auto;
   }
 }
