@@ -5,6 +5,7 @@ import { OnboardingState } from '../interfaces/onboarding.interface';
 import { AgeRange, User, UserProfile } from '../interfaces/user.interface';
 import { AuthService } from './auth.service';
 import { UserDataService } from './user-data.service';
+import { normalizeUser } from '../utils/user.utils';
 
 @Injectable({ providedIn: 'root' })
 export class UserSessionService {
@@ -74,9 +75,25 @@ export class UserSessionService {
   async restoreFromFirestore(uid: string): Promise<User | null> {
     const user = await this.userData.getUser(uid);
     if (user) {
-      this.setCurrentUser(user);
+      const normalized = normalizeUser(user);
+      this.setCurrentUser(normalized);
+      return normalized;
     }
-    return user;
+    return null;
+  }
+
+  /** Charge le profil depuis Firestore si la session mémoire est vide (ex. rechargement F5). */
+  async ensureCurrentUser(): Promise<User | null> {
+    if (this.currentUser) {
+      return normalizeUser(this.currentUser);
+    }
+
+    const uid = await this.auth.waitForUid();
+    if (!uid) {
+      return null;
+    }
+
+    return this.restoreFromFirestore(uid);
   }
 
   private persist(user: User): void {
@@ -122,6 +139,7 @@ export class UserSessionService {
         height: o.profile.height,
       },
       bio: o.bio?.trim() || undefined,
+      ageRange: { min: 18, max: 45 },
     };
 
     this.setCurrentUser(user);

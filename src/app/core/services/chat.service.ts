@@ -5,8 +5,7 @@ import { Conversation } from '../interfaces/conversation.interface';
 import { ChatMessage } from '../interfaces/message.interface';
 import { Match } from '../interfaces/match.interface';
 import { User } from '../interfaces/user.interface';
-
-const CURRENT_USER_ID = 'current-user';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChatService {
@@ -25,6 +24,8 @@ export class ChatService {
   get totalUnread(): number {
     return this.conversations.reduce((sum, c) => sum + c.unreadCount, 0);
   }
+
+  constructor(private readonly auth: AuthService) {}
 
   /** Crée automatiquement une conversation symétrique à chaque match */
   createFromMatch(match: Match): Conversation {
@@ -79,7 +80,7 @@ export class ChatService {
     const message: ChatMessage = {
       id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
       conversationId,
-      senderId: CURRENT_USER_ID,
+      senderId: this.auth.uid ?? 'anonymous',
       text: trimmed,
       sentAt: new Date(),
     };
@@ -98,7 +99,8 @@ export class ChatService {
   }
 
   isFromCurrentUser(message: ChatMessage): boolean {
-    return message.senderId === CURRENT_USER_ID;
+    const uid = this.auth.uid;
+    return !!uid && message.senderId === uid;
   }
 
   getLastMessage(conversation: Conversation): ChatMessage | undefined {

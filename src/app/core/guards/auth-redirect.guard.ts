@@ -5,6 +5,11 @@ import { take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { UserDataService } from '../services/user-data.service';
 import { UserSessionService } from '../services/user-session.service';
+import {
+  isProfileComplete,
+  normalizeUser,
+  onboardingRouteFor,
+} from '../utils/user.utils';
 
 /**
  * Redirige un utilisateur déjà connecté loin des pages d'accueil/login,
@@ -29,8 +34,10 @@ export const authRedirectGuard: CanActivateFn = async (): Promise<boolean | UrlT
   }
 
   if (profile) {
-    session.setCurrentUser(profile);
-    return router.createUrlTree(['/jungle']);
+    const user = normalizeUser(profile);
+    session.setCurrentUser(user);
+    const route = isProfileComplete(user) ? '/jungle' : onboardingRouteFor(user);
+    return router.createUrlTree([route]);
   }
 
   return router.createUrlTree(['/birthdate']);

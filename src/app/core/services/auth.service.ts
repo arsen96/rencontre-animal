@@ -4,6 +4,7 @@ import {
   authState,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -21,6 +22,21 @@ export class AuthService {
 
   get uid(): string | null {
     return this.auth.currentUser?.uid ?? null;
+  }
+
+  /** Attend que Firebase Auth soit initialisé (important au rechargement de page). */
+  waitForUid(): Promise<string | null> {
+    const existing = this.auth.currentUser?.uid;
+    if (existing) {
+      return Promise.resolve(existing);
+    }
+
+    return new Promise((resolve) => {
+      const unsubscribe = onAuthStateChanged(this.auth, (user) => {
+        unsubscribe();
+        resolve(user?.uid ?? null);
+      });
+    });
   }
 
   register(email: string, password: string) {

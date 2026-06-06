@@ -4,6 +4,11 @@ import { take } from 'rxjs/operators';
 import { AuthService } from '../../core/services/auth.service';
 import { UserDataService } from '../../core/services/user-data.service';
 import { UserSessionService } from '../../core/services/user-session.service';
+import {
+  isProfileComplete,
+  normalizeUser,
+  onboardingRouteFor,
+} from '../../core/utils/user.utils';
 
 @Component({
   selector: 'app-login',
@@ -122,8 +127,11 @@ export class LoginPage implements OnInit {
     }
 
     if (profile) {
-      this.session.setCurrentUser(profile);
-      this.router.navigate(['/jungle']);
+      const user = normalizeUser(profile);
+      this.session.setCurrentUser(user);
+      this.router.navigate([
+        isProfileComplete(user) ? '/jungle' : onboardingRouteFor(user),
+      ]);
     } else {
       this.router.navigate(['/birthdate']);
     }

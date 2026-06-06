@@ -2,10 +2,10 @@ import { EnvironmentInjector, Injectable, runInInjectionContext } from '@angular
 import {
   Firestore,
   collection,
-  collectionData,
   doc,
   docData,
   getDoc,
+  getDocs,
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
@@ -51,13 +51,10 @@ export class UserDataService {
     );
   }
 
-  users$(): Observable<User[]> {
-    return runInInjectionContext(
-      this.injector,
-      () =>
-        collectionData(collection(this.firestore, this.collectionName), {
-          idField: 'id',
-        }) as Observable<User[]>
+  async getAllUsers(): Promise<User[]> {
+    const snapshot = await runInInjectionContext(this.injector, () =>
+      getDocs(collection(this.firestore, this.collectionName))
     );
+    return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as User));
   }
 }

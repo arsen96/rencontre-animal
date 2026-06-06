@@ -15,7 +15,10 @@ export class AppComponent {
   ) {
     this.auth.authState$.subscribe((firebaseUser) => {
       if (firebaseUser && !this.session.currentUser) {
-        this.session.restoreFromFirestore(firebaseUser.uid);
+        void this.session.restoreFromFirestore(firebaseUser.uid);
+      }
+      if (!firebaseUser) {
+        this.session.reset();
       }
     });
   }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { User } from '../../core/interfaces/user.interface';
 import { AuthService } from '../../core/services/auth.service';
@@ -21,12 +21,15 @@ import {
   styleUrls: ['./jungle.page.scss'],
   standalone: false,
 })
-export class JunglePage implements OnInit, OnDestroy {
+export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
   deck: User[] = [];
   unreadChats = 0;
+  loadingDeck = false;
+  passedProfilesCount = 0;
   @ViewChildren(SwipeCardComponent) cardComponents!: QueryList<SwipeCardComponent>;
 
   private unreadSub?: Subscription;
+  private passedSub?: Subscription;
 
   constructor(
     private readonly swipeService: SwipeService,
@@ -38,17 +41,64 @@ export class JunglePage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.swipeService.initDeck(this.session.currentUser?.ageRange);
     this.swipeService.deck$.subscribe((deck) => {
       this.deck = deck;
     });
     this.unreadSub = this.chatService.totalUnread$.subscribe((n) => {
       this.unreadChats = n;
     });
+    this.passedSub = this.swipeService.passedProfiles$.subscribe((list) => {
+      this.passedProfilesCount = list.length;
+    });
+  }
+
+  private loadDeckInProgress = false;
+  private lastDeckKey: string | null = null;
+
+  ionViewWillEnter(): void {
+    void this.loadDeck();
   }
 
   ngOnDestroy(): void {
     this.unreadSub?.unsubscribe();
+    this.passedSub?.unsubscribe();
+  }
+
+  private async loadDeck(): Promise<void> {
+    if (this.loadDeckInProgress) {
+      return;
+    }
+
+    this.loadDeckInProgress = true;
+    this.loadingDeck = true;
+    try {
+      const user = await this.session.ensureCurrentUser();
+      if (!user) {
+        await this.auth.logout();
+        this.session.reset();
+        this.lastDeckKey = null;
+        this.router.navigate(['/landing']);
+        return;
+      }
+
+      const deckKey = this.buildDeckKey(user);
+      const shouldReload =
+        this.lastDeckKey !== deckKey ||
+        (this.deck.length === 0 && !this.swipeService.hasPassedProfiles);
+
+      if (shouldReload) {
+        await this.swipeService.initDeck(user, this.lastDeckKey !== deckKey);
+        this.lastDeckKey = deckKey;
+      }
+    } finally {
+      this.loadingDeck = false;
+      this.loadDeckInProgress = false;
+    }
+  }
+
+  private buildDeckKey(user: User): string {
+    const range = user.ageRange ?? { min: 18, max: 45 };
+    return `${user.id}:${range.min}-${range.max}`;
   }
 
   openChats(): void {
@@ -70,32 +120,32 @@ export class JunglePage implements OnInit, OnDestroy {
   }
 
   get isEmpty(): boolean {
-    return this.deck.length === 0;
+    return !this.loadingDeck && this.deck.length === 0;
   }
 
   get hasPassedProfiles(): boolean {
-    return this.swipeService.hasPassedProfiles;
+    return this.passedProfilesCount > 0;
   }
 
   get passedCount(): number {
-    return this.swipeService.passedCount;
+    return this.passedProfilesCount;
   }
 
   restartWithPassed(): void {
-    this.swipeService.restartWithPassed();
+    void this.swipeService.restartWithPassed();
   }
 
   onSwiped(direction: SwipeDirection): void {
     if (direction === 'right') {
-      const match = this.swipeService.swipeRight();
-      if (match) {
-        this.router.navigate(['/match'], {
-          state: { match },
-        });
-        return;
-      }
+      void this.swipeService.swipeRight().then((match) => {
+        if (match) {
+          this.router.navigate(['/match'], {
+            state: { match },
+          });
+        }
+      });
     } else {
-      this.swipeService.swipeLeft();
+      void this.swipeService.swipeLeft();
     }
   }
 
