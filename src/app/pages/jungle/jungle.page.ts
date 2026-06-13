@@ -27,6 +27,7 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
   unreadChats = 0;
   loadingDeck = true;
   passedProfilesCount = 0;
+  discoveryHint: string | null = null;
   @ViewChildren(SwipeCardComponent) cardComponents!: QueryList<SwipeCardComponent>;
 
   private unreadSub?: Subscription;
@@ -45,6 +46,7 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
   ngOnInit(): void {
     this.swipeService.deck$.subscribe((deck) => {
       this.deck = deck;
+      this.discoveryHint = this.swipeService.discoveryTierLabel;
     });
     this.unreadSub = this.chatService.totalUnread$.subscribe((n) => {
       this.unreadChats = n;

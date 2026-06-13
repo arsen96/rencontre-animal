@@ -1,0 +1,98 @@
+.city-autocomplete {
+  position: relative;
+}
+
+.field-hint {
+  margin: 0 0 10px;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.city-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  background: rgba(11, 11, 11, 0.35);
+
+  ion-icon {
+    color: var(--gold-light);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  ion-input {
+    flex: 1;
+    min-width: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --color: var(--text-primary);
+    --placeholder-color: var(--text-secondary);
+  }
+
+  .city-spinner {
+    width: 18px;
+    height: 18px;
+    color: var(--gold-light);
+    flex-shrink: 0;
+  }
+}
+
+.suggestions {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: 240px;
+  overflow-y: auto;
+
+  li {
+    margin: 0;
+  }
+
+  button {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-primary);
+    text-align: left;
+    cursor: pointer;
+
+    strong {
+      color: var(--gold-light);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    span {
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      line-height: 1.3;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: rgba(212, 175, 55, 0.12);
+      outline: none;
+    }
+  }
+}
+
+.city-error {
+  margin: 10px 0 0;
+  color: #ff8a8a;
+  font-size: 0.82rem;
+}

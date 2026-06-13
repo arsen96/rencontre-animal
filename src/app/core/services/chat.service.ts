@@ -55,6 +55,7 @@ export class ChatService {
     if (conversationId) {
       this.markAsRead(conversationId);
     }
+    void this.syncActiveConversationPresence(conversationId);
   }
 
   async syncFromFirestore(currentUid: string): Promise<void> {
@@ -318,6 +319,18 @@ export class ChatService {
     return 'Nouveau match — dis bonjour !';
   }
 
+  async clearPresence(uid: string): Promise<void> {
+    try {
+      await runInInjectionContext(this.injector, () =>
+        updateDoc(doc(this.firestore, 'users', uid), {
+          activeConversationId: null,
+        })
+      );
+    } catch (error) {
+      console.error('Failed to clear conversation presence', error);
+    }
+  }
+
   clear(): void {
     this.conversationsListener?.();
     this.conversationsListener = null;
@@ -438,6 +451,25 @@ export class ChatService {
         { merge: true }
       )
     );
+  }
+
+  private async syncActiveConversationPresence(
+    conversationId: string | null
+  ): Promise<void> {
+    const uid = this.auth.uid;
+    if (!uid) {
+      return;
+    }
+
+    try {
+      await runInInjectionContext(this.injector, () =>
+        updateDoc(doc(this.firestore, 'users', uid), {
+          activeConversationId: conversationId,
+        })
+      );
+    } catch (error) {
+      console.error('Failed to sync active conversation presence', error);
+    }
   }
 
   private async persistMessage(

@@ -131,6 +131,7 @@
   .distance {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 4px;
     color: var(--text-secondary);
     font-size: 0.78rem;
@@ -139,6 +140,11 @@
 
     ion-icon {
       color: var(--gold-muted);
+    }
+
+    .distance-km {
+      color: var(--gold-light);
+      font-weight: 600;
     }
   }
 }

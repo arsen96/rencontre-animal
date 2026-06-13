@@ -20,6 +20,14 @@
       <p class="location">
         <ion-icon name="location-outline"></ion-icon>
         {{ profile.city }}
+        @if (profile.distanceKm != null) {
+          <span class="distance-km">· {{ profile.distanceKm }} km</span>
+        }
+      </p>
+    } @else if (profile.distanceKm != null) {
+      <p class="location">
+        <ion-icon name="navigate-outline"></ion-icon>
+        {{ profile.distanceKm }} km
       </p>
     }
 

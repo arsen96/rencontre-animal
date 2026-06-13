@@ -27,6 +27,12 @@
           Toi &amp; <strong>{{ match.user.displayName }}</strong>
         </p>
         <p class="match-animal">{{ match.user.animal.name }} · {{ match.user.animal.personality }}</p>
+        @if (match.user.distanceKm != null) {
+          <p class="match-distance">
+            <ion-icon name="navigate-outline"></ion-icon>
+            À {{ match.user.distanceKm }} km de toi
+          </p>
+        }
       </div>
 
       <div class="match-actions">

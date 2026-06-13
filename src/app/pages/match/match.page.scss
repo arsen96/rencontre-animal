@@ -108,6 +108,21 @@
   letter-spacing: 0.03em;
 }
 
+.match-distance {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 12px 0 0;
+  color: var(--gold-light);
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  ion-icon {
+    font-size: 1rem;
+  }
+}
+
 .match-actions {
   width: 100%;
   max-width: 340px;

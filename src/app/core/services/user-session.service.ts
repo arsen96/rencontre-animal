@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Animal } from '../interfaces/animal.interface';
 import { OnboardingState } from '../interfaces/onboarding.interface';
-import { AgeRange, User, UserProfile } from '../interfaces/user.interface';
+import { AgeRange, GeoPoint, User, UserProfile } from '../interfaces/user.interface';
+import { resolveCityCoordinates } from '../utils/distance.util';
 import { AuthService } from './auth.service';
 import { UserDataService } from './user-data.service';
 import { normalizeUser } from '../utils/user.utils';
@@ -40,6 +41,7 @@ export class UserSessionService {
     displayName?: string;
     bio?: string;
     city?: string;
+    location?: GeoPoint | null;
     profile?: Partial<UserProfile>;
     ageRange?: AgeRange;
   }): User | null {
@@ -48,12 +50,21 @@ export class UserSessionService {
       return null;
     }
 
+    const city =
+      patch.city !== undefined ? patch.city.trim() || undefined : current.city;
+    const location =
+      patch.location !== undefined
+        ? patch.location ?? undefined
+        : patch.city !== undefined
+          ? resolveCityCoordinates(patch.city) ?? undefined
+          : current.location;
+
     const updated: User = {
       ...current,
       displayName: patch.displayName?.trim() || current.displayName,
       bio: patch.bio?.trim() || undefined,
-      city:
-        patch.city !== undefined ? patch.city.trim() || undefined : current.city,
+      city,
+      location,
       profile: { ...current.profile, ...patch.profile },
       ageRange: patch.ageRange ?? current.ageRange,
     };
@@ -118,8 +129,15 @@ export class UserSessionService {
       !o.gender ||
       !o.meetPreference ||
       !o.selectedAnimal ||
-      o.profile?.height == null
+      o.profile?.height == null ||
+      !o.city?.trim()
     ) {
+      return null;
+    }
+
+    const city = o.city.trim();
+    const location = o.location ?? resolveCityCoordinates(city) ?? undefined;
+    if (!location) {
       return null;
     }
 
@@ -142,6 +160,8 @@ export class UserSessionService {
         height: o.profile.height,
       },
       bio: o.bio?.trim() || undefined,
+      city,
+      location,
       ageRange: { min: 18, max: 45 },
     };
 

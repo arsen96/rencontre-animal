@@ -56,6 +56,14 @@
           rows="2"
         ></ion-textarea>
       </div>
+      <div class="form-field city-autocomplete-field">
+        <label>Ma ville</label>
+        <app-city-autocomplete
+          [city]="city"
+          [location]="cityLocation"
+          (selectionChange)="onCitySelection($event)"
+        ></app-city-autocomplete>
+      </div>
 
       <p class="form-section-hint">Pour aller plus loin (facultatif)</p>
 

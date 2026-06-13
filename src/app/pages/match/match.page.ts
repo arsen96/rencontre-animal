@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { ChatService } from '../../core/services/chat.service';
 import { SwipeDataService } from '../../core/services/swipe-data.service';
 import { UserSessionService } from '../../core/services/user-session.service';
+import { withDistanceFrom } from '../../core/utils/distance.util';
 
 @Component({
   selector: 'app-match',
@@ -33,6 +34,12 @@ export class MatchPage implements OnInit {
     if (!this.match) {
       this.router.navigate(['/jungle']);
       return;
+    }
+
+    const current = this.session.currentUser;
+    if (current) {
+      const enrichedUser = withDistanceFrom(current, this.match.user);
+      this.match = { ...this.match, user: enrichedUser };
     }
 
     this.chatService.ensureConversation(this.match);

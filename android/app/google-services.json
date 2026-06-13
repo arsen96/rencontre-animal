@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "768126961667",
+    "project_id": "rencontre-animal",
+    "storage_bucket": "rencontre-animal.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768126961667:android:98d5ea48724d32616de636",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768126961667-8uvtrv0uao0u85genig7kil90rmdo6sg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7HZB7fS5iwFLokwl6azqtGD2d9eP8LEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768126961667-8uvtrv0uao0u85genig7kil90rmdo6sg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

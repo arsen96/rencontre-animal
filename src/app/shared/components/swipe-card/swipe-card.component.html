@@ -28,15 +28,15 @@
     @if (profile.bio) {
       <p class="bio">{{ profile.bio }}</p>
     }
-    @if (profile.city) {
+    @if (profile.city || profile.distanceKm != null) {
       <p class="location-line">
         <ion-icon name="location-outline"></ion-icon>
-        {{ profile.city }}
-      </p>
-    } @else if (profile.distanceKm) {
-      <p class="location-line">
-        <ion-icon name="location-outline"></ion-icon>
-        {{ profile.distanceKm }} km
+        @if (profile.city) {
+          <span>{{ profile.city }}</span>
+        }
+        @if (profile.distanceKm != null) {
+          <span class="distance-km">· {{ profile.distanceKm }} km</span>
+        }
       </p>
     }
   </div>

@@ -21,6 +21,7 @@ import {
 import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
 import { provideFirestore, initializeFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideHttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -59,6 +60,7 @@ addIcons({
       })
     ),
     provideAuth(() => getAuth()),
+    provideHttpClient(),
   ],
   bootstrap: [AppComponent],
 })

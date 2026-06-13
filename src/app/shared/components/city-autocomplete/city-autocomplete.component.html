@@ -1,0 +1,44 @@
+<div class="city-autocomplete">
+  @if (showHint) {
+    <p class="field-hint">Commence à taper puis choisis ta ville dans la liste.</p>
+  }
+
+  <div class="city-field">
+    <ion-icon name="location-outline"></ion-icon>
+    <ion-input
+      [value]="query"
+      [placeholder]="placeholder"
+      maxlength="80"
+      autocomplete="off"
+      (ionInput)="onInput($any($event).detail.value ?? '')"
+      (ionFocus)="onFocus()"
+      (ionBlur)="onBlur()"
+    ></ion-input>
+    @if (loading) {
+      <ion-spinner name="crescent" class="city-spinner"></ion-spinner>
+    }
+  </div>
+
+  @if (showSuggestions) {
+    <ul class="suggestions glass-card" role="listbox">
+      @for (suggestion of suggestions; track suggestion.city + suggestion.context) {
+        <li>
+          <button
+            type="button"
+            role="option"
+            (mousedown)="selectSuggestion(suggestion)"
+          >
+            <strong>{{ suggestion.label }}</strong>
+            @if (suggestion.context) {
+              <span>{{ suggestion.context }}</span>
+            }
+          </button>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (selectionHint) {
+    <p class="city-error">Choisis une ville dans les suggestions pour valider.</p>
+  }
+</div>

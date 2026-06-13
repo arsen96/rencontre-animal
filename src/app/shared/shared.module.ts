@@ -9,6 +9,7 @@ import { SwipeCardComponent } from './components/swipe-card/swipe-card.component
 import { ProfileDetailModalComponent } from './components/profile-detail-modal/profile-detail-modal.component';
 import { ChatBubbleComponent } from './components/chat-bubble/chat-bubble.component';
 import { AnimalAvatarComponent } from './components/animal-avatar/animal-avatar.component';
+import { CityAutocompleteComponent } from './components/city-autocomplete/city-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AnimalAvatarComponent } from './components/animal-avatar/animal-avatar.
     SwipeCardComponent,
     ProfileDetailModalComponent,
     ChatBubbleComponent,
+    CityAutocompleteComponent,
   ],
   imports: [CommonModule, IonicModule],
   exports: [
@@ -31,6 +33,7 @@ import { AnimalAvatarComponent } from './components/animal-avatar/animal-avatar.
     SwipeCardComponent,
     ProfileDetailModalComponent,
     ChatBubbleComponent,
+    CityAutocompleteComponent,
     CommonModule,
     IonicModule,
   ],

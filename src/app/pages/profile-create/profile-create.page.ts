@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Animal } from '../../core/interfaces/animal.interface';
+import { CitySelection } from '../../core/interfaces/city-selection.interface';
+import { GeoPoint } from '../../core/interfaces/user.interface';
 import { UserSessionService } from '../../core/services/user-session.service';
+import { resolveCityCoordinates } from '../../core/utils/distance.util';
 
 @Component({
   selector: 'app-profile-create',
@@ -19,6 +22,9 @@ export class ProfileCreatePage implements OnInit {
   hairColor = '';
   height?: number;
   bio = '';
+  city = '';
+  cityLocation?: GeoPoint;
+  cityValid = false;
   isEdit = false;
   animal?: Animal;
 
@@ -53,11 +59,18 @@ export class ProfileCreatePage implements OnInit {
     this.hairColor = noDash(user.profile.hairColor);
     this.height = user.profile.height;
     this.bio = user.bio ?? '';
+    this.city = user.city ?? '';
+    this.cityLocation = user.location;
+    if (this.city && !this.cityLocation) {
+      this.cityLocation = resolveCityCoordinates(this.city) ?? undefined;
+    }
+    this.cityValid = !!(this.city.trim() && this.cityLocation);
   }
 
   get canContinue(): boolean {
     return !!(
       this.bio.trim() &&
+      this.cityValid &&
       this.eyeColor &&
       this.hairColor &&
       this.height &&
@@ -66,11 +79,25 @@ export class ProfileCreatePage implements OnInit {
     );
   }
 
+  onCitySelection(selection: CitySelection | null): void {
+    if (selection) {
+      this.city = selection.city;
+      this.cityLocation = selection.location;
+      this.cityValid = true;
+      return;
+    }
+
+    this.cityValid = false;
+    this.cityLocation = undefined;
+  }
+
   changeAnimal(): void {
     const current = this.session.currentUser;
     this.session.updateProfile({
       displayName: this.displayName.trim(),
       bio: this.bio.trim(),
+      city: this.city.trim(),
+      location: this.cityLocation,
       profile: {
         movies: [this.movie1.trim() || '—', this.movie2.trim() || '—'],
         songs: [this.song1.trim() || '—', this.song2.trim() || '—'],
@@ -91,6 +118,8 @@ export class ProfileCreatePage implements OnInit {
       this.session.updateProfile({
         displayName: this.displayName.trim(),
         bio: this.bio.trim(),
+        city: this.city.trim(),
+        location: this.cityLocation,
         profile: {
           movies: [this.movie1.trim() || '—', this.movie2.trim() || '—'],
           songs: [this.song1.trim() || '—', this.song2.trim() || '—'],
@@ -105,6 +134,8 @@ export class ProfileCreatePage implements OnInit {
 
     this.session.patchOnboarding({
       bio: this.bio.trim(),
+      city: this.city.trim(),
+      location: this.cityLocation,
       profile: {
         movies: [this.movie1.trim(), this.movie2.trim()],
         songs: [this.song1.trim(), this.song2.trim()],

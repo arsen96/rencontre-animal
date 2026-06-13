@@ -27,6 +27,12 @@ export interface User {
   profile: UserProfile;
   bio?: string;
   city?: string;
+  location?: GeoPoint;
   ageRange?: AgeRange;
   distanceKm?: number;
+}
+
+export interface GeoPoint {
+  lat: number;
+  lng: number;
 }

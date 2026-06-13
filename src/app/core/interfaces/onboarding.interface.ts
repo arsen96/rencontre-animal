@@ -1,5 +1,5 @@
 import { Animal } from './animal.interface';
-import { Gender, MeetPreference, UserProfile } from './user.interface';
+import { Gender, MeetPreference, GeoPoint, UserProfile } from './user.interface';
 
 export interface OnboardingState {
   birthDay?: number;
@@ -10,4 +10,6 @@ export interface OnboardingState {
   selectedAnimal?: Animal;
   profile?: Partial<UserProfile>;
   bio?: string;
+  city?: string;
+  location?: GeoPoint;
 }

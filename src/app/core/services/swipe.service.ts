@@ -7,6 +7,13 @@ import {
   normalizeUser,
   resolveAge,
 } from '../utils/user.utils';
+import {
+  DISCOVERY_DISTANCE_TIERS_KM,
+  getDiscoveryTierIndex,
+  getDiscoveryTierLabel,
+  sortUsersByDistance,
+  withDistanceFrom,
+} from '../utils/distance.util';
 import { ChatService } from './chat.service';
 import { SwipeDataService } from './swipe-data.service';
 import { UserDataService } from './user-data.service';
@@ -17,6 +24,8 @@ const DEFAULT_AGE_RANGE: AgeRange = { min: 18, max: 45 };
 export class SwipeService {
   private deck: User[] = [];
   private passedProfiles: User[] = [];
+  private profilePool: User[] = [];
+  private currentTierIndex = 0;
   private currentUser: User | null = null;
   private readonly deckSubject = new BehaviorSubject<User[]>([]);
   private readonly passedProfilesSubject = new BehaviorSubject<User[]>([]);
@@ -48,6 +57,14 @@ export class SwipeService {
     return this.passedProfiles.length;
   }
 
+  get discoveryExpanded(): boolean {
+    return this.currentTierIndex > 0;
+  }
+
+  get discoveryTierLabel(): string | null {
+    return getDiscoveryTierLabel(this.currentTierIndex);
+  }
+
   async initDeck(currentUser: User, force = false): Promise<void> {
     const normalizedCurrentUser = normalizeUser(currentUser);
     this.currentUser = normalizedCurrentUser;
@@ -55,6 +72,7 @@ export class SwipeService {
     if (force) {
       this.passedProfiles = [];
       this.emitPassedProfiles();
+      this.currentTierIndex = 0;
     } else if (this.deck.length === 0 && this.passedProfiles.length > 0) {
       return;
     }
@@ -87,9 +105,12 @@ export class SwipeService {
           this.matchesDiscoveryFilters(profile, normalizedCurrentUser, ageRange)
       );
 
-    this.deck = profiles.sort(() => Math.random() - 0.5);
+    this.profilePool = sortUsersByDistance(
+      profiles.map((profile) => withDistanceFrom(normalizedCurrentUser, profile))
+    );
+    this.currentTierIndex = 0;
+    this.refillDeckFromTiers();
     await this.syncPassedProfiles(normalizedCurrentUser, allUsers, ageRange);
-    this.deckSubject.next([...this.deck]);
     this.emitPassedProfiles();
   }
 
@@ -137,7 +158,12 @@ export class SwipeService {
       );
     }
 
-    this.deck = [...this.passedProfiles].sort(() => Math.random() - 0.5);
+    const currentUser = this.currentUser;
+    this.deck = sortUsersByDistance(
+      currentUser
+        ? this.passedProfiles.map((profile) => withDistanceFrom(currentUser, profile))
+        : [...this.passedProfiles]
+    );
     this.passedProfiles = [];
     this.emitPassedProfiles();
     this.deckSubject.next([...this.deck]);
@@ -255,7 +281,38 @@ export class SwipeService {
 
   private removeTop(): void {
     this.deck = this.deck.slice(1);
-    this.deckSubject.next([...this.deck]);
+
+    if (this.deck.length === 0) {
+      this.advanceToNextDistanceTier();
+    } else {
+      this.deckSubject.next([...this.deck]);
+    }
+  }
+
+  private refillDeckFromTiers(): void {
+    while (this.currentTierIndex < DISCOVERY_DISTANCE_TIERS_KM.length) {
+      const candidates = this.getProfilesForTier(this.currentTierIndex);
+      if (candidates.length > 0) {
+        this.deck = candidates;
+        this.deckSubject.next([...this.deck]);
+        return;
+      }
+      this.currentTierIndex++;
+    }
+
+    this.deck = [];
+    this.deckSubject.next([]);
+  }
+
+  private advanceToNextDistanceTier(): void {
+    this.currentTierIndex++;
+    this.refillDeckFromTiers();
+  }
+
+  private getProfilesForTier(tierIndex: number): User[] {
+    return this.profilePool.filter(
+      (profile) => getDiscoveryTierIndex(profile.distanceKm) === tierIndex
+    );
   }
 
   private emitPassedProfiles(): void {

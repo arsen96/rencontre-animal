@@ -42,6 +42,12 @@
       }
     </div>
   } @else {
+    @if (discoveryHint) {
+      <div class="discovery-hint glass-card">
+        <ion-icon name="navigate-outline"></ion-icon>
+        <span>{{ discoveryHint }}</span>
+      </div>
+    }
     <div class="deck-container">
       @for (profile of visibleCards; track profile.id; let i = $index) {
         <app-swipe-card

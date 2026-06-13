@@ -1,15 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { combineLatest, Subscription } from 'rxjs';
 import { Match } from '../../core/interfaces/match.interface';
-import { User } from '../../core/interfaces/user.interface';
+import { CitySelection } from '../../core/interfaces/city-selection.interface';
+import { GeoPoint, User } from '../../core/interfaces/user.interface';
 import { AuthService } from '../../core/services/auth.service';
 import { ChatService } from '../../core/services/chat.service';
 import { SwipeDataService } from '../../core/services/swipe-data.service';
 import { SwipeService } from '../../core/services/swipe.service';
 import { UserSessionService } from '../../core/services/user-session.service';
 import { ProfileDetailModalComponent } from '../../shared/components/profile-detail-modal/profile-detail-modal.component';
+import { CityAutocompleteComponent } from '../../shared/components/city-autocomplete/city-autocomplete.component';
+import { withDistanceFrom, resolveCityCoordinates } from '../../core/utils/distance.util';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,12 +23,16 @@ import { ProfileDetailModalComponent } from '../../shared/components/profile-det
 export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   user: User | null = null;
   city = '';
+  cityLocation?: GeoPoint;
+  cityValid = false;
   cityRequiredHint = false;
   ageRange: { lower: number; upper: number } = { lower: 18, upper: 45 };
   matches: Match[] = [];
   receivedLikes: User[] = [];
   loadingConnections = true;
   respondingTo: string | null = null;
+
+  @ViewChild(CityAutocompleteComponent) cityAutocomplete?: CityAutocompleteComponent;
 
   private sub?: Subscription;
 
@@ -46,7 +53,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     ]).subscribe(([firebaseUser, user]) => {
       if (user) {
         this.user = user;
-        this.city = user.city ?? '';
+        this.applyUserCity(user);
         if (user.ageRange) {
           this.ageRange = { lower: user.ageRange.min, upper: user.ageRange.max };
         }
@@ -68,37 +75,35 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   }
 
   get canEnterJungle(): boolean {
-    return this.city.trim().length > 0;
+    return this.cityValid;
   }
 
   enterJungle(): void {
-    const trimmedCity = this.city.trim();
-    if (!trimmedCity) {
+    if (!this.cityValid) {
       this.cityRequiredHint = true;
+      this.cityAutocomplete?.markSelectionRequired();
       return;
     }
 
     this.cityRequiredHint = false;
-    this.session.updateProfile({ city: trimmedCity });
     this.router.navigate(['/jungle']);
   }
 
-  onCityChange(value: string): void {
-    this.city = value;
-    if (this.city.trim()) {
+  onCitySelection(selection: CitySelection | null): void {
+    if (selection) {
+      this.city = selection.city;
+      this.cityLocation = selection.location;
+      this.cityValid = true;
       this.cityRequiredHint = false;
-    }
-  }
-
-  saveCity(): void {
-    const trimmedCity = this.city.trim();
-    if (!trimmedCity) {
-      this.cityRequiredHint = true;
+      this.session.updateProfile({
+        city: selection.city,
+        location: selection.location,
+      });
       return;
     }
 
-    this.cityRequiredHint = false;
-    this.session.updateProfile({ city: trimmedCity });
+    this.cityValid = false;
+    this.cityLocation = undefined;
   }
 
   onAgeRangeChange(event: CustomEvent): void {
@@ -126,9 +131,10 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   }
 
   async openProfileDetail(profile: User): Promise<void> {
+    const enriched = this.user ? withDistanceFrom(this.user, profile) : profile;
     const modal = await this.modalCtrl.create({
       component: ProfileDetailModalComponent,
-      componentProps: { profile },
+      componentProps: { profile: enriched },
       cssClass: 'profile-detail-modal',
     });
     await modal.present();
@@ -177,6 +183,23 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     this.router.navigate(['/landing']);
   }
 
+  private applyUserCity(user: User): void {
+    this.city = user.city ?? '';
+    this.cityLocation = user.location;
+
+    if (this.city && !this.cityLocation) {
+      this.cityLocation = resolveCityCoordinates(this.city) ?? undefined;
+      if (this.cityLocation) {
+        this.session.updateProfile({
+          city: this.city,
+          location: this.cityLocation,
+        });
+      }
+    }
+
+    this.cityValid = !!(this.city.trim() && this.cityLocation);
+  }
+
   private async loadConnections(): Promise<void> {
     const user = await this.session.ensureCurrentUser();
     if (!user) {
@@ -189,14 +212,21 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
       await this.chatService.syncFromFirestore(user.id);
 
       try {
-        this.matches = await this.swipeData.getMatches(user.id);
+        const matches = await this.swipeData.getMatches(user.id);
+        this.matches = matches.map((match) => ({
+          ...match,
+          user: withDistanceFrom(user, match.user),
+        }));
       } catch (error) {
         console.error('Failed to load matches', error);
         this.matches = [];
       }
 
       try {
-        this.receivedLikes = await this.swipeData.getReceivedLikes(user.id);
+        const receivedLikes = await this.swipeData.getReceivedLikes(user.id);
+        this.receivedLikes = receivedLikes.map((profile) =>
+          withDistanceFrom(user, profile)
+        );
       } catch (error) {
         console.error('Failed to load received likes', error);
         this.receivedLikes = [];
