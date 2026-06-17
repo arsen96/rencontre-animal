@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Animal } from '../../core/interfaces/animal.interface';
 import { MockDataService } from '../../core/services/mock-data.service';
@@ -10,18 +10,11 @@ import { UserSessionService } from '../../core/services/user-session.service';
   styleUrls: ['./animal-select.page.scss'],
   standalone: false,
 })
-export class AnimalSelectPage implements OnInit, OnDestroy {
+export class AnimalSelectPage implements OnInit {
   animals: Animal[] = [];
   searchTerm = '';
   selectedId?: string;
   isEdit = false;
-  expandedAnimal?: Animal;
-  overlayFlipped = false;
-  overlayEntering = false;
-  overlayClosing = false;
-  private overlayFlipTimer?: number;
-  private overlayEnterTimer?: number;
-  private overlayCloseTimer?: number;
 
   constructor(
     private readonly mockData: MockDataService,
@@ -35,11 +28,13 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
     this.isEdit = this.route.snapshot.queryParamMap.get('edit') === '1';
     if (this.isEdit && this.session.currentUser) {
       this.selectedId = this.session.currentUser.animal.id;
+      return;
     }
-  }
 
-  ngOnDestroy(): void {
-    this.clearOverlayTimers();
+    const onboardingAnimal = this.session.onboarding?.selectedAnimal;
+    if (onboardingAnimal) {
+      this.selectedId = onboardingAnimal.id;
+    }
   }
 
   get canContinue(): boolean {
@@ -91,43 +86,16 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   }
 
   onCardClick(animal: Animal): void {
-    if (this.expandedAnimal && !this.overlayClosing) {
-      return;
-    }
-
     this.selectedId = animal.id;
     this.session.patchOnboarding({ selectedAnimal: animal });
-    this.expandedAnimal = animal;
-    this.overlayFlipped = false;
-    this.overlayClosing = false;
-    this.overlayEntering = true;
-    this.clearOverlayTimers();
-    this.overlayFlipTimer = window.setTimeout(() => {
-      this.overlayFlipped = true;
-    }, 260);
-    this.overlayEnterTimer = window.setTimeout(() => {
-      this.overlayEntering = false;
-    }, 760);
+    void this.router.navigate([animal.id], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve',
+    });
   }
 
   isSelected(animal: Animal): boolean {
     return this.selectedId === animal.id;
-  }
-
-  closeExpanded(event?: Event): void {
-    event?.stopPropagation();
-    if (!this.expandedAnimal || this.overlayClosing) {
-      return;
-    }
-
-    this.clearOverlayTimers();
-    this.overlayEntering = false;
-    this.overlayClosing = true;
-    this.overlayFlipped = false;
-    this.overlayCloseTimer = window.setTimeout(() => {
-      this.expandedAnimal = undefined;
-      this.overlayClosing = false;
-    }, 760);
   }
 
   continue(): void {
@@ -145,23 +113,6 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
     }
 
     this.router.navigate(['/profile-create']);
-  }
-
-  private clearOverlayTimers(): void {
-    if (this.overlayFlipTimer) {
-      window.clearTimeout(this.overlayFlipTimer);
-      this.overlayFlipTimer = undefined;
-    }
-
-    if (this.overlayEnterTimer) {
-      window.clearTimeout(this.overlayEnterTimer);
-      this.overlayEnterTimer = undefined;
-    }
-
-    if (this.overlayCloseTimer) {
-      window.clearTimeout(this.overlayCloseTimer);
-      this.overlayCloseTimer = undefined;
-    }
   }
 
   private normalizeText(value: string): string {
