@@ -307,6 +307,17 @@
   cursor: pointer;
 }
 
+.legal-link {
+  display: block;
+  margin: 18px auto 0;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .profile-card {
   margin-bottom: 24px;
 

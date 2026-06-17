@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/services/auth.service';
 import { UserDataService } from '../../core/services/user-data.service';
 import { UserSessionService } from '../../core/services/user-session.service';
+import { openExternalUrl } from '../../core/utils/open-external-url.util';
 import {
   isProfileComplete,
   normalizeUser,
@@ -23,6 +25,7 @@ export class LoginPage implements OnInit {
   loading = false;
   error = '';
   checkingSession = true;
+  readonly privacyPolicyUrl = environment.privacyPolicyUrl;
 
   constructor(
     private readonly auth: AuthService,
@@ -54,6 +57,10 @@ export class LoginPage implements OnInit {
   toggleMode(): void {
     this.mode = this.isLogin ? 'register' : 'login';
     this.error = '';
+  }
+
+  openPrivacyPolicy(): void {
+    openExternalUrl(this.privacyPolicyUrl);
   }
 
   onEmailInput(event: Event): void {

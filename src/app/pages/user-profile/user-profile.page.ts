@@ -14,6 +14,8 @@ import { UserSessionService } from '../../core/services/user-session.service';
 import { ProfileDetailModalComponent } from '../../shared/components/profile-detail-modal/profile-detail-modal.component';
 import { CityAutocompleteComponent } from '../../shared/components/city-autocomplete/city-autocomplete.component';
 import { withDistanceFrom, resolveCityCoordinates } from '../../core/utils/distance.util';
+import { openExternalUrl } from '../../core/utils/open-external-url.util';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -32,6 +34,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   receivedLikes: User[] = [];
   loadingConnections = true;
   respondingTo: string | null = null;
+  readonly privacyPolicyUrl = environment.privacyPolicyUrl;
 
   @ViewChild(CityAutocompleteComponent) cityAutocomplete?: CityAutocompleteComponent;
 
@@ -184,6 +187,10 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     this.session.reset();
     this.chatService.clear();
     this.router.navigate(['/landing']);
+  }
+
+  openPrivacyPolicy(): void {
+    openExternalUrl(this.privacyPolicyUrl);
   }
 
   private applyUserCity(user: User): void {

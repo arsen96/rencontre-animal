@@ -33,6 +33,11 @@ service cloud.firestore {
         && request.auth.uid in resource.data.userIds;
     }
 
+    match /animals/{animalId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     match /conversations/{conversationId} {
       allow read: if request.auth != null
         && request.auth.uid in resource.data.userIds;
@@ -48,8 +53,20 @@ service cloud.firestore {
           && request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.userIds
           && request.resource.data.senderId == request.auth.uid
           && request.resource.data.text is string
-          && request.resource.data.text.size() > 0
-          && request.resource.data.text.size() <= 2000;
+          && (
+            (
+              request.resource.data.type == 'image'
+              && request.resource.data.imageUrl is string
+              && request.resource.data.imageUrl.size() > 0
+              && request.resource.data.text.size() <= 200
+              && get(/databases/$(database)/documents/conversations/$(conversationId)).data.photosEnabled == true
+            )
+            || (
+              (request.resource.data.type == 'text' || !('type' in request.resource.data))
+              && request.resource.data.text.size() > 0
+              && request.resource.data.text.size() <= 2000
+            )
+          );
       }
     }
   }
