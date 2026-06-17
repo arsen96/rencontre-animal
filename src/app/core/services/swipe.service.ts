@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Match } from '../interfaces/match.interface';
 import { AgeRange, User } from '../interfaces/user.interface';
 import {
@@ -14,6 +14,7 @@ import {
   sortUsersByDistance,
   withDistanceFrom,
 } from '../utils/distance.util';
+import { AnimalService } from './animal.service';
 import { ChatService } from './chat.service';
 import { SwipeDataService } from './swipe-data.service';
 import { UserDataService } from './user-data.service';
@@ -21,7 +22,7 @@ import { UserDataService } from './user-data.service';
 const DEFAULT_AGE_RANGE: AgeRange = { min: 18, max: 45 };
 
 @Injectable({ providedIn: 'root' })
-export class SwipeService {
+export class SwipeService implements OnDestroy {
   private deck: User[] = [];
   private passedProfiles: User[] = [];
   private profilePool: User[] = [];
@@ -30,12 +31,22 @@ export class SwipeService {
   private readonly deckSubject = new BehaviorSubject<User[]>([]);
   private readonly passedProfilesSubject = new BehaviorSubject<User[]>([]);
   private readonly lastMatchSubject = new BehaviorSubject<Match | null>(null);
+  private animalsSub?: Subscription;
 
   constructor(
+    private readonly animalService: AnimalService,
     private readonly chatService: ChatService,
     private readonly swipeData: SwipeDataService,
     private readonly userData: UserDataService
-  ) {}
+  ) {
+    this.animalsSub = this.animalService.animals$.subscribe(() => {
+      this.refreshCatalogOnProfiles();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.animalsSub?.unsubscribe();
+  }
 
   readonly deck$ = this.deckSubject.asObservable();
   readonly passedProfiles$ = this.passedProfilesSubject.asObservable();
@@ -90,13 +101,14 @@ export class SwipeService {
 
     let allUsers: User[] = [];
     try {
-      allUsers = await this.userData.getAllUsers();
+      allUsers = (await this.userData.getAllUsers()).map((profile) =>
+        this.animalService.enrichUser(normalizeUser(profile))
+      );
     } catch (error) {
       console.error('Failed to load users from Firestore', error);
     }
 
     const profiles = allUsers
-      .map((profile) => normalizeUser(profile))
       .filter(
         (profile) =>
           profile.id !== normalizedCurrentUser.id &&
@@ -130,14 +142,14 @@ export class SwipeService {
       }
 
       this.passedProfiles = allUsers
-        .map((profile) => normalizeUser(profile))
         .filter(
           (profile) =>
             passedIds.has(profile.id) &&
             profile.id !== currentUser.id &&
             isDiscoverableProfile(profile) &&
             this.matchesDiscoveryFilters(profile, currentUser, ageRange)
-        );
+        )
+        .map((profile) => this.animalService.enrichUser(profile));
       this.emitPassedProfiles();
     } catch (error) {
       console.error('Failed to load passed profiles from Firestore', error);
@@ -317,5 +329,25 @@ export class SwipeService {
 
   private emitPassedProfiles(): void {
     this.passedProfilesSubject.next([...this.passedProfiles]);
+  }
+
+  private refreshCatalogOnProfiles(): void {
+    if (
+      this.deck.length === 0 &&
+      this.passedProfiles.length === 0 &&
+      this.profilePool.length === 0
+    ) {
+      return;
+    }
+
+    this.deck = this.deck.map((profile) => this.animalService.enrichUser(profile));
+    this.passedProfiles = this.passedProfiles.map((profile) =>
+      this.animalService.enrichUser(profile)
+    );
+    this.profilePool = this.profilePool.map((profile) =>
+      this.animalService.enrichUser(profile)
+    );
+    this.deckSubject.next([...this.deck]);
+    this.emitPassedProfiles();
   }
 }

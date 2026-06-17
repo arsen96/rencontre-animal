@@ -6,6 +6,7 @@ import { Match } from '../../core/interfaces/match.interface';
 import { CitySelection } from '../../core/interfaces/city-selection.interface';
 import { GeoPoint, User } from '../../core/interfaces/user.interface';
 import { AuthService } from '../../core/services/auth.service';
+import { AnimalService } from '../../core/services/animal.service';
 import { ChatService } from '../../core/services/chat.service';
 import { SwipeDataService } from '../../core/services/swipe-data.service';
 import { SwipeService } from '../../core/services/swipe.service';
@@ -38,6 +39,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
 
   constructor(
     private readonly session: UserSessionService,
+    private readonly animalService: AnimalService,
     private readonly auth: AuthService,
     private readonly swipeData: SwipeDataService,
     private readonly swipeService: SwipeService,
@@ -50,12 +52,13 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     this.sub = combineLatest([
       this.auth.authState$,
       this.session.currentUser$,
+      this.animalService.animals$,
     ]).subscribe(([firebaseUser, user]) => {
       if (user) {
-        this.user = user;
-        this.applyUserCity(user);
-        if (user.ageRange) {
-          this.ageRange = { lower: user.ageRange.min, upper: user.ageRange.max };
+        this.user = this.animalService.enrichUser(user);
+        this.applyUserCity(this.user);
+        if (this.user.ageRange) {
+          this.ageRange = { lower: this.user.ageRange.min, upper: this.user.ageRange.max };
         }
         return;
       }
@@ -215,7 +218,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
         const matches = await this.swipeData.getMatches(user.id);
         this.matches = matches.map((match) => ({
           ...match,
-          user: withDistanceFrom(user, match.user),
+          user: this.animalService.enrichUser(withDistanceFrom(user, match.user)),
         }));
       } catch (error) {
         console.error('Failed to load matches', error);
@@ -225,7 +228,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
       try {
         const receivedLikes = await this.swipeData.getReceivedLikes(user.id);
         this.receivedLikes = receivedLikes.map((profile) =>
-          withDistanceFrom(user, profile)
+          this.animalService.enrichUser(withDistanceFrom(user, profile))
         );
       } catch (error) {
         console.error('Failed to load received likes', error);

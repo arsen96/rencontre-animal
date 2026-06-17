@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Animal } from '../../core/interfaces/animal.interface';
-import { MockDataService } from '../../core/services/mock-data.service';
+import { AnimalService } from '../../core/services/animal.service';
 import { UserSessionService } from '../../core/services/user-session.service';
 
 @Component({
@@ -10,22 +11,30 @@ import { UserSessionService } from '../../core/services/user-session.service';
   styleUrls: ['./animal-select.page.scss'],
   standalone: false,
 })
-export class AnimalSelectPage implements OnInit {
+export class AnimalSelectPage implements OnInit, OnDestroy {
   animals: Animal[] = [];
   searchTerm = '';
   selectedId?: string;
   isEdit = false;
+  loading = true;
+
+  private animalsSub?: Subscription;
 
   constructor(
-    private readonly mockData: MockDataService,
+    private readonly animalService: AnimalService,
     private readonly session: UserSessionService,
     private readonly route: ActivatedRoute,
     private readonly router: Router
   ) {}
 
   ngOnInit(): void {
-    this.animals = this.mockData.getAnimals();
     this.isEdit = this.route.snapshot.queryParamMap.get('edit') === '1';
+
+    this.animalsSub = this.animalService.animals$.subscribe((animals) => {
+      this.animals = animals;
+      this.loading = animals.length === 0;
+    });
+
     if (this.isEdit && this.session.currentUser) {
       this.selectedId = this.session.currentUser.animal.id;
       return;
@@ -35,6 +44,10 @@ export class AnimalSelectPage implements OnInit {
     if (onboardingAnimal) {
       this.selectedId = onboardingAnimal.id;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.animalsSub?.unsubscribe();
   }
 
   get canContinue(): boolean {

@@ -34,7 +34,11 @@
       }
     </div>
 
-    @if (filteredAnimals.length > 0) {
+    @if (loading) {
+      <div class="animal-empty">
+        <p>Chargement des animaux...</p>
+      </div>
+    } @else if (filteredAnimals.length > 0) {
       <div class="animal-grid">
         @for (animal of filteredAnimals; track animal.id) {
           <app-animal-flip-card
