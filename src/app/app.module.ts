@@ -9,8 +9,11 @@ import {
   arrowBack,
   chatbubbleEllipsesOutline,
   chatbubblesOutline,
+  checkmarkOutline,
   close,
+  closeCircleOutline,
   heart,
+  imageOutline,
   informationCircleOutline,
   locationOutline,
   logoGoogle,
@@ -18,9 +21,11 @@ import {
   send,
 } from 'ionicons/icons';
 
+import { Capacitor } from '@capacitor/core';
 import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
 import { provideFirestore, initializeFirestore } from '@angular/fire/firestore';
-import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { provideHttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -38,6 +43,9 @@ addIcons({
   send,
   close,
   heart,
+  'image-outline': imageOutline,
+  'checkmark-outline': checkmarkOutline,
+  'close-circle-outline': closeCircleOutline,
 });
 
 @NgModule({
@@ -59,7 +67,13 @@ addIcons({
         experimentalForceLongPolling: true,
       })
     ),
-    provideAuth(() => getAuth()),
+    provideAuth(() => {
+      if (Capacitor.isNativePlatform()) {
+        return initializeAuth(getApp(), { persistence: indexedDBLocalPersistence });
+      }
+      return getAuth();
+    }),
+    provideStorage(() => getStorage()),
     provideHttpClient(),
   ],
   bootstrap: [AppComponent],

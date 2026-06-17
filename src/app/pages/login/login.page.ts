@@ -106,9 +106,14 @@ export class LoginPage implements OnInit {
       uid = credential.user.uid;
     } catch (error: unknown) {
       const code = (error as { code?: string })?.code;
-      if (code !== 'auth/popup-closed-by-user' && code !== 'auth/cancelled-popup-request') {
+      const message = (error as { message?: string })?.message ?? '';
+      const cancelled =
+        code === 'auth/popup-closed-by-user' ||
+        code === 'auth/cancelled-popup-request' ||
+        message.includes('annulée');
+      if (!cancelled) {
         console.error('Google auth error', error);
-        this.error = this.mapError(code);
+        this.error = this.mapError(code, message);
       }
       this.loading = false;
       return;
@@ -137,7 +142,10 @@ export class LoginPage implements OnInit {
     }
   }
 
-  private mapError(code?: string): string {
+  private mapError(code?: string, message?: string): string {
+    if (message?.includes('token manquant')) {
+      return 'Connexion Google annulée.';
+    }
     switch (code) {
       case 'auth/invalid-email':
         return "L'adresse e-mail n'est pas valide.";

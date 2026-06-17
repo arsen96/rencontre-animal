@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -21,12 +22,15 @@ import { UserSessionService } from '../../core/services/user-session.service';
 })
 export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
   @ViewChild(IonContent) content?: IonContent;
+  @ViewChild('photoInput') photoInput?: ElementRef<HTMLInputElement>;
 
   conversation?: Conversation;
   messages: ChatMessage[] = [];
   draft = '';
   conversationId = '';
   loading = true;
+  uploadingPhoto = false;
+  photoError = '';
 
   private sub?: Subscription;
   private bootstrapped = false;
@@ -70,6 +74,81 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
 
   isMine(message: ChatMessage): boolean {
     return this.chatService.isFromCurrentUser(message);
+  }
+
+  get canRequestPhotos(): boolean {
+    return !!this.conversation && this.chatService.canRequestPhotoSharing(this.conversation);
+  }
+
+  get hasPendingPhotoRequestFromMe(): boolean {
+    return !!this.conversation && this.chatService.hasPendingPhotoRequestFromMe(this.conversation);
+  }
+
+  get canRespondToPhotoRequest(): boolean {
+    return !!this.conversation && this.chatService.canRespondToPhotoRequest(this.conversation);
+  }
+
+  get photosEnabled(): boolean {
+    return !!this.conversation?.photosEnabled;
+  }
+
+  requestPhotoSharing(): void {
+    if (!this.conversationId) {
+      return;
+    }
+
+    void this.chatService.requestPhotoSharing(this.conversationId);
+  }
+
+  acceptPhotoSharing(): void {
+    if (!this.conversationId) {
+      return;
+    }
+
+    void this.chatService.respondToPhotoRequest(this.conversationId, true);
+  }
+
+  declinePhotoSharing(): void {
+    if (!this.conversationId) {
+      return;
+    }
+
+    void this.chatService.respondToPhotoRequest(this.conversationId, false);
+  }
+
+  openPhotoPicker(): void {
+    this.photoError = '';
+    this.photoInput?.nativeElement.click();
+  }
+
+  onPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+
+    if (!file || !this.conversationId) {
+      return;
+    }
+
+    this.uploadingPhoto = true;
+    this.photoError = '';
+
+    void this.chatService
+      .sendImageMessage(this.conversationId, file)
+      .then((message) => {
+        if (message) {
+          setTimeout(() => this.scrollToBottom(), 50);
+        } else {
+          this.photoError = "Impossible d'envoyer la photo.";
+        }
+      })
+      .catch((error: unknown) => {
+        this.photoError =
+          error instanceof Error ? error.message : "Impossible d'envoyer la photo.";
+      })
+      .finally(() => {
+        this.uploadingPhoto = false;
+      });
   }
 
   send(): void {

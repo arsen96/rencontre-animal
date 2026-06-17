@@ -5,11 +5,15 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithCredential,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   User as FirebaseUser,
+  UserCredential,
 } from '@angular/fire/auth';
+import { Capacitor } from '@capacitor/core';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -47,7 +51,17 @@ export class AuthService {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  loginWithGoogle() {
+  async loginWithGoogle(): Promise<UserCredential> {
+    if (Capacitor.isNativePlatform()) {
+      const result = await FirebaseAuthentication.signInWithGoogle();
+      const idToken = result.credential?.idToken;
+      if (!idToken) {
+        throw new Error('Connexion Google annulée ou token manquant.');
+      }
+      const credential = GoogleAuthProvider.credential(idToken);
+      return signInWithCredential(this.auth, credential);
+    }
+
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: 'select_account' });
     return signInWithPopup(this.auth, provider);

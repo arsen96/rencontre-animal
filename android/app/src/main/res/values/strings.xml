@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">animal-rencontre</string>
     <string name="title_activity_main">animal-rencontre</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">fr.animalrencontre.app</string>
+    <string name="custom_url_scheme">fr.animalrencontre.app</string>
+    <string name="default_web_client_id">768126961667-8uvtrv0uao0u85genig7kil90rmdo6sg.apps.googleusercontent.com</string>
 </resources>

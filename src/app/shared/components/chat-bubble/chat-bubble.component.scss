@@ -22,6 +22,19 @@
     word-break: break-word;
   }
 
+  img {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    border-radius: 12px;
+    margin-bottom: 4px;
+    object-fit: cover;
+  }
+
+  &.image {
+    padding: 8px;
+  }
+
   time {
     font-size: 0.62rem;
     color: var(--text-secondary);

@@ -45,6 +45,74 @@
   }
 }
 
+.photo-banner {
+  margin: 0 16px 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(11, 11, 11, 0.78);
+  border: 1px solid var(--glass-border);
+
+  p {
+    margin: 0 0 10px;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--text-primary);
+  }
+
+  &.pending p,
+  &.enabled {
+    margin-bottom: 0;
+  }
+
+  &.enabled {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: var(--gold-light);
+
+    ion-icon {
+      font-size: 1.1rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+  }
+
+  &.request {
+    border-color: rgba(200, 169, 107, 0.35);
+  }
+}
+
+.photo-banner-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.photo-action-btn {
+  --background: rgba(36, 61, 50, 0.95);
+  --color: var(--gold-light);
+  --border-radius: 12px;
+  --box-shadow: 0 0 12px var(--gold-glow-soft);
+  text-transform: none;
+  font-size: 0.78rem;
+}
+
+.photo-decline-btn {
+  --color: var(--text-secondary);
+  --border-color: var(--glass-border);
+  --border-radius: 12px;
+  text-transform: none;
+  font-size: 0.78rem;
+}
+
+.photo-error {
+  margin: 0 0 8px;
+  padding: 0 4px;
+  font-size: 0.75rem;
+  color: #ff8a80;
+}
+
 .messages {
   padding: 0 16px 24px;
 }
@@ -62,6 +130,19 @@
   display: flex;
   align-items: flex-end;
   gap: 8px;
+
+  .photo-btn {
+    --background: rgba(11, 11, 11, 0.9);
+    --color: var(--gold-light);
+    --border-radius: 50%;
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: var(--gold-border);
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    flex-shrink: 0;
+  }
 
   ion-textarea {
     flex: 1;

@@ -29,6 +29,45 @@
     <span>Chat ouvert — vous pouvez tous les deux écrire à tout moment</span>
   </div>
 
+  @if (canRequestPhotos) {
+    <div class="photo-banner glass-card">
+      <p>Vous avez tous les deux écrit. Envie de partager des photos ?</p>
+      <ion-button size="small" class="photo-action-btn" (click)="requestPhotoSharing()">
+        <ion-icon slot="start" name="image-outline"></ion-icon>
+        Demander l'envoi de photos
+      </ion-button>
+    </div>
+  }
+
+  @if (hasPendingPhotoRequestFromMe) {
+    <div class="photo-banner glass-card pending">
+      <p>Demande envoyée — en attente de l'accord de {{ participantName }}.</p>
+    </div>
+  }
+
+  @if (canRespondToPhotoRequest) {
+    <div class="photo-banner glass-card request">
+      <p>{{ participantName }} souhaite pouvoir envoyer des photos. Accepter ?</p>
+      <div class="photo-banner-actions">
+        <ion-button size="small" class="photo-action-btn" (click)="acceptPhotoSharing()">
+          <ion-icon slot="start" name="checkmark-outline"></ion-icon>
+          Accepter
+        </ion-button>
+        <ion-button size="small" fill="outline" class="photo-decline-btn" (click)="declinePhotoSharing()">
+          <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+          Refuser
+        </ion-button>
+      </div>
+    </div>
+  }
+
+  @if (photosEnabled) {
+    <div class="photo-banner glass-card enabled">
+      <ion-icon name="image-outline"></ion-icon>
+      <span>Photos activées — vous pouvez vous envoyer des images.</span>
+    </div>
+  }
+
   <div class="messages">
     @for (msg of messages; track msg.id) {
       <app-chat-bubble [message]="msg" [isMine]="isMine(msg)"></app-chat-bubble>
@@ -38,7 +77,26 @@
 
 <ion-footer class="chat-footer ion-no-border">
   <ion-toolbar>
+    @if (photoError) {
+      <p class="photo-error">{{ photoError }}</p>
+    }
     <div class="composer">
+      @if (photosEnabled) {
+        <ion-button
+          class="photo-btn"
+          [disabled]="uploadingPhoto"
+          (click)="openPhotoPicker()"
+        >
+          <ion-icon name="image-outline"></ion-icon>
+        </ion-button>
+        <input
+          #photoInput
+          type="file"
+          accept="image/*"
+          hidden
+          (change)="onPhotoSelected($event)"
+        />
+      }
       <ion-textarea
         [(ngModel)]="draft"
         placeholder="Écris un message…"

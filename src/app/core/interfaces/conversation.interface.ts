@@ -9,4 +9,6 @@ export interface Conversation {
   createdAt: Date;
   updatedAt: Date;
   unreadCount: number;
+  photosEnabled: boolean;
+  photoRequestBy: string | null;
 }

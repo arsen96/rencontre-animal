@@ -13,6 +13,7 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
+import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { BehaviorSubject, map } from 'rxjs';
 import { Conversation } from '../interfaces/conversation.interface';
 import { ChatMessage } from '../interfaces/message.interface';
@@ -25,6 +26,7 @@ import { UserDataService } from './user-data.service';
 export class ChatService {
   private readonly conversationsSubject = new BehaviorSubject<Conversation[]>([]);
   private readonly messageListeners = new Map<string, Unsubscribe>();
+  private readonly conversationMetaListeners = new Map<string, Unsubscribe>();
   private conversationsListener: Unsubscribe | null = null;
   private listeningForUid: string | null = null;
   private activeConversationId: string | null = null;
@@ -47,6 +49,7 @@ export class ChatService {
     private readonly auth: AuthService,
     private readonly userData: UserDataService,
     private readonly firestore: Firestore,
+    private readonly storage: Storage,
     private readonly injector: EnvironmentInjector
   ) {}
 
@@ -117,6 +120,8 @@ export class ChatService {
           createdAt,
           updatedAt,
           unreadCount,
+          photosEnabled: !!data['photosEnabled'],
+          photoRequestBy: (data['photoRequestBy'] as string | undefined) ?? null,
         });
       }
 
@@ -172,13 +177,19 @@ export class ChatService {
         return;
       }
 
+      const data = change.doc.data();
       const messages = await this.loadMessages(matchId, conversationId);
       this.applyMessages(conversationId, messages);
+      this.applyConversationMeta(conversationId, {
+        photosEnabled: !!data['photosEnabled'],
+        photoRequestBy: (data['photoRequestBy'] as string | undefined) ?? null,
+      });
     }
   }
 
   subscribeToMessages(matchId: string, conversationId: string): void {
     this.unsubscribeFromMessages(conversationId);
+    this.subscribeToConversationMeta(matchId, conversationId);
 
     const messagesQuery = query(
       collection(this.firestore, 'conversations', matchId, 'messages'),
@@ -209,6 +220,51 @@ export class ChatService {
       unsubscribe();
       this.messageListeners.delete(conversationId);
     }
+    this.unsubscribeFromConversationMeta(conversationId);
+  }
+
+  private subscribeToConversationMeta(matchId: string, conversationId: string): void {
+    this.unsubscribeFromConversationMeta(conversationId);
+
+    const unsubscribe = runInInjectionContext(this.injector, () =>
+      onSnapshot(
+        doc(this.firestore, 'conversations', matchId),
+        (snapshot) => {
+          const data = snapshot.data();
+          if (!data) {
+            return;
+          }
+
+          this.applyConversationMeta(conversationId, {
+            photosEnabled: !!data['photosEnabled'],
+            photoRequestBy: (data['photoRequestBy'] as string | undefined) ?? null,
+          });
+        },
+        (error) => {
+          console.error('Failed to listen to conversation metadata', error);
+        }
+      )
+    );
+
+    this.conversationMetaListeners.set(conversationId, unsubscribe);
+  }
+
+  private unsubscribeFromConversationMeta(conversationId: string): void {
+    const unsubscribe = this.conversationMetaListeners.get(conversationId);
+    if (unsubscribe) {
+      unsubscribe();
+      this.conversationMetaListeners.delete(conversationId);
+    }
+  }
+
+  private applyConversationMeta(
+    conversationId: string,
+    meta: { photosEnabled: boolean; photoRequestBy: string | null }
+  ): void {
+    const list = this.conversations.map((conversation) =>
+      conversation.id === conversationId ? { ...conversation, ...meta } : conversation
+    );
+    this.conversationsSubject.next(list);
   }
 
   createFromMatch(match: Match): Conversation {
@@ -228,6 +284,8 @@ export class ChatService {
       createdAt: new Date(match.matchedAt),
       updatedAt: new Date(match.matchedAt),
       unreadCount: 1,
+      photosEnabled: false,
+      photoRequestBy: null,
     };
 
     void this.persistConversation(match, conversation);
@@ -272,6 +330,7 @@ export class ChatService {
       id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
       conversationId,
       senderId: uid,
+      type: 'text',
       text: trimmed,
       sentAt: new Date(),
     };
@@ -298,6 +357,147 @@ export class ChatService {
     return message;
   }
 
+  async sendImageMessage(conversationId: string, file: File): Promise<ChatMessage | null> {
+    const uid = this.auth.uid;
+    if (!uid || !file.type.startsWith('image/')) {
+      return null;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      throw new Error('Image trop lourde (5 Mo max).');
+    }
+
+    const index = this.conversations.findIndex((c) => c.id === conversationId);
+    if (index < 0) {
+      return null;
+    }
+
+    const conversation = this.conversations[index];
+    if (!conversation.photosEnabled) {
+      return null;
+    }
+
+    const messageId = `msg-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const storagePath = `conversations/${conversation.matchId}/photos/${messageId}`;
+
+    let imageUrl: string;
+    try {
+      imageUrl = await runInInjectionContext(this.injector, async () => {
+        const storageRef = ref(this.storage, storagePath);
+        await uploadBytes(storageRef, file, { contentType: file.type });
+        return getDownloadURL(storageRef);
+      });
+    } catch (error) {
+      console.error('Failed to upload chat image', error);
+      return null;
+    }
+
+    const message: ChatMessage = {
+      id: messageId,
+      conversationId,
+      senderId: uid,
+      type: 'image',
+      text: 'Photo',
+      imageUrl,
+      sentAt: new Date(),
+    };
+
+    try {
+      await this.persistMessage(conversation.matchId, message);
+    } catch (error) {
+      console.error('Failed to persist image message', error);
+      return null;
+    }
+
+    const updated: Conversation = {
+      ...conversation,
+      messages: [...conversation.messages, message],
+      updatedAt: message.sentAt,
+      unreadCount: 0,
+    };
+
+    const list = [...this.conversations];
+    list[index] = updated;
+    list.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+    this.conversationsSubject.next(list);
+
+    return message;
+  }
+
+  bothUsersHaveMessaged(conversation: Conversation): boolean {
+    const uid = this.auth.uid;
+    const participantId = conversation.participant.id;
+    if (!uid || !participantId) {
+      return false;
+    }
+
+    const senders = new Set(conversation.messages.map((message) => message.senderId));
+    return senders.has(uid) && senders.has(participantId);
+  }
+
+  canRequestPhotoSharing(conversation: Conversation): boolean {
+    return (
+      this.bothUsersHaveMessaged(conversation) &&
+      !conversation.photosEnabled &&
+      !conversation.photoRequestBy
+    );
+  }
+
+  hasPendingPhotoRequestFromMe(conversation: Conversation): boolean {
+    const uid = this.auth.uid;
+    return !!uid && conversation.photoRequestBy === uid && !conversation.photosEnabled;
+  }
+
+  canRespondToPhotoRequest(conversation: Conversation): boolean {
+    const uid = this.auth.uid;
+    return (
+      !!uid &&
+      !!conversation.photoRequestBy &&
+      conversation.photoRequestBy !== uid &&
+      !conversation.photosEnabled
+    );
+  }
+
+  async requestPhotoSharing(conversationId: string): Promise<boolean> {
+    const uid = this.auth.uid;
+    const conversation = this.getById(conversationId);
+    if (!uid || !conversation || !this.canRequestPhotoSharing(conversation)) {
+      return false;
+    }
+
+    try {
+      await runInInjectionContext(this.injector, () =>
+        updateDoc(doc(this.firestore, 'conversations', conversation.matchId), {
+          photoRequestBy: uid,
+        })
+      );
+      return true;
+    } catch (error) {
+      console.error('Failed to request photo sharing', error);
+      return false;
+    }
+  }
+
+  async respondToPhotoRequest(conversationId: string, accept: boolean): Promise<boolean> {
+    const conversation = this.getById(conversationId);
+    if (!conversation || !this.canRespondToPhotoRequest(conversation)) {
+      return false;
+    }
+
+    try {
+      await runInInjectionContext(this.injector, () =>
+        updateDoc(doc(this.firestore, 'conversations', conversation.matchId), {
+          photosEnabled: accept,
+          photoRequestBy: null,
+        })
+      );
+      return true;
+    } catch (error) {
+      console.error('Failed to respond to photo request', error);
+      return false;
+    }
+  }
+
   isFromCurrentUser(message: ChatMessage): boolean {
     const uid = this.auth.uid;
     return !!uid && message.senderId === uid;
@@ -313,7 +513,13 @@ export class ChatService {
 
   getPreview(conversation: Conversation): string {
     const last = this.getLastMessage(conversation);
-    if (last?.text) {
+    if (!last) {
+      return 'Nouveau match — dis bonjour !';
+    }
+    if (last.type === 'image') {
+      return 'Photo';
+    }
+    if (last.text) {
       return last.text;
     }
     return 'Nouveau match — dis bonjour !';
@@ -422,7 +628,9 @@ export class ChatService {
       id,
       conversationId,
       senderId: (data['senderId'] as string) ?? '',
+      type: (data['type'] as ChatMessage['type'] | undefined) ?? 'text',
       text: (data['text'] as string) ?? '',
+      imageUrl: (data['imageUrl'] as string | undefined) ?? undefined,
       sentAt,
     };
   }
@@ -480,13 +688,15 @@ export class ChatService {
       await setDoc(doc(this.firestore, 'conversations', matchId, 'messages', message.id), {
         id: message.id,
         senderId: message.senderId,
+        type: message.type,
         text: message.text,
+        ...(message.imageUrl ? { imageUrl: message.imageUrl } : {}),
         sentAt: serverTimestamp(),
       });
 
       await updateDoc(doc(this.firestore, 'conversations', matchId), {
         updatedAt: serverTimestamp(),
-        lastMessageText: message.text,
+        lastMessageText: message.type === 'image' ? 'Photo' : message.text,
       });
     });
   }
