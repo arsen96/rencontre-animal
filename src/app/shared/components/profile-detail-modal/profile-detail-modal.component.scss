@@ -36,6 +36,12 @@ ion-toolbar {
     letter-spacing: 0.04em;
   }
 
+  .animal-description {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: -2px 0 12px;
+  }
+
   .bio {
     color: var(--text-secondary);
     line-height: 1.55;

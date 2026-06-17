@@ -1,5 +1,17 @@
 @import '../../../theme/mixins.scss';
 
+.animal-detail-header {
+  ion-toolbar {
+    --background: transparent;
+    --color: #fff;
+  }
+
+  ion-button,
+  ion-icon {
+    color: #fff;
+  }
+}
+
 .animal-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));

@@ -1,5 +1,17 @@
 <app-jungle-background variant="subtle"></app-jungle-background>
 
+@if (isEdit) {
+  <ion-header class="ion-no-border animal-detail-header">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="goBack()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+}
+
 <ion-content class="jungle-content" [fullscreen]="true">
   <div class="page-shell">
     <app-step-header [currentStep]="4" [totalSteps]="6"></app-step-header>

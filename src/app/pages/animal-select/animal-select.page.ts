@@ -115,6 +115,17 @@ export class AnimalSelectPage implements OnInit {
     this.router.navigate(['/profile-create']);
   }
 
+  goBack(): void {
+    if (this.isEdit) {
+      void this.router.navigate(['/user-profile']);
+      return;
+    }
+
+    void this.router.navigate(['/animal-select'], {
+      queryParamsHandling: 'preserve',
+    });
+  }
+
   private normalizeText(value: string): string {
     return value
       .toLowerCase()
