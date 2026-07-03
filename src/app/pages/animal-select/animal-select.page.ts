@@ -12,11 +12,14 @@ import { UserSessionService } from '../../core/services/user-session.service';
   standalone: false,
 })
 export class AnimalSelectPage implements OnInit, OnDestroy {
+  readonly pageSize = 40;
+
   animals: Animal[] = [];
   searchTerm = '';
   selectedId?: string;
   isEdit = false;
   loading = true;
+  currentPage = 1;
 
   private animalsSub?: Subscription;
 
@@ -33,6 +36,7 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
     this.animalsSub = this.animalService.animals$.subscribe((animals) => {
       this.animals = animals;
       this.loading = animals.length === 0;
+      this.syncPagination();
     });
 
     if (this.isEdit && this.session.currentUser) {
@@ -77,6 +81,31 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
     return `${count} animaux disponibles`;
   }
 
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredAnimals.length / this.pageSize));
+  }
+
+  get paginatedAnimals(): Animal[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.filteredAnimals.slice(start, start + this.pageSize);
+  }
+
+  get pageLabel(): string {
+    return `Page ${this.currentPage} sur ${this.totalPages}`;
+  }
+
+  get showPagination(): boolean {
+    return this.filteredAnimals.length > this.pageSize;
+  }
+
+  get canGoToPreviousPage(): boolean {
+    return this.currentPage > 1;
+  }
+
+  get canGoToNextPage(): boolean {
+    return this.currentPage < this.totalPages;
+  }
+
   get filteredAnimals(): Animal[] {
     const query = this.normalizeText(this.searchTerm);
     if (!query) {
@@ -96,6 +125,7 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   onSearchInput(event: Event): void {
     const customEvent = event as CustomEvent<{ value?: string | null }>;
     this.searchTerm = customEvent.detail?.value?.replace(/^\s+/, '') ?? '';
+    this.currentPage = 1;
   }
 
   onCardClick(animal: Animal): void {
@@ -137,6 +167,28 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
     void this.router.navigate(['/animal-select'], {
       queryParamsHandling: 'preserve',
     });
+  }
+
+  previousPage(): void {
+    if (!this.canGoToPreviousPage) {
+      return;
+    }
+
+    this.currentPage -= 1;
+  }
+
+  nextPage(): void {
+    if (!this.canGoToNextPage) {
+      return;
+    }
+
+    this.currentPage += 1;
+  }
+
+  private syncPagination(): void {
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = this.totalPages;
+    }
   }
 
   private normalizeText(value: string): string {

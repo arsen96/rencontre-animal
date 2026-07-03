@@ -40,7 +40,7 @@
       </div>
     } @else if (filteredAnimals.length > 0) {
       <div class="animal-grid">
-        @for (animal of filteredAnimals; track animal.id) {
+        @for (animal of paginatedAnimals; track animal.id) {
           <app-animal-flip-card
             [animal]="animal"
             [selected]="isSelected(animal)"
@@ -48,6 +48,32 @@
           ></app-animal-flip-card>
         }
       </div>
+
+      @if (showPagination) {
+        <div class="pagination-bar">
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="!canGoToPreviousPage"
+            (click)="previousPage()"
+          >
+            <ion-icon name="chevron-back"></ion-icon>
+            Precedent
+          </button>
+
+          <span class="pagination-label">{{ pageLabel }}</span>
+
+          <button
+            type="button"
+            class="pagination-button"
+            [disabled]="!canGoToNextPage"
+            (click)="nextPage()"
+          >
+            Suivant
+            <ion-icon name="chevron-forward"></ion-icon>
+          </button>
+        </div>
+      }
     } @else {
       <div class="animal-empty">
         <h2>Aucun animal trouvé</h2>

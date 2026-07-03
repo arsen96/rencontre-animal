@@ -80,6 +80,8 @@ export const notifyOnNewMessage = onDocumentCreated(
       android: {
         priority: 'high',
         notification: {
+          icon: 'ic_notification',
+          color: '#2d4a2d',
           sound: 'default',
         },
       },

@@ -12,7 +12,8 @@
     "lint": "ng lint",
     "functions:build": "npm run build --prefix functions",
     "deploy:push": "npm run functions:build && npx firebase deploy --only functions,firestore:rules,storage",
-    "assets:icons": "npx @capacitor/assets generate --android --iconBackgroundColor \"#2d4a2d\"",
+    "assets:icons": "npx @capacitor/assets generate --android --iconBackgroundColor \"#2d4a2d\" && node scripts/sync-notification-icon.mjs",
+    "assets:notification-icon": "node scripts/sync-notification-icon.mjs",
     "animals:seed:generate": "node scripts/generate-animal-seeds.mjs",
     "animals:seed": "node scripts/seed-animals.mjs",
     "animals:images:sync": "node scripts/sync-animal-images-storage.mjs"
