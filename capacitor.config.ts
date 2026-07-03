@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'fr.animalrencontre.app',
-  appName: 'animal-rencontre',
+  appId: 'com.animalrencontre.app',
+  appName: 'Animal Rencontre',
   webDir: 'www',
   plugins: {
     PushNotifications: {

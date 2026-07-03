@@ -24,11 +24,13 @@
         [expanded]="true"
         [clickable]="false"
       ></app-animal-flip-card>
-
-      <p class="detail-note">
-        Animal sélectionné. Retourne à la liste pour choisir une autre carte ou appuie sur
-        <strong>Continuer</strong>.
-      </p>
     </div>
+  }
+
+  @if (canContinue) {
+    <button type="button" class="floating-continue" (click)="continue()">
+      <ion-icon name="arrow-forward"></ion-icon>
+      Continuer
+    </button>
   }
 </ion-content>

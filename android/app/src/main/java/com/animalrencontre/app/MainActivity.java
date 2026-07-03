@@ -1,4 +1,4 @@
-package fr.animalrencontre.app;
+package com.animalrencontre.app;
 
 import com.getcapacitor.BridgeActivity;
 

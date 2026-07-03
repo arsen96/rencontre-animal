@@ -14,6 +14,7 @@ import { UserSessionService } from '../../core/services/user-session.service';
 export class AnimalDetailPage implements OnInit, OnDestroy {
   animal?: Animal;
   flipped = false;
+  isEdit = false;
   private flipTimer?: number;
   private animalsSub?: Subscription;
   private animalId?: string;
@@ -26,6 +27,8 @@ export class AnimalDetailPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isEdit = this.route.snapshot.queryParamMap.get('edit') === '1';
+
     const animalId = this.route.snapshot.paramMap.get('animalId');
     if (!animalId) {
       this.goBack();
@@ -55,6 +58,24 @@ export class AnimalDetailPage implements OnInit, OnDestroy {
     if (this.flipTimer) {
       window.clearTimeout(this.flipTimer);
     }
+  }
+
+  get canContinue(): boolean {
+    return !!this.animal;
+  }
+
+  continue(): void {
+    if (!this.animal) {
+      return;
+    }
+
+    if (this.isEdit) {
+      this.session.updateAnimal(this.animal);
+      void this.router.navigate(['/jungle']);
+      return;
+    }
+
+    void this.router.navigate(['/profile-create']);
   }
 
   goBack(): void {

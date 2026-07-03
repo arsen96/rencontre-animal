@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:768126961667:android:9bfddb4d09d8c1af6de636",
         "android_client_info": {
-          "package_name": "fr.animalrencontre.app"
+          "package_name": "com.animalrencontre.app"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "768126961667-834mlr58t5pskcucgetc71bak4olgbbp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "fr.animalrencontre.app",
+            "package_name": "com.animalrencontre.app",
             "certificate_hash": "737647ecd09110a153760ccce150cdfebc8c0e94"
           }
         },
