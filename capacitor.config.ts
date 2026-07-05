@@ -16,3 +16,13 @@ const config: CapacitorConfig = {
 };
 
 export default config;
+
+
+// npm run build
+// npx cap sync android
+// npx cap open android
+
+// npx cap run android
+
+// cd android
+// ./gradlew assembleDebug  

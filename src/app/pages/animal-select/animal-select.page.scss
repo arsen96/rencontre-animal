@@ -30,52 +30,6 @@
   }
 }
 
-.pagination-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 0 0 28px;
-  padding: 14px 16px;
-  border: 1px solid rgba(255, 215, 128, 0.2);
-  border-radius: 18px;
-  background: rgba(9, 17, 10, 0.62);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.pagination-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  border: 1px solid rgba(255, 215, 128, 0.28);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
-
-  &:not(:disabled):hover {
-    background: rgba(255, 255, 255, 0.12);
-    transform: translateY(-1px);
-  }
-
-  &:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
-}
-
-.pagination-label {
-  color: var(--gold-light);
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-align: center;
-}
-
 .floating-continue {
   position: fixed;
   left: 50%;
@@ -124,14 +78,5 @@
   .animal-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 14px;
-  }
-
-  .pagination-bar {
-    flex-direction: column;
-  }
-
-  .pagination-button {
-    width: 100%;
-    justify-content: center;
   }
 }
