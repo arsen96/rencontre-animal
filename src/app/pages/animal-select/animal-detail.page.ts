@@ -43,7 +43,6 @@ export class AnimalDetailPage implements OnInit, OnDestroy {
       }
 
       this.animal = animal;
-      this.session.patchOnboarding({ selectedAnimal: animal });
 
       if (!this.flipped) {
         this.flipTimer = window.setTimeout(() => {
@@ -75,6 +74,7 @@ export class AnimalDetailPage implements OnInit, OnDestroy {
       return;
     }
 
+    this.session.patchOnboarding({ selectedAnimal: this.animal });
     void this.router.navigate(['/profile-create']);
   }
 

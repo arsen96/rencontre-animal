@@ -28,9 +28,15 @@
   }
 
   @if (canContinue) {
-    <button type="button" class="floating-continue" (click)="continue()">
-      <ion-icon name="arrow-forward"></ion-icon>
-      Continuer
-    </button>
+    <div class="floating-actions">
+      <button type="button" class="floating-action floating-action--back" (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+        Retour
+      </button>
+      <button type="button" class="floating-action floating-action--select" (click)="continue()">
+        <ion-icon name="checkmark"></ion-icon>
+        Sélectionner
+      </button>
+    </div>
   }
 </ion-content>

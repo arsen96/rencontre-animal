@@ -62,22 +62,26 @@ app-animal-flip-card.detail-card {
   }
 }
 
-.floating-continue {
+.floating-actions {
   position: fixed;
   left: 50%;
   bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.floating-action {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 11px 22px;
   border-radius: 999px;
   border: 1px solid var(--gold-border);
-  background: rgba(11, 11, 11, 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  color: var(--gold-light);
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -88,6 +92,17 @@ app-animal-flip-card.detail-card {
   ion-icon {
     font-size: 1.05rem;
   }
+}
+
+.floating-action--back {
+  background: rgba(11, 11, 11, 0.72);
+  color: var(--gold-light);
+}
+
+.floating-action--select {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #0b0b0b;
 }
 
 @media (max-width: 480px) {

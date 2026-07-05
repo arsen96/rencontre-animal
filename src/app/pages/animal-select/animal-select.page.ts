@@ -99,8 +99,6 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
   }
 
   onCardClick(animal: Animal): void {
-    this.selectedId = animal.id;
-    this.session.patchOnboarding({ selectedAnimal: animal });
     void this.router.navigate([animal.id], {
       relativeTo: this.route,
       queryParamsHandling: 'preserve',
