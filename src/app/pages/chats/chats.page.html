@@ -7,7 +7,7 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Mes conversations</ion-title>
+    <ion-title>{{ 'chats.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,9 +15,9 @@
   @if (isEmpty) {
     <div class="empty">
       <span class="emoji">💬</span>
-      <h2>Aucune conversation</h2>
-      <p>Match avec quelqu'un dans la Jungle pour démarrer un chat.</p>
-      <ion-button fill="outline" (click)="backToJungle()">Retour à la Jungle</ion-button>
+      <h2>{{ 'chats.emptyTitle' | translate }}</h2>
+      <p>{{ 'chats.emptySubtitle' | translate }}</p>
+      <ion-button fill="outline" (click)="backToJungle()">{{ 'chats.backToJungle' | translate }}</ion-button>
     </div>
   } @else {
     <ion-list lines="none" class="conv-list">

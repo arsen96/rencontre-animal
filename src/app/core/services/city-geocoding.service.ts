@@ -26,6 +26,8 @@ const GEOCODING_URL = 'https://data.geopf.fr/geocodage/search';
 export class CityGeocodingService {
   constructor(private readonly http: HttpClient) {}
 
+
+
   searchMunicipalities(query: string, limit = 8): Observable<CitySuggestion[]> {
     const trimmed = query.trim();
     if (trimmed.length < 2) {

@@ -2,7 +2,7 @@
 
 <ion-header class="ion-no-border jungle-header">
   <ion-toolbar>
-    <ion-title>La Jungle</ion-title>
+    <ion-title>{{ 'jungle.title' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button class="profile-btn" (click)="openProfile()">
         <ion-icon name="person-circle-outline"></ion-icon>
@@ -24,21 +24,21 @@
   @if (loadingDeck) {
     <div class="deck-loading">
       <ion-spinner name="crescent"></ion-spinner>
-      <p>Chargement de la jungle…</p>
+      <p>{{ 'jungle.loading' | translate }}</p>
     </div>
   } @else if (isEmpty) {
     <div class="empty-state">
       <span class="emoji">🌴</span>
-      <h2>Plus de profils pour l'instant</h2>
+      <h2>{{ 'jungle.emptyTitle' | translate }}</h2>
       @if (hasPassedProfiles) {
-        <p>Tu as refusé {{ passedCount }} profil@if (passedCount > 1) {s}. Envie de leur redonner une chance ?</p>
+        <p>{{ (passedCount > 1 ? 'jungle.passedMany' : 'jungle.passedOne') | translate: { count: passedCount } }}</p>
         <app-primary-button
-          label="Revoir les profils"
+          [label]="'jungle.reviewButton' | translate"
           variant="green"
           (pressed)="restartWithPassed()"
         ></app-primary-button>
       } @else {
-        <p>Reviens plus tard — la jungle se repopule !</p>
+        <p>{{ 'jungle.comeBackLater' | translate }}</p>
       }
     </div>
   } @else {

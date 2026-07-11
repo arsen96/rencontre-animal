@@ -31,11 +31,11 @@
     <div class="floating-actions">
       <button type="button" class="floating-action floating-action--back" (click)="goBack()">
         <ion-icon name="arrow-back"></ion-icon>
-        Retour
+        {{ 'common.back' | translate }}
       </button>
       <button type="button" class="floating-action floating-action--select" (click)="continue()">
         <ion-icon name="checkmark"></ion-icon>
-        Sélectionner
+        {{ 'common.select' | translate }}
       </button>
     </div>
   }

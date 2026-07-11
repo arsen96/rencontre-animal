@@ -1,28 +1,44 @@
 import { EnvironmentInjector, Injectable, OnDestroy, runInInjectionContext } from '@angular/core';
 import { Firestore, collection, onSnapshot } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable, filter, firstValueFrom, take } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject, Observable, Subscription, filter, firstValueFrom, take } from 'rxjs';
 import animalSeeds from '../data/animal-seeds.json';
 import { Animal } from '../interfaces/animal.interface';
 import { User } from '../interfaces/user.interface';
-import { AnimalSeed, animalFromSeed } from '../utils/animal.utils';
+import { AnimalLang, AnimalSeed, animalFromSeed } from '../utils/animal.utils';
 
 @Injectable({ providedIn: 'root' })
 export class AnimalService implements OnDestroy {
   private readonly animalsSubject = new BehaviorSubject<Animal[]>([]);
   private readonly readySubject = new BehaviorSubject(false);
   private unsubscribeFirestore?: () => void;
+  private currentSeeds: AnimalSeed[] = [];
+  private langSub?: Subscription;
 
   readonly animals$: Observable<Animal[]> = this.animalsSubject.asObservable();
 
   constructor(
     private readonly firestore: Firestore,
-    private readonly injector: EnvironmentInjector
+    private readonly injector: EnvironmentInjector,
+    private readonly translate: TranslateService
   ) {
     this.startFirestoreListener();
+    this.langSub = this.translate.onLangChange.subscribe(() => this.rebuildAnimals());
   }
 
   ngOnDestroy(): void {
     this.unsubscribeFirestore?.();
+    this.langSub?.unsubscribe();
+  }
+
+  private get activeLang(): AnimalLang {
+    return this.translate.getCurrentLang() === 'en' ? 'en' : 'fr';
+  }
+
+  private rebuildAnimals(): void {
+    if (this.currentSeeds.length > 0) {
+      this.publishAnimals(this.currentSeeds.map((seed) => animalFromSeed(seed, this.activeLang)));
+    }
   }
 
   async getAnimals(): Promise<Animal[]> {
@@ -69,7 +85,8 @@ export class AnimalService implements OnDestroy {
         collection(this.firestore, 'animals'),
         (snapshot) => {
           if (!snapshot.empty) {
-            this.publishAnimals(this.mapSnapshot(snapshot.docs));
+            this.currentSeeds = this.seedsFromSnapshot(snapshot.docs);
+            this.rebuildAnimals();
             return;
           }
 
@@ -83,24 +100,18 @@ export class AnimalService implements OnDestroy {
     });
   }
 
-  private mapSnapshot(
+  private seedsFromSnapshot(
     docs: Array<{ id: string; data: () => Record<string, unknown> }>
-  ): Animal[] {
+  ): AnimalSeed[] {
     return docs
-      .map((docSnap) => {
-        const seed = { ...(docSnap.data() as unknown as AnimalSeed), id: docSnap.id };
-        return { seed, animal: animalFromSeed(seed) };
-      })
-      .filter(({ seed }) => seed.active !== false)
-      .sort((left, right) => (left.seed.sortOrder ?? 0) - (right.seed.sortOrder ?? 0))
-      .map(({ animal }) => animal);
+      .map((docSnap) => ({ ...(docSnap.data() as unknown as AnimalSeed), id: docSnap.id }))
+      .filter((seed) => seed.active !== false)
+      .sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0));
   }
 
   private useFallbackAnimals(): void {
-    const animals = (animalSeeds as AnimalSeed[])
-      .filter((seed) => seed.active !== false)
-      .map(animalFromSeed);
-    this.publishAnimals(animals);
+    this.currentSeeds = (animalSeeds as AnimalSeed[]).filter((seed) => seed.active !== false);
+    this.rebuildAnimals();
   }
 
   private publishAnimals(animals: Animal[]): void {

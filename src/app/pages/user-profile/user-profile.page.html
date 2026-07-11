@@ -11,14 +11,14 @@
         </div>
         <button type="button" class="change-animal-btn" (click)="changeAnimal()">
           <ion-icon name="swap-horizontal-outline"></ion-icon>
-          Changer d'animal
+          {{ 'profile.changeAnimal' | translate }}
         </button>
       </div>
 
       <div class="profile-card glass-card">
         <h1>{{ user.displayName }}</h1>
         <p class="meta">
-          {{ user.age }} ans · {{ user.profile.height }} cm
+          {{ user.age }} {{ 'common.years' | translate }} · {{ user.profile.height }} cm
           @if (user.city) {
             · {{ user.city }}
           }
@@ -30,46 +30,46 @@
         }
 
         <div class="traits-row">
-          <span><strong>Yeux</strong> {{ user.profile.eyeColor }}</span>
-          <span><strong>Cheveux</strong> {{ user.profile.hairColor }}</span>
+          <span><strong>{{ 'profile.eyes' | translate }}</strong> {{ 'color.' + user.profile.eyeColor | translate }}</span>
+          <span><strong>{{ 'profile.hair' | translate }}</strong> {{ 'color.' + user.profile.hairColor | translate }}</span>
         </div>
 
         <div class="media-section">
-          <h3>Films</h3>
+          <h3>{{ 'profile.movies' | translate }}</h3>
           <p>{{ user.profile.movies[0] }}</p>
           <p>{{ user.profile.movies[1] }}</p>
         </div>
 
         <div class="media-section">
-          <h3>Chansons</h3>
+          <h3>{{ 'profile.songs' | translate }}</h3>
           <p>{{ user.profile.songs[0] }}</p>
           <p>{{ user.profile.songs[1] }}</p>
         </div>
       </div>
 
       <div class="profile-card glass-card city-card">
-        <h3>Ma ville</h3>
-        <p class="section-hint">Obligatoire pour apparaître dans la Jungle et voir les autres profils.</p>
+        <h3>{{ 'profile.cityTitle' | translate }}</h3>
+        <p class="section-hint">{{ 'profile.cityHint' | translate }}</p>
         <app-city-autocomplete
           [city]="city"
           [location]="cityLocation"
           (selectionChange)="onCitySelection($event)"
         ></app-city-autocomplete>
         @if (cityRequiredHint) {
-          <p class="city-error">Indique ta ville pour entrer dans la Jungle.</p>
+          <p class="city-error">{{ 'profile.cityError' | translate }}</p>
         }
       </div>
 
       <div class="profile-card glass-card connections-card">
-        <h3>Mes matchs</h3>
-        <p class="section-hint">Personnes avec qui tu as matché </p>
+        <h3>{{ 'profile.matchesTitle' | translate }}</h3>
+        <p class="section-hint">{{ 'profile.matchesHint' | translate }}</p>
 
         @if (loadingConnections) {
           <div class="connections-loading">
             <ion-spinner name="crescent"></ion-spinner>
           </div>
         } @else if (matches.length === 0) {
-          <p class="empty-hint">Aucun match pour l'instant. Explore la Jungle !</p>
+          <p class="empty-hint">{{ 'profile.matchesEmpty' | translate }}</p>
         } @else {
           <div class="connection-list connection-list--scroll">
             @for (match of matches; track match.id) {
@@ -77,7 +77,7 @@
                 <button
                   type="button"
                   class="connection-avatar"
-                  [attr.aria-label]="'Voir le profil de ' + match.user.displayName"
+                  [attr.aria-label]="'profile.viewProfileOf' | translate: { name: match.user.displayName }"
                   (click)="openProfileDetail(match.user)"
                 >
                   <app-animal-avatar
@@ -100,7 +100,7 @@
                 </div>
                 <button type="button" class="message-btn" (click)="openMatchChat(match)">
                   <ion-icon name="chatbubble-outline"></ion-icon>
-                  Message
+                  {{ 'common.message' | translate }}
                 </button>
               </div>
             }
@@ -109,15 +109,15 @@
       </div>
 
       <div class="profile-card glass-card connections-card">
-        <h3>Likes reçus</h3>
-        <p class="section-hint">Ils t'ont liké — à toi de répondre.</p>
+        <h3>{{ 'profile.likesTitle' | translate }}</h3>
+        <p class="section-hint">{{ 'profile.likesHint' | translate }}</p>
 
         @if (loadingConnections) {
           <div class="connections-loading">
             <ion-spinner name="crescent"></ion-spinner>
           </div>
         } @else if (receivedLikes.length === 0) {
-          <p class="empty-hint">Personne en attente pour l'instant.</p>
+          <p class="empty-hint">{{ 'profile.likesEmpty' | translate }}</p>
         } @else {
           <div class="connection-list connection-list--scroll">
             @for (profile of receivedLikes; track profile.id) {
@@ -125,7 +125,7 @@
                 <button
                   type="button"
                   class="connection-avatar"
-                  [attr.aria-label]="'Voir le profil de ' + profile.displayName"
+                  [attr.aria-label]="'profile.viewProfileOf' | translate: { name: profile.displayName }"
                   (click)="openProfileDetail(profile)"
                 >
                   <app-animal-avatar
@@ -137,7 +137,7 @@
                 <div class="connection-info">
                   <strong>{{ profile.displayName }}</strong>
                   <span>
-                    {{ profile.age }} ans · {{ profile.animal.name }}
+                    {{ profile.age }} {{ 'common.years' | translate }} · {{ profile.animal.name }}
                     @if (profile.city) {
                       · {{ profile.city }}
                     }
@@ -171,8 +171,8 @@
       </div>
 
       <div class="profile-card glass-card age-range-card">
-        <h3>Tranche d'âge à rencontrer</h3>
-        <p class="age-range-value">{{ ageRange.lower }} – {{ ageRange.upper }} ans</p>
+        <h3>{{ 'profile.ageRangeTitle' | translate }}</h3>
+        <p class="age-range-value">{{ 'profile.ageRangeValue' | translate: { lower: ageRange.lower, upper: ageRange.upper } }}</p>
         <ion-range
           [(ngModel)]="ageRange"
           (ionChange)="onAgeRangeChange($event)"
@@ -184,24 +184,39 @@
         ></ion-range>
       </div>
 
+      <div class="profile-card glass-card language-card">
+        <h3>{{ 'language.title' | translate }}</h3>
+        <p class="section-hint">{{ 'language.hint' | translate }}</p>
+        <ion-segment [value]="currentLanguage" (ionChange)="onLanguageChange($event)">
+          @for (lang of languages; track lang) {
+            <ion-segment-button [value]="lang">
+              <ion-label>
+                <img class="lang-flag" [src]="languageFlags[lang]" alt="" aria-hidden="true" />
+                {{ 'language.' + lang | translate }}
+              </ion-label>
+            </ion-segment-button>
+          }
+        </ion-segment>
+      </div>
+
       <button type="button" class="edit-profile-btn" (click)="editProfile()">
         <ion-icon name="create-outline"></ion-icon>
-        Modifier mon profil
+        {{ 'profile.editProfile' | translate }}
       </button>
 
       <app-primary-button
-        label="Entrer dans la Jungle"
+        [label]="'profile.enterJungle' | translate"
         variant="green"
         [disabled]="!canEnterJungle"
         (pressed)="enterJungle()"
       ></app-primary-button>
 
       <button type="button" class="legal-link" (click)="openPrivacyPolicy()">
-        Politique de confidentialité
+        {{ 'privacy.link' | translate }}
       </button>
 
       <button type="button" class="logout-btn" (click)="logout()">
-        Se déconnecter
+        {{ 'profile.logout' | translate }}
       </button>
     </div>
   }

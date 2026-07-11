@@ -26,36 +26,36 @@
 <ion-content #chatContent class="jungle-content chat-page" [fullscreen]="true">
   <div class="symmetry-hint glass-card">
     <ion-icon name="chatbubbles-outline"></ion-icon>
-    <span>Chat ouvert — vous pouvez tous les deux écrire à tout moment</span>
+    <span>{{ 'chat.symmetryHint' | translate }}</span>
   </div>
 
   @if (canRequestPhotos) {
     <div class="photo-banner glass-card">
-      <p>Vous avez tous les deux écrit. Envie de partager des photos ?</p>
+      <p>{{ 'chat.photoBanner' | translate }}</p>
       <ion-button size="small" class="photo-action-btn" (click)="requestPhotoSharing()">
         <ion-icon slot="start" name="image-outline"></ion-icon>
-        Demander l'envoi de photos
+        {{ 'chat.photoAsk' | translate }}
       </ion-button>
     </div>
   }
 
   @if (hasPendingPhotoRequestFromMe) {
     <div class="photo-banner glass-card pending">
-      <p>Demande envoyée — en attente de l'accord de {{ participantName }}.</p>
+      <p>{{ 'chat.photoPending' | translate: { name: participantName } }}</p>
     </div>
   }
 
   @if (canRespondToPhotoRequest) {
     <div class="photo-banner glass-card request">
-      <p>{{ participantName }} souhaite pouvoir envoyer des photos. Accepter ?</p>
+      <p>{{ 'chat.photoIncoming' | translate: { name: participantName } }}</p>
       <div class="photo-banner-actions">
         <ion-button size="small" class="photo-action-btn" (click)="acceptPhotoSharing()">
           <ion-icon slot="start" name="checkmark-outline"></ion-icon>
-          Accepter
+          {{ 'chat.photoAccept' | translate }}
         </ion-button>
         <ion-button size="small" fill="outline" class="photo-decline-btn" (click)="declinePhotoSharing()">
           <ion-icon slot="start" name="close-circle-outline"></ion-icon>
-          Refuser
+          {{ 'chat.photoDecline' | translate }}
         </ion-button>
       </div>
     </div>
@@ -64,7 +64,7 @@
   @if (photosEnabled) {
     <div class="photo-banner glass-card enabled">
       <ion-icon name="image-outline"></ion-icon>
-      <span>Photos activées — vous pouvez vous envoyer des images.</span>
+      <span>{{ 'chat.photoEnabled' | translate }}</span>
     </div>
   }
 
@@ -99,7 +99,7 @@
       }
       <ion-textarea
         [(ngModel)]="draft"
-        placeholder="Écris un message…"
+        [placeholder]="'chat.composerPlaceholder' | translate"
         [autoGrow]="true"
         rows="1"
         maxlength="500"

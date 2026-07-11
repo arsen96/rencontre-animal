@@ -28,7 +28,7 @@ import { CityGeocodingService } from '../../../core/services/city-geocoding.serv
 export class CityAutocompleteComponent implements OnInit, OnChanges, OnDestroy {
   @Input() city = '';
   @Input() location?: GeoPoint;
-  @Input() placeholder = 'Ex. Paris, Lyon, Marseille…';
+  @Input() placeholder = '';
   @Input() showHint = true;
   @Output() selectionChange = new EventEmitter<CitySelection | null>();
 

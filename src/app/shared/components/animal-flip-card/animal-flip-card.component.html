@@ -13,13 +13,13 @@
       </div>
       <div class="card-caption">
         <span class="name">{{ animal.name }}</span>
-        <span class="hint">Révéler la fiche</span>
+        <span class="hint">{{ 'flipCard.reveal' | translate }}</span>
       </div>
     </div>
 
     <div class="flip-face flip-back">
       <div class="flip-back-inner">
-        <p class="fiche-title">Fiche collector</p>
+        <p class="fiche-title">{{ 'flipCard.title' | translate }}</p>
         <h3 class="animal-name">{{ animal.name }}</h3>
         <p class="personality">{{ animal.personality }}</p>
         <p class="description">{{ animal.description }}</p>

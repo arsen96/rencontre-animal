@@ -1,7 +1,7 @@
 <div class="bubble-row" [class.mine]="isMine">
   <div class="bubble" [class.mine]="isMine" [class.image]="message.type === 'image'">
     @if (message.type === 'image' && message.imageUrl) {
-      <img [src]="message.imageUrl" alt="Photo envoyée" loading="lazy" />
+      <img [src]="message.imageUrl" [alt]="'chatBubble.photoAlt' | translate" loading="lazy" />
     } @else {
       <p>{{ message.text }}</p>
     }

@@ -6,8 +6,8 @@
       <app-step-header [currentStep]="5" [totalSteps]="6"></app-step-header>
     }
 
-    <h1 class="page-title">{{ isEdit ? 'Modifier ton profil' : 'Crée ton profil' }}</h1>
-    <p class="page-subtitle">Quelques détails pour te démarquer dans la jungle.</p>
+    <h1 class="page-title">{{ (isEdit ? 'profileCreate.titleEdit' : 'profileCreate.titleCreate') | translate }}</h1>
+    <p class="page-subtitle">{{ 'profileCreate.subtitle' | translate }}</p>
 
     @if (isEdit && animal) {
       <div class="edit-animal">
@@ -16,48 +16,48 @@
         </div>
         <button type="button" class="change-animal-btn" (click)="changeAnimal()">
           <ion-icon name="swap-horizontal-outline"></ion-icon>
-          Changer d'animal
+          {{ 'profileCreate.changeAnimal' | translate }}
         </button>
       </div>
     }
 
     <div class="glass-card form-block">
       <div class="form-field">
-        <label>Ton prénom</label>
-        <ion-input [(ngModel)]="displayName" placeholder="Ex. Alex"></ion-input>
+        <label>{{ 'profileCreate.firstName' | translate }}</label>
+        <ion-input [(ngModel)]="displayName" [placeholder]="'profileCreate.firstNamePlaceholder' | translate"></ion-input>
       </div>
       <div class="form-field">
-        <label>Couleur des yeux</label>
-        <ion-select [(ngModel)]="eyeColor" interface="action-sheet" placeholder="Choisir">
+        <label>{{ 'profileCreate.eyeColor' | translate }}</label>
+        <ion-select [(ngModel)]="eyeColor" interface="action-sheet" [placeholder]="'common.choose' | translate">
           @for (c of eyeColors; track c) {
-            <ion-select-option [value]="c">{{ c }}</ion-select-option>
+            <ion-select-option [value]="c">{{ 'color.' + c | translate }}</ion-select-option>
           }
         </ion-select>
       </div>
       <div class="form-field">
-        <label>Couleur des cheveux</label>
-        <ion-select [(ngModel)]="hairColor" interface="action-sheet" placeholder="Choisir">
+        <label>{{ 'profileCreate.hairColor' | translate }}</label>
+        <ion-select [(ngModel)]="hairColor" interface="action-sheet" [placeholder]="'common.choose' | translate">
           @for (c of hairColors; track c) {
-            <ion-select-option [value]="c">{{ c }}</ion-select-option>
+            <ion-select-option [value]="c">{{ 'color.' + c | translate }}</ion-select-option>
           }
         </ion-select>
       </div>
       <div class="form-field">
-        <label>Taille (cm)</label>
-        <ion-input type="number" [(ngModel)]="height" placeholder="175"></ion-input>
+        <label>{{ 'profileCreate.height' | translate }}</label>
+        <ion-input type="number" [(ngModel)]="height" [placeholder]="'profileCreate.heightPlaceholder' | translate"></ion-input>
       </div>
       <div class="form-field">
-        <label>Ta phrase d'accroche</label>
+        <label>{{ 'profileCreate.bio' | translate }}</label>
         <ion-textarea
           [(ngModel)]="bio"
-          placeholder="Ex. Amoureuse des couchers de soleil et des balades en forêt."
+          [placeholder]="'profileCreate.bioPlaceholder' | translate"
           [autoGrow]="true"
           [maxlength]="160"
           rows="2"
         ></ion-textarea>
       </div>
       <div class="form-field city-autocomplete-field">
-        <label>Ma ville</label>
+        <label>{{ 'profileCreate.city' | translate }}</label>
         <app-city-autocomplete
           [city]="city"
           [location]="cityLocation"
@@ -65,28 +65,28 @@
         ></app-city-autocomplete>
       </div>
 
-      <p class="form-section-hint">Pour aller plus loin (facultatif)</p>
+      <p class="form-section-hint">{{ 'profileCreate.optionalHint' | translate }}</p>
 
       <div class="form-field">
-        <label>Film préféré 1 </label>
-        <ion-input [(ngModel)]="movie1" placeholder="Ex. Le Roi Lion"></ion-input>
+        <label>{{ 'profileCreate.movie1' | translate }}</label>
+        <ion-input [(ngModel)]="movie1" [placeholder]="'profileCreate.moviePlaceholder1' | translate"></ion-input>
       </div>
       <div class="form-field">
-        <label>Film préféré 2 </label>
-        <ion-input [(ngModel)]="movie2" placeholder="Ex. Avatar"></ion-input>
+        <label>{{ 'profileCreate.movie2' | translate }}</label>
+        <ion-input [(ngModel)]="movie2" [placeholder]="'profileCreate.moviePlaceholder2' | translate"></ion-input>
       </div>
       <div class="form-field">
-        <label>Chanson préférée 1 </label>
-        <ion-input [(ngModel)]="song1" placeholder="Ex. Roar"></ion-input>
+        <label>{{ 'profileCreate.song1' | translate }}</label>
+        <ion-input [(ngModel)]="song1" [placeholder]="'profileCreate.songPlaceholder1' | translate"></ion-input>
       </div>
       <div class="form-field">
-        <label>Chanson préférée 2 </label>
-        <ion-input [(ngModel)]="song2" placeholder="Ex. Jungle"></ion-input>
+        <label>{{ 'profileCreate.song2' | translate }}</label>
+        <ion-input [(ngModel)]="song2" [placeholder]="'profileCreate.songPlaceholder2' | translate"></ion-input>
       </div>
     </div>
 
     <app-primary-button
-      [label]="isEdit ? 'Enregistrer' : 'Valider mon profil'"
+      [label]="(isEdit ? 'common.save' : 'profileCreate.submitCreate') | translate"
       [disabled]="!canContinue"
       (pressed)="submit()"
     ></app-primary-button>

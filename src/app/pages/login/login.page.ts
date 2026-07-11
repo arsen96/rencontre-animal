@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/services/auth.service';
@@ -31,7 +32,8 @@ export class LoginPage implements OnInit {
     private readonly auth: AuthService,
     private readonly userData: UserDataService,
     private readonly session: UserSessionService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -117,7 +119,8 @@ export class LoginPage implements OnInit {
       const cancelled =
         code === 'auth/popup-closed-by-user' ||
         code === 'auth/cancelled-popup-request' ||
-        message.includes('annulée');
+        message.includes('annulée') ||
+        message.includes('cancelled');
       if (!cancelled) {
         console.error('Google auth error', error);
         this.error = this.mapError(code, message);
@@ -151,27 +154,31 @@ export class LoginPage implements OnInit {
 
   private mapError(code?: string, message?: string): string {
     if (message?.includes('token manquant')) {
-      return 'Connexion Google annulée.';
+      return this.translate.instant('login.errors.googleCancelled');
     }
+    return this.translate.instant(`login.errors.${this.errorKeyFor(code)}`);
+  }
+
+  private errorKeyFor(code?: string): string {
     switch (code) {
       case 'auth/invalid-email':
-        return "L'adresse e-mail n'est pas valide.";
+        return 'invalidEmail';
       case 'auth/email-already-in-use':
-        return 'Ce compte existe déjà. Connecte-toi plutôt.';
+        return 'emailInUse';
       case 'auth/weak-password':
-        return 'Mot de passe trop court (6 caractères minimum).';
+        return 'weakPassword';
       case 'auth/invalid-credential':
       case 'auth/wrong-password':
       case 'auth/user-not-found':
-        return 'E-mail ou mot de passe incorrect.';
+        return 'wrongCredentials';
       case 'auth/network-request-failed':
-        return 'Problème de connexion réseau.';
+        return 'network';
       case 'auth/popup-blocked':
-        return 'La fenêtre Google a été bloquée par le navigateur.';
+        return 'popupBlocked';
       case 'auth/account-exists-with-different-credential':
-        return 'Un compte existe déjà avec cet e-mail (autre méthode de connexion).';
+        return 'accountExists';
       default:
-        return 'Une erreur est survenue. Réessaie.';
+        return 'generic';
     }
   }
 }

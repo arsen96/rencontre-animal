@@ -76,6 +76,15 @@ export class SwipeService implements OnDestroy {
     return getDiscoveryTierLabel(this.currentTierIndex);
   }
 
+  get discoveryTierIndex(): number {
+    return this.currentTierIndex;
+  }
+
+  get discoveryTierLimitKm(): number | null {
+    const limit = DISCOVERY_DISTANCE_TIERS_KM[this.currentTierIndex];
+    return limit === Infinity ? null : limit;
+  }
+
   async initDeck(currentUser: User, force = false): Promise<void> {
     const normalizedCurrentUser = normalizeUser(currentUser);
     this.currentUser = normalizedCurrentUser;

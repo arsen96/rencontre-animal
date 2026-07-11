@@ -7,6 +7,7 @@ import { CitySelection } from '../../core/interfaces/city-selection.interface';
 import { GeoPoint, User } from '../../core/interfaces/user.interface';
 import { AuthService } from '../../core/services/auth.service';
 import { AnimalService } from '../../core/services/animal.service';
+import { AppLanguage, LanguageService } from '../../core/services/language.service';
 import { ChatService } from '../../core/services/chat.service';
 import { SwipeDataService } from '../../core/services/swipe-data.service';
 import { SwipeService } from '../../core/services/swipe.service';
@@ -35,6 +36,12 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   loadingConnections = true;
   respondingTo: string | null = null;
   readonly privacyPolicyUrl = environment.privacyPolicyUrl;
+  languages: readonly AppLanguage[] = ['fr', 'en'];
+  currentLanguage: AppLanguage = 'fr';
+  readonly languageFlags: Record<AppLanguage, string> = {
+    fr: 'assets/flags/fr.svg',
+    en: 'assets/flags/gb.svg',
+  };
 
   @ViewChild(CityAutocompleteComponent) cityAutocomplete?: CityAutocompleteComponent;
 
@@ -48,10 +55,23 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly swipeService: SwipeService,
     private readonly chatService: ChatService,
     private readonly modalCtrl: ModalController,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly languageService: LanguageService
   ) {}
 
+  onLanguageChange(event: CustomEvent): void {
+    const value = event.detail?.value as AppLanguage | undefined;
+    if (!value || value === this.currentLanguage) {
+      return;
+    }
+    this.currentLanguage = value;
+    this.languageService.setLanguage(value);
+  }
+
   ngOnInit(): void {
+    this.languages = this.languageService.supportedLanguages;
+    this.currentLanguage = this.languageService.getCurrentLanguage();
+
     this.sub = combineLatest([
       this.auth.authState$,
       this.session.currentUser$,

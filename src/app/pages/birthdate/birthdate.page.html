@@ -4,29 +4,29 @@
   <div class="page-shell">
     <app-step-header [currentStep]="1" [totalSteps]="6"></app-step-header>
 
-    <h1 class="page-title">Ta date de naissance</h1>
-    <p class="page-subtitle">On a besoin de ton âge pour te présenter aux bons profils.</p>
+    <h1 class="page-title">{{ 'birthdate.title' | translate }}</h1>
+    <p class="page-subtitle">{{ 'birthdate.subtitle' | translate }}</p>
 
     <div class="date-grid glass-card">
       <div class="form-field">
-        <label>Jour</label>
-        <ion-select [(ngModel)]="day" interface="action-sheet" placeholder="Jour">
+        <label>{{ 'birthdate.day' | translate }}</label>
+        <ion-select [(ngModel)]="day" interface="action-sheet" [placeholder]="'birthdate.day' | translate">
           @for (d of days; track d) {
             <ion-select-option [value]="d">{{ d }}</ion-select-option>
           }
         </ion-select>
       </div>
       <div class="form-field">
-        <label>Mois</label>
-        <ion-select [(ngModel)]="month" interface="action-sheet" placeholder="Mois">
-          @for (m of months; track m.value) {
-            <ion-select-option [value]="m.value">{{ m.label }}</ion-select-option>
+        <label>{{ 'birthdate.month' | translate }}</label>
+        <ion-select [(ngModel)]="month" interface="action-sheet" [placeholder]="'birthdate.month' | translate">
+          @for (m of months; track m) {
+            <ion-select-option [value]="m">{{ 'date.month.' + m | translate }}</ion-select-option>
           }
         </ion-select>
       </div>
       <div class="form-field">
-        <label>Année</label>
-        <ion-select [(ngModel)]="year" interface="action-sheet" placeholder="Année">
+        <label>{{ 'birthdate.year' | translate }}</label>
+        <ion-select [(ngModel)]="year" interface="action-sheet" [placeholder]="'birthdate.year' | translate">
           @for (y of years; track y) {
             <ion-select-option [value]="y">{{ y }}</ion-select-option>
           }
@@ -35,6 +35,7 @@
     </div>
 
     <app-primary-button
+      [label]="'common.continue' | translate"
       [disabled]="!canContinue"
       (pressed)="continue()"
     ></app-primary-button>

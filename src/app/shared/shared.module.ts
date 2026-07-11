@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { JungleBackgroundComponent } from './components/jungle-background/jungle-background.component';
 import { PrimaryButtonComponent } from './components/primary-button/primary-button.component';
 import { StepHeaderComponent } from './components/step-header/step-header.component';
@@ -23,7 +24,7 @@ import { CityAutocompleteComponent } from './components/city-autocomplete/city-a
     ChatBubbleComponent,
     CityAutocompleteComponent,
   ],
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, TranslatePipe, TranslateDirective],
   exports: [
     JungleBackgroundComponent,
     PrimaryButtonComponent,
@@ -36,6 +37,8 @@ import { CityAutocompleteComponent } from './components/city-autocomplete/city-a
     CityAutocompleteComponent,
     CommonModule,
     IonicModule,
+    TranslatePipe,
+    TranslateDirective,
   ],
 })
 export class SharedModule {}

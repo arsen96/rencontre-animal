@@ -14,6 +14,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { Conversation } from '../interfaces/conversation.interface';
 import { ChatMessage } from '../interfaces/message.interface';
@@ -50,7 +51,8 @@ export class ChatService {
     private readonly userData: UserDataService,
     private readonly firestore: Firestore,
     private readonly storage: Storage,
-    private readonly injector: EnvironmentInjector
+    private readonly injector: EnvironmentInjector,
+    private readonly translate: TranslateService
   ) {}
 
   setActiveConversation(conversationId: string | null): void {
@@ -514,15 +516,15 @@ export class ChatService {
   getPreview(conversation: Conversation): string {
     const last = this.getLastMessage(conversation);
     if (!last) {
-      return 'Nouveau match — dis bonjour !';
+      return this.translate.instant('chats.newMatch');
     }
     if (last.type === 'image') {
-      return 'Photo';
+      return this.translate.instant('chats.photoPreview');
     }
     if (last.text) {
       return last.text;
     }
-    return 'Nouveau match — dis bonjour !';
+    return this.translate.instant('chats.newMatch');
   }
 
   async clearPresence(uid: string): Promise<void> {

@@ -36,27 +36,27 @@
 
     <div class="grid">
       <div class="item">
-        <span class="label">Yeux</span>
-        <span>{{ profile.profile.eyeColor }}</span>
+        <span class="label">{{ 'profile.eyes' | translate }}</span>
+        <span>{{ 'color.' + profile.profile.eyeColor | translate }}</span>
       </div>
       <div class="item">
-        <span class="label">Cheveux</span>
-        <span>{{ profile.profile.hairColor }}</span>
+        <span class="label">{{ 'profile.hair' | translate }}</span>
+        <span>{{ 'color.' + profile.profile.hairColor | translate }}</span>
       </div>
       <div class="item">
-        <span class="label">Taille</span>
+        <span class="label">{{ 'profile.height' | translate }}</span>
         <span>{{ profile.profile.height }} cm</span>
       </div>
     </div>
 
     <div class="section">
-      <h3>Films</h3>
+      <h3>{{ 'profile.movies' | translate }}</h3>
       <p>{{ profile.profile.movies[0] }}</p>
       <p>{{ profile.profile.movies[1] }}</p>
     </div>
 
     <div class="section">
-      <h3>Chansons</h3>
+      <h3>{{ 'profile.songs' | translate }}</h3>
       <p>{{ profile.profile.songs[0] }}</p>
       <p>{{ profile.profile.songs[1] }}</p>
     </div>

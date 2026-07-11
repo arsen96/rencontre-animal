@@ -7,29 +7,29 @@
     </div>
   } @else {
   <div class="page-shell">
-    <h1 class="page-title">Bienvenue dans la jungle</h1>
+    <h1 class="page-title">{{ 'login.title' | translate }}</h1>
     <p class="page-subtitle">
-      {{ isLogin ? 'Connecte-toi pour reprendre l\'aventure.' : 'Crée ton compte pour commencer l\'aventure.' }}
+      {{ (isLogin ? 'login.subtitleLogin' : 'login.subtitleRegister') | translate }}
     </p>
 
     <div class="auth-form">
       <div class="form-field">
-        <label>E-mail</label>
+        <label>{{ 'login.email' | translate }}</label>
         <ion-input
           type="email"
           autocomplete="email"
-          placeholder="toi@exemple.com"
+          [placeholder]="'login.emailPlaceholder' | translate"
           [value]="email"
           (ionInput)="onEmailInput($event)"
         ></ion-input>
       </div>
 
       <div class="form-field">
-        <label>Mot de passe</label>
+        <label>{{ 'login.password' | translate }}</label>
         <ion-input
           type="password"
           autocomplete="current-password"
-          placeholder="6 caractères minimum"
+          [placeholder]="'login.passwordPlaceholder' | translate"
           [value]="password"
           (ionInput)="onPasswordInput($event)"
         ></ion-input>
@@ -48,11 +48,11 @@
         @if (loading) {
           <ion-spinner name="crescent"></ion-spinner>
         } @else {
-          {{ isLogin ? 'Se connecter' : 'Créer mon compte' }}
+          {{ (isLogin ? 'login.signIn' : 'login.createAccount') | translate }}
         }
       </ion-button>
 
-      <div class="auth-separator"><span>ou</span></div>
+      <div class="auth-separator"><span>{{ 'common.or' | translate }}</span></div>
 
       <button
         type="button"
@@ -61,17 +61,17 @@
         (click)="googleLogin()"
       >
         <ion-icon name="logo-google"></ion-icon>
-        Continuer avec Google
+        {{ 'login.googleContinue' | translate }}
       </button>
 
       <button type="button" class="toggle-mode" (click)="toggleMode()">
-        {{ isLogin ? "Pas encore de compte ? S'inscrire" : 'Déjà un compte ? Se connecter' }}
+        {{ (isLogin ? 'login.toggleToRegister' : 'login.toggleToLogin') | translate }}
       </button>
     </div>
 
     <div class="links">
       <button type="button" class="link-muted" (click)="openPrivacyPolicy()">
-        Politique de confidentialité
+        {{ 'privacy.link' | translate }}
       </button>
     </div>
   </div>

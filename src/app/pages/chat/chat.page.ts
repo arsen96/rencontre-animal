@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, ViewWillEnter } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Animal } from '../../core/interfaces/animal.interface';
 import { Conversation } from '../../core/interfaces/conversation.interface';
@@ -39,7 +40,8 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly session: UserSessionService,
-    readonly chatService: ChatService
+    readonly chatService: ChatService,
+    private readonly translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -139,12 +141,12 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
         if (message) {
           setTimeout(() => this.scrollToBottom(), 50);
         } else {
-          this.photoError = "Impossible d'envoyer la photo.";
+          this.photoError = this.translate.instant('chat.sendPhotoError');
         }
       })
       .catch((error: unknown) => {
         this.photoError =
-          error instanceof Error ? error.message : "Impossible d'envoyer la photo.";
+          error instanceof Error ? error.message : this.translate.instant('chat.sendPhotoError');
       })
       .finally(() => {
         this.uploadingPhoto = false;

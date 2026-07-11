@@ -6,12 +6,12 @@
       <div class="logo-ring">
         <span class="logo-emoji">🦁</span>
       </div>
-      <h1 class="brand">Animal Rencontre</h1>
-      <p class="tagline">Une jungle mystérieuse. Rencontre des créatures rares — mais attention aux morsures.</p>
+      <h1 class="brand">{{ 'landing.brand' | translate }}</h1>
+      <p class="tagline">{{ 'landing.tagline' | translate }}</p>
     </div>
 
     <div class="cta-block">
-      <app-primary-button label="Commencer" (pressed)="start()"></app-primary-button>
+      <app-primary-button [label]="'landing.start' | translate" (pressed)="start()"></app-primary-button>
     </div>
   </div>
 </ion-content>

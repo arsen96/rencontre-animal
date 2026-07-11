@@ -12,10 +12,10 @@ import { UserSessionService } from '../../core/services/user-session.service';
 export class GenderPage {
   selected?: Gender;
 
-  readonly options: { value: Gender; label: string }[] = [
-    { value: 'femelle', label: 'Femelle' },
-    { value: 'male', label: 'Mâle' },
-    { value: 'non-binaire', label: 'Non-binaire' },
+  readonly options: { value: Gender; labelKey: string }[] = [
+    { value: 'femelle', labelKey: 'gender.femelle' },
+    { value: 'male', labelKey: 'gender.male' },
+    { value: 'non-binaire', labelKey: 'gender.nonBinaire' },
   ];
 
   constructor(

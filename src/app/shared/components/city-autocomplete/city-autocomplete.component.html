@@ -1,13 +1,13 @@
 <div class="city-autocomplete">
   @if (showHint) {
-    <p class="field-hint">Commence à taper puis choisis ta ville dans la liste.</p>
+    <p class="field-hint">{{ 'city.hint' | translate }}</p>
   }
 
   <div class="city-field">
     <ion-icon name="location-outline"></ion-icon>
     <ion-input
       [value]="query"
-      [placeholder]="placeholder"
+      [placeholder]="placeholder || ('city.placeholder' | translate)"
       maxlength="80"
       autocomplete="off"
       (ionInput)="onInput($any($event).detail.value ?? '')"
@@ -39,6 +39,6 @@
   }
 
   @if (selectionHint) {
-    <p class="city-error">Choisis une ville dans les suggestions pour valider.</p>
+    <p class="city-error">{{ 'city.selectError' | translate }}</p>
   }
 </div>

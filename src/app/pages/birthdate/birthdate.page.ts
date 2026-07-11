@@ -14,20 +14,7 @@ export class BirthdatePage {
   year?: number;
 
   readonly days = Array.from({ length: 31 }, (_, i) => i + 1);
-  readonly months = [
-    { value: 1, label: 'Janvier' },
-    { value: 2, label: 'Février' },
-    { value: 3, label: 'Mars' },
-    { value: 4, label: 'Avril' },
-    { value: 5, label: 'Mai' },
-    { value: 6, label: 'Juin' },
-    { value: 7, label: 'Juillet' },
-    { value: 8, label: 'Août' },
-    { value: 9, label: 'Septembre' },
-    { value: 10, label: 'Octobre' },
-    { value: 11, label: 'Novembre' },
-    { value: 12, label: 'Décembre' },
-  ];
+  readonly months = Array.from({ length: 12 }, (_, i) => i + 1);
   readonly years = Array.from({ length: 80 }, (_, i) => new Date().getFullYear() - 18 - i);
 
   constructor(

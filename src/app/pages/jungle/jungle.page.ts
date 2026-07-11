@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ViewWillEnter } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { User } from '../../core/interfaces/user.interface';
 import { AuthService } from '../../core/services/auth.service';
@@ -32,6 +33,7 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
 
   private unreadSub?: Subscription;
   private passedSub?: Subscription;
+  private langSub?: Subscription;
 
   constructor(
     private readonly swipeService: SwipeService,
@@ -40,13 +42,14 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly modalCtrl: ModalController,
     private readonly auth: AuthService,
     private readonly session: UserSessionService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.swipeService.deck$.subscribe((deck) => {
       this.deck = deck;
-      this.discoveryHint = this.swipeService.discoveryTierLabel;
+      this.discoveryHint = this.buildDiscoveryHint();
     });
     this.unreadSub = this.chatService.totalUnread$.subscribe((n) => {
       this.unreadChats = n;
@@ -54,6 +57,20 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
     this.passedSub = this.swipeService.passedProfiles$.subscribe((list) => {
       this.passedProfilesCount = list.length;
     });
+    this.langSub = this.translate.onLangChange.subscribe(() => {
+      this.discoveryHint = this.buildDiscoveryHint();
+    });
+  }
+
+  private buildDiscoveryHint(): string | null {
+    if (this.swipeService.discoveryTierIndex <= 0) {
+      return null;
+    }
+    const limitKm = this.swipeService.discoveryTierLimitKm;
+    if (limitKm == null) {
+      return this.translate.instant('jungle.discoveryFrance');
+    }
+    return this.translate.instant('jungle.discoveryWider', { km: limitKm });
   }
 
   private loadDeckInProgress = false;
@@ -66,6 +83,7 @@ export class JunglePage implements OnInit, OnDestroy, ViewWillEnter {
   ngOnDestroy(): void {
     this.unreadSub?.unsubscribe();
     this.passedSub?.unsubscribe();
+    this.langSub?.unsubscribe();
   }
 
   private async loadDeck(): Promise<void> {

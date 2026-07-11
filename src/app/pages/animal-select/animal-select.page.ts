@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Animal } from '../../core/interfaces/animal.interface';
 import { AnimalService } from '../../core/services/animal.service';
@@ -24,7 +25,8 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
     private readonly animalService: AnimalService,
     private readonly session: UserSessionService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -63,18 +65,12 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
         return '';
       }
 
-      if (count === 1) {
-        return `1 animal trouvé pour « ${query} »`;
-      }
-
-      return `${count} animaux trouvés pour « ${query} »`;
+      const key = count === 1 ? 'animalSelect.metaFoundOne' : 'animalSelect.metaFoundMany';
+      return this.translate.instant(key, { count, query });
     }
 
-    if (count === 1) {
-      return '1 animal disponible';
-    }
-
-    return `${count} animaux disponibles`;
+    const key = count === 1 ? 'animalSelect.metaAvailableOne' : 'animalSelect.metaAvailableMany';
+    return this.translate.instant(key, { count });
   }
 
   get filteredAnimals(): Animal[] {

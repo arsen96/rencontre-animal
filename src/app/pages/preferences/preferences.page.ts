@@ -12,10 +12,10 @@ import { UserSessionService } from '../../core/services/user-session.service';
 export class PreferencesPage {
   selected?: MeetPreference;
 
-  readonly options: { value: MeetPreference; label: string }[] = [
-    { value: 'femelle', label: 'Femelle' },
-    { value: 'male', label: 'Mâle' },
-    { value: 'tout', label: 'Tout le monde' },
+  readonly options: { value: MeetPreference; labelKey: string }[] = [
+    { value: 'femelle', labelKey: 'preferences.femelle' },
+    { value: 'male', labelKey: 'preferences.male' },
+    { value: 'tout', labelKey: 'preferences.tout' },
   ];
 
   constructor(

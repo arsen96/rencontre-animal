@@ -1,0 +1,215 @@
+{
+  "common": {
+    "continue": "Continuer",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "select": "Sélectionner",
+    "message": "Message",
+    "or": "ou",
+    "loading": "Chargement…",
+    "choose": "Choisir",
+    "years": "ans"
+  },
+  "privacy": {
+    "link": "Politique de confidentialité"
+  },
+  "landing": {
+    "brand": "Animal Rencontre",
+    "tagline": "Une jungle mystérieuse. Rencontre des créatures rares — mais attention aux morsures.",
+    "start": "Commencer"
+  },
+  "login": {
+    "title": "Bienvenue dans la jungle",
+    "subtitleLogin": "Connecte-toi pour reprendre l'aventure.",
+    "subtitleRegister": "Crée ton compte pour commencer l'aventure.",
+    "email": "E-mail",
+    "emailPlaceholder": "toi@exemple.com",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "6 caractères minimum",
+    "signIn": "Se connecter",
+    "createAccount": "Créer mon compte",
+    "googleContinue": "Continuer avec Google",
+    "toggleToRegister": "Pas encore de compte ? S'inscrire",
+    "toggleToLogin": "Déjà un compte ? Se connecter",
+    "errors": {
+      "googleCancelled": "Connexion Google annulée.",
+      "invalidEmail": "L'adresse e-mail n'est pas valide.",
+      "emailInUse": "Ce compte existe déjà. Connecte-toi plutôt.",
+      "weakPassword": "Mot de passe trop court (6 caractères minimum).",
+      "wrongCredentials": "E-mail ou mot de passe incorrect.",
+      "network": "Problème de connexion réseau.",
+      "popupBlocked": "La fenêtre Google a été bloquée par le navigateur.",
+      "accountExists": "Un compte existe déjà avec cet e-mail (autre méthode de connexion).",
+      "generic": "Une erreur est survenue. Réessaie."
+    }
+  },
+  "birthdate": {
+    "title": "Ta date de naissance",
+    "subtitle": "On a besoin de ton âge pour te présenter aux bons profils.",
+    "day": "Jour",
+    "month": "Mois",
+    "year": "Année"
+  },
+  "date": {
+    "month": {
+      "1": "Janvier",
+      "2": "Février",
+      "3": "Mars",
+      "4": "Avril",
+      "5": "Mai",
+      "6": "Juin",
+      "7": "Juillet",
+      "8": "Août",
+      "9": "Septembre",
+      "10": "Octobre",
+      "11": "Novembre",
+      "12": "Décembre"
+    }
+  },
+  "gender": {
+    "title": "Tu es une femelle ou un mâle ?",
+    "subtitle": "Choisis l'option qui te correspond le mieux.",
+    "femelle": "Femelle",
+    "male": "Mâle",
+    "nonBinaire": "Non-binaire"
+  },
+  "preferences": {
+    "title": "Que veux-tu rencontrer ?",
+    "subtitle": "Indique tes préférences de rencontre.",
+    "femelle": "Femelle",
+    "male": "Mâle",
+    "tout": "Tout le monde"
+  },
+  "animalSelect": {
+    "title": "Choisis ta carte collector",
+    "subtitle": "Retourne une carte rare pour révéler l'âme de la créature qui te représente.",
+    "searchPlaceholder": "Rechercher un animal",
+    "loading": "Chargement des animaux...",
+    "emptyTitle": "Aucun animal trouvé",
+    "emptySubtitle": "Essaie un autre nom ou un trait de personnalité.",
+    "metaFoundOne": "{{count}} animal trouvé pour « {{query}} »",
+    "metaFoundMany": "{{count}} animaux trouvés pour « {{query}} »",
+    "metaAvailableOne": "{{count}} animal disponible",
+    "metaAvailableMany": "{{count}} animaux disponibles"
+  },
+  "profileCreate": {
+    "titleCreate": "Crée ton profil",
+    "titleEdit": "Modifier ton profil",
+    "subtitle": "Quelques détails pour te démarquer dans la jungle.",
+    "changeAnimal": "Changer d'animal",
+    "firstName": "Ton prénom",
+    "firstNamePlaceholder": "Ex. Alex",
+    "eyeColor": "Couleur des yeux",
+    "hairColor": "Couleur des cheveux",
+    "height": "Taille (cm)",
+    "heightPlaceholder": "175",
+    "bio": "Ta phrase d'accroche",
+    "bioPlaceholder": "Ex. Amoureuse des couchers de soleil et des balades en forêt.",
+    "city": "Ma ville",
+    "optionalHint": "Pour aller plus loin (facultatif)",
+    "movie1": "Film préféré 1",
+    "movie2": "Film préféré 2",
+    "song1": "Chanson préférée 1",
+    "song2": "Chanson préférée 2",
+    "moviePlaceholder1": "Ex. Le Roi Lion",
+    "moviePlaceholder2": "Ex. Avatar",
+    "songPlaceholder1": "Ex. Roar",
+    "songPlaceholder2": "Ex. Jungle",
+    "submitCreate": "Valider mon profil"
+  },
+  "color": {
+    "Verts": "Verts",
+    "Bleus": "Bleus",
+    "Marrons": "Marrons",
+    "Noisette": "Noisette",
+    "Gris": "Gris",
+    "Ambre": "Ambre",
+    "Blonds": "Blonds",
+    "Bruns": "Bruns",
+    "Noirs": "Noirs",
+    "Roux": "Roux",
+    "Châtains": "Châtains",
+    "Auburn": "Auburn",
+    "—": "—"
+  },
+  "profile": {
+    "changeAnimal": "Changer d'animal",
+    "eyes": "Yeux",
+    "hair": "Cheveux",
+    "height": "Taille",
+    "movies": "Films",
+    "songs": "Chansons",
+    "cityTitle": "Ma ville",
+    "cityHint": "Obligatoire pour apparaître dans la Jungle et voir les autres profils.",
+    "cityError": "Indique ta ville pour entrer dans la Jungle.",
+    "matchesTitle": "Mes matchs",
+    "matchesHint": "Personnes avec qui tu as matché",
+    "matchesEmpty": "Aucun match pour l'instant. Explore la Jungle !",
+    "likesTitle": "Likes reçus",
+    "likesHint": "Ils t'ont liké — à toi de répondre.",
+    "likesEmpty": "Personne en attente pour l'instant.",
+    "ageRangeTitle": "Tranche d'âge à rencontrer",
+    "ageRangeValue": "{{lower}} – {{upper}} ans",
+    "editProfile": "Modifier mon profil",
+    "enterJungle": "Entrer dans la Jungle",
+    "logout": "Se déconnecter",
+    "viewProfileOf": "Voir le profil de {{name}}"
+  },
+  "language": {
+    "title": "Langue",
+    "hint": "Choisis la langue de l'application.",
+    "fr": "Français",
+    "en": "English"
+  },
+  "jungle": {
+    "title": "La Jungle",
+    "loading": "Chargement de la jungle…",
+    "emptyTitle": "Plus de profils pour l'instant",
+    "passedOne": "Tu as refusé {{count}} profil. Envie de leur redonner une chance ?",
+    "passedMany": "Tu as refusé {{count}} profils. Envie de leur redonner une chance ?",
+    "reviewButton": "Revoir les profils",
+    "comeBackLater": "Reviens plus tard — la jungle se repopule !",
+    "discoveryFrance": "Recherche élargie — toute la France",
+    "discoveryWider": "Recherche élargie — jusqu'à {{km}} km"
+  },
+  "chats": {
+    "title": "Mes conversations",
+    "emptyTitle": "Aucune conversation",
+    "emptySubtitle": "Match avec quelqu'un dans la Jungle pour démarrer un chat.",
+    "backToJungle": "Retour à la Jungle",
+    "newMatch": "Nouveau match — dis bonjour !",
+    "photoPreview": "Photo"
+  },
+  "chat": {
+    "symmetryHint": "Chat ouvert — vous pouvez tous les deux écrire à tout moment",
+    "photoBanner": "Vous avez tous les deux écrit. Envie de partager des photos ?",
+    "photoAsk": "Demander l'envoi de photos",
+    "photoPending": "Demande envoyée — en attente de l'accord de {{name}}.",
+    "photoIncoming": "{{name}} souhaite pouvoir envoyer des photos. Accepter ?",
+    "photoAccept": "Accepter",
+    "photoDecline": "Refuser",
+    "photoEnabled": "Photos activées — vous pouvez vous envoyer des images.",
+    "composerPlaceholder": "Écris un message…",
+    "sendPhotoError": "Impossible d'envoyer la photo."
+  },
+  "match": {
+    "title": "Vous avez matché !",
+    "subtitle": "La jungle vous unit",
+    "youAnd": "Toi &",
+    "distance": "À {{km}} km de toi",
+    "sendMessage": "Envoyer un message",
+    "keepSwiping": "Continuer à swiper"
+  },
+  "city": {
+    "hint": "Commence à taper puis choisis ta ville dans la liste.",
+    "placeholder": "Ex. Paris, Lyon, Marseille…",
+    "selectError": "Choisis une ville dans les suggestions pour valider."
+  },
+  "chatBubble": {
+    "photoAlt": "Photo envoyée"
+  },
+  "flipCard": {
+    "reveal": "Révéler la fiche",
+    "title": "Fiche collector"
+  }
+}

@@ -8,8 +8,8 @@
       <span class="confetti c3">💚</span>
 
       <div class="match-card">
-        <h1 class="match-title">Vous avez matché !</h1>
-        <p class="match-sub">La jungle vous unit</p>
+        <h1 class="match-title">{{ 'match.title' | translate }}</h1>
+        <p class="match-sub">{{ 'match.subtitle' | translate }}</p>
 
         <div class="avatars">
           <div class="avatar you">
@@ -24,24 +24,24 @@
         </div>
 
         <p class="match-name">
-          Toi &amp; <strong>{{ match.user.displayName }}</strong>
+          {{ 'match.youAnd' | translate }} <strong>{{ match.user.displayName }}</strong>
         </p>
         <p class="match-animal">{{ match.user.animal.name }} · {{ match.user.animal.personality }}</p>
         @if (match.user.distanceKm != null) {
           <p class="match-distance">
             <ion-icon name="navigate-outline"></ion-icon>
-            À {{ match.user.distanceKm }} km de toi
+            {{ 'match.distance' | translate: { km: match.user.distanceKm } }}
           </p>
         }
       </div>
 
       <div class="match-actions">
         <app-primary-button
-          label="Envoyer un message"
+          [label]="'match.sendMessage' | translate"
           (pressed)="openChat()"
         ></app-primary-button>
         <app-primary-button
-          label="Continuer à swiper"
+          [label]="'match.keepSwiping' | translate"
           variant="green"
           (pressed)="continueSwiping()"
         ></app-primary-button>

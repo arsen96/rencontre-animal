@@ -27,10 +27,14 @@ import { provideFirestore, initializeFirestore } from '@angular/fire/firestore';
 import { provideAuth, getAuth, initializeAuth, indexedDBLocalPersistence } from '@angular/fire/auth';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { provideHttpClient } from '@angular/common/http';
+import { APP_INITIALIZER } from '@angular/core';
+import { provideTranslateService, TranslatePipe } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
+import { LanguageService } from './core/services/language.service';
 
 addIcons({
   'logo-google': logoGoogle,
@@ -57,9 +61,23 @@ addIcons({
       mode: 'ios',
     }),
     AppRoutingModule,
+    TranslatePipe,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json',
+      }),
+      fallbackLang: 'fr',
+    }),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (language: LanguageService) => () => language.init(),
+      deps: [LanguageService],
+      multi: true,
+    },
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() =>
       initializeFirestore(getApp(), {
