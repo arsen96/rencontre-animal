@@ -190,7 +190,9 @@
     "photoDecline": "Decline",
     "photoEnabled": "Photos enabled — you can send each other images.",
     "composerPlaceholder": "Write a message…",
-    "sendPhotoError": "Could not send the photo."
+    "sendPhotoError": "Could not send the photo.",
+    "dateToday": "Today",
+    "dateYesterday": "Yesterday"
   },
   "match": {
     "title": "It's a match!",

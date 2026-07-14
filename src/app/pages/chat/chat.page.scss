@@ -117,6 +117,24 @@
   padding: 0 16px 24px;
 }
 
+.day-separator {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 14px;
+
+  span {
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(200, 169, 107, 0.14);
+    text-transform: capitalize;
+  }
+}
+
 .chat-footer ion-toolbar {
   --background: rgba(11, 11, 11, 0.95);
   --padding-start: 12px;

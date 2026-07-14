@@ -16,7 +16,6 @@ import { ProfileDetailModalComponent } from '../../shared/components/profile-det
 import { CityAutocompleteComponent } from '../../shared/components/city-autocomplete/city-autocomplete.component';
 import { withDistanceFrom, resolveCityCoordinates } from '../../core/utils/distance.util';
 import { openExternalUrl } from '../../core/utils/open-external-url.util';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -35,7 +34,6 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   receivedLikes: User[] = [];
   loadingConnections = true;
   respondingTo: string | null = null;
-  readonly privacyPolicyUrl = environment.privacyPolicyUrl;
   languages: readonly AppLanguage[] = ['fr', 'en'];
   currentLanguage: AppLanguage = 'fr';
   readonly languageFlags: Record<AppLanguage, string> = {
@@ -210,7 +208,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   }
 
   openPrivacyPolicy(): void {
-    openExternalUrl(this.privacyPolicyUrl);
+    openExternalUrl(this.languageService.getPrivacyPolicyUrl());
   }
 
   private applyUserCity(user: User): void {

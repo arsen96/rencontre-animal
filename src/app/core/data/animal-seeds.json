@@ -2252,5 +2252,74 @@
       "Sharp",
       "Observant"
     ]
+  },
+  {
+    "id": "margay",
+    "name": "Margay",
+    "emoji": "🐾",
+    "imageUrl": "assets/animals/margay.jpg",
+    "personality": "Discret, créatif",
+    "description": "Le margay est une personne agile d'esprit, discrète et particulièrement curieuse. Elle aime comprendre les situations sous tous les angles avant de prendre une décision. Indépendante, elle préfère suivre son propre chemin plutôt que de se laisser influencer par les attentes des autres. Son imagination et sa créativité lui permettent de trouver des solutions originales là où beaucoup abandonnent. Derrière son calme apparent se cache une personnalité audacieuse qui n'a pas peur de sortir de sa zone de confort. Elle apprécie les personnes intelligentes, sincères et ouvertes au dialogue, mais se montre distante face à l'arrogance, aux manipulations et aux faux-semblants.",
+    "traits": [
+      "Créatif",
+      "Indépendant",
+      "Audacieux"
+    ],
+    "accent": "rgba(168, 136, 92, 0.12)",
+    "active": true,
+    "nameEn": "Margay",
+    "personalityEn": "Discreet, creative",
+    "descriptionEn": "The margay is a quick-witted, discreet and particularly curious person. They like to understand situations from every angle before making a decision. Independent, they prefer to follow their own path rather than be swayed by others' expectations. Their imagination and creativity let them find original solutions where many give up. Behind their apparent calm hides a bold personality unafraid to leave their comfort zone. They appreciate intelligent, sincere people open to dialogue, but keep their distance from arrogance, manipulation and pretence.",
+    "traitsEn": [
+      "Creative",
+      "Independent",
+      "Bold"
+    ]
+  },
+  {
+    "id": "putois",
+    "name": "Putois",
+    "emoji": "🐾",
+    "imageUrl": "assets/animals/putois.jpg",
+    "personality": "Vif, indépendant",
+    "description": "Le putois est une personne vive, débrouillarde et étonnamment indépendante. Elle ne se laisse pas facilement impressionner et sait défendre ses intérêts avec intelligence plutôt qu'avec la force. Très observatrice, elle repère rapidement les opportunités et sait tirer parti des situations les plus complexes. Elle apprécie sa liberté et refuse qu'on lui impose des choix qui ne lui ressemblent pas. Derrière son caractère affirmé se cache une grande fidélité envers ceux qui ont gagné son estime. Elle admire les personnes franches, courageuses et authentiques, mais supporte mal les comportements hypocrites ou les promesses non tenues.",
+    "traits": [
+      "Débrouillard",
+      "Franc",
+      "Fidèle"
+    ],
+    "accent": "rgba(72, 72, 72, 0.12)",
+    "active": true,
+    "nameEn": "Skunk",
+    "personalityEn": "Lively, independent",
+    "descriptionEn": "The skunk is a lively, resourceful and surprisingly independent person. They aren't easily impressed and know how to defend their interests with intelligence rather than force. Highly observant, they quickly spot opportunities and know how to make the most of complex situations. They value their freedom and refuse to have choices imposed on them that don't feel like their own. Behind their assertive character hides great loyalty toward those who have earned their esteem. They admire frank, brave and authentic people, but bear hypocritical behaviour and broken promises poorly.",
+    "traitsEn": [
+      "Resourceful",
+      "Frank",
+      "Faithful"
+    ]
+  },
+  {
+    "id": "muntjac",
+    "name": "Muntjac",
+    "emoji": "🦌",
+    "imageUrl": "assets/animals/muntjac.jpg",
+    "personality": "Discret, attentif",
+    "description": "Le muntjac est une personne discrète, attentive et dotée d'une grande finesse d'esprit. Elle préfère observer avant de s'exprimer et accorde sa confiance avec prudence. Sensible à son environnement, elle perçoit rapidement les changements d'ambiance et adapte son comportement avec intelligence. D'un naturel humble, elle ne cherche pas à être au centre de l'attention, mais sa présence rassurante est souvent très appréciée. Derrière sa douceur se cache une détermination silencieuse : lorsqu'elle se fixe un objectif, elle avance avec patience jusqu'à l'atteindre. Elle apprécie les personnes sincères, respectueuses et à l'écoute, mais se détourne des conflits inutiles, de l'arrogance et des comportements agressifs.",
+    "traits": [
+      "Fin",
+      "Patient",
+      "Humble"
+    ],
+    "accent": "rgba(155, 125, 90, 0.12)",
+    "active": true,
+    "nameEn": "Muntjac",
+    "personalityEn": "Discreet, attentive",
+    "descriptionEn": "The muntjac is a discreet, attentive person with a great subtlety of mind. They prefer to observe before speaking and grant their trust with caution. Sensitive to their environment, they quickly perceive shifts in mood and adapt their behaviour intelligently. Humble by nature, they don't seek the spotlight, but their reassuring presence is often greatly appreciated. Behind their gentleness hides a silent determination: when they set a goal, they move forward with patience until they reach it. They appreciate sincere, respectful and attentive people, but turn away from needless conflict, arrogance and aggressive behaviour.",
+    "traitsEn": [
+      "Subtle",
+      "Patient",
+      "Humble"
+    ]
   }
 ]

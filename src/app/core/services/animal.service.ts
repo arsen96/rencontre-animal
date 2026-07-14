@@ -37,7 +37,12 @@ export class AnimalService implements OnDestroy {
 
   private rebuildAnimals(): void {
     if (this.currentSeeds.length > 0) {
-      this.publishAnimals(this.currentSeeds.map((seed) => animalFromSeed(seed, this.activeLang)));
+      const lang = this.activeLang;
+      const locale = lang === 'en' ? 'en' : 'fr';
+      const animals = this.currentSeeds
+        .map((seed) => animalFromSeed(seed, lang))
+        .sort((left, right) => left.name.localeCompare(right.name, locale, { sensitivity: 'base' }));
+      this.publishAnimals(animals);
     }
   }
 
@@ -105,8 +110,7 @@ export class AnimalService implements OnDestroy {
   ): AnimalSeed[] {
     return docs
       .map((docSnap) => ({ ...(docSnap.data() as unknown as AnimalSeed), id: docSnap.id }))
-      .filter((seed) => seed.active !== false)
-      .sort((left, right) => (left.sortOrder ?? 0) - (right.sortOrder ?? 0));
+      .filter((seed) => seed.active !== false);
   }
 
   private useFallbackAnimals(): void {

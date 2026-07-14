@@ -78,6 +78,45 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
     return this.chatService.isFromCurrentUser(message);
   }
 
+  isNewDay(index: number): boolean {
+    if (this.messages.length === 0) {
+      return false;
+    }
+    if (index === 0) {
+      return true;
+    }
+    return !this.isSameCalendarDay(
+      this.messages[index - 1].sentAt,
+      this.messages[index].sentAt
+    );
+  }
+
+  dayLabel(sentAt: Date): string {
+    const date = this.toDate(sentAt);
+    const now = new Date();
+
+    if (this.isSameCalendarDay(date, now)) {
+      return this.translate.instant('chat.dateToday');
+    }
+
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    if (this.isSameCalendarDay(date, yesterday)) {
+      return this.translate.instant('chat.dateYesterday');
+    }
+
+    const locale = this.translate.getCurrentLang() === 'en' ? 'en-GB' : 'fr-FR';
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+    };
+    if (date.getFullYear() !== now.getFullYear()) {
+      options.year = 'numeric';
+    }
+    return date.toLocaleDateString(locale, options);
+  }
+
   get canRequestPhotos(): boolean {
     return !!this.conversation && this.chatService.canRequestPhotoSharing(this.conversation);
   }
@@ -219,5 +258,19 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
     setTimeout(() => {
       this.content?.scrollToBottom(300);
     }, 80);
+  }
+
+  private toDate(value: Date): Date {
+    return value instanceof Date ? value : new Date(value);
+  }
+
+  private isSameCalendarDay(a: Date, b: Date): boolean {
+    const left = this.toDate(a);
+    const right = this.toDate(b);
+    return (
+      left.getFullYear() === right.getFullYear() &&
+      left.getMonth() === right.getMonth() &&
+      left.getDate() === right.getDate()
+    );
   }
 }

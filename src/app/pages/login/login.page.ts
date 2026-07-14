@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/services/auth.service';
+import { LanguageService } from '../../core/services/language.service';
 import { UserDataService } from '../../core/services/user-data.service';
 import { UserSessionService } from '../../core/services/user-session.service';
 import { openExternalUrl } from '../../core/utils/open-external-url.util';
@@ -26,14 +26,14 @@ export class LoginPage implements OnInit {
   loading = false;
   error = '';
   checkingSession = true;
-  readonly privacyPolicyUrl = environment.privacyPolicyUrl;
 
   constructor(
     private readonly auth: AuthService,
     private readonly userData: UserDataService,
     private readonly session: UserSessionService,
     private readonly router: Router,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly languageService: LanguageService
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
   }
 
   openPrivacyPolicy(): void {
-    openExternalUrl(this.privacyPolicyUrl);
+    openExternalUrl(this.languageService.getPrivacyPolicyUrl());
   }
 
   onEmailInput(event: Event): void {

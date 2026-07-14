@@ -69,7 +69,12 @@
   }
 
   <div class="messages">
-    @for (msg of messages; track msg.id) {
+    @for (msg of messages; track msg.id; let i = $index) {
+      @if (isNewDay(i)) {
+        <div class="day-separator">
+          <span>{{ dayLabel(msg.sentAt) }}</span>
+        </div>
+      }
       <app-chat-bubble [message]="msg" [isMine]="isMine(msg)"></app-chat-bubble>
     }
   </div>

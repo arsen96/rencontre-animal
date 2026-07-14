@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   privacyPolicyUrl: 'https://rencontre-animal.web.app/privacy.html',
+  privacyPolicyUrlEn: 'https://rencontre-animal.web.app/privacy-en.html',
   firebase: {
     apiKey: 'AIzaSyB8l6s9MHVDt5FZhT1GsHRHvXORtW6lif4',
     authDomain: 'rencontre-animal.firebaseapp.com',

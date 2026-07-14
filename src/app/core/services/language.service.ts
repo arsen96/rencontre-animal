@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../../environments/environment';
 
 export type AppLanguage = 'fr' | 'en';
 
@@ -37,6 +38,12 @@ export class LanguageService {
     }
 
     this.applyLanguage(language);
+  }
+
+  getPrivacyPolicyUrl(): string {
+    return this.getCurrentLanguage() === 'en'
+      ? environment.privacyPolicyUrlEn
+      : environment.privacyPolicyUrl;
   }
 
   private applyLanguage(language: AppLanguage): void {

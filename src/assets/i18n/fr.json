@@ -190,7 +190,9 @@
     "photoDecline": "Refuser",
     "photoEnabled": "Photos activées — vous pouvez vous envoyer des images.",
     "composerPlaceholder": "Écris un message…",
-    "sendPhotoError": "Impossible d'envoyer la photo."
+    "sendPhotoError": "Impossible d'envoyer la photo.",
+    "dateToday": "Aujourd'hui",
+    "dateYesterday": "Hier"
   },
   "match": {
     "title": "Vous avez matché !",
