@@ -46,6 +46,7 @@ ion-toolbar {
     color: var(--text-secondary);
     line-height: 1.55;
     margin-bottom: 16px;
+    text-transform: none;
   }
 
   .location {
@@ -92,6 +93,7 @@ ion-toolbar {
         color: var(--text-primary);
         font-weight: 600;
         font-size: 0.82rem;
+        text-transform: none;
       }
     }
   }
@@ -108,6 +110,7 @@ ion-toolbar {
       color: var(--text-secondary);
       margin: 0 0 4px;
       font-size: 0.88rem;
+      text-transform: none;
     }
   }
 }

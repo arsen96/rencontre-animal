@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ViewWillEnter } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { Match } from '../../core/interfaces/match.interface';
 import { CitySelection } from '../../core/interfaces/city-selection.interface';
@@ -16,6 +17,7 @@ import { ProfileDetailModalComponent } from '../../shared/components/profile-det
 import { CityAutocompleteComponent } from '../../shared/components/city-autocomplete/city-autocomplete.component';
 import { withDistanceFrom, resolveCityCoordinates } from '../../core/utils/distance.util';
 import { openExternalUrl } from '../../core/utils/open-external-url.util';
+import { buildSafetyReportMailto } from '../../core/utils/safety-report.util';
 
 @Component({
   selector: 'app-user-profile',
@@ -54,7 +56,8 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly chatService: ChatService,
     private readonly modalCtrl: ModalController,
     private readonly router: Router,
-    private readonly languageService: LanguageService
+    private readonly languageService: LanguageService,
+    private readonly translate: TranslateService
   ) {}
 
   onLanguageChange(event: CustomEvent): void {
@@ -209,6 +212,16 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
 
   openPrivacyPolicy(): void {
     openExternalUrl(this.languageService.getPrivacyPolicyUrl());
+  }
+
+  openChildSafetyStandards(): void {
+    openExternalUrl(this.languageService.getChildSafetyUrl());
+  }
+
+  reportSafetyIssue(): void {
+    const subject = this.translate.instant('safety.reportSubject');
+    const body = this.translate.instant('safety.reportBody');
+    openExternalUrl(buildSafetyReportMailto(subject, body));
   }
 
   private applyUserCity(user: User): void {

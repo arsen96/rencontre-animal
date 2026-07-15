@@ -42,31 +42,33 @@
       }
     </div>
   } @else {
-    @if (discoveryHint) {
-      <div class="discovery-hint glass-card">
-        <ion-icon name="navigate-outline"></ion-icon>
-        <span>{{ discoveryHint }}</span>
-      </div>
-    }
-    <div class="deck-container">
-      @for (profile of visibleCards; track profile.id; let i = $index) {
-        <app-swipe-card
-          [profile]="profile"
-          [stackIndex]="i"
-          [interactive]="i === 0"
-          (swiped)="onSwiped($event)"
-          (detailClick)="openDetail($event)"
-        ></app-swipe-card>
+    <div class="jungle-play-area">
+      @if (discoveryHint) {
+        <div class="discovery-hint glass-card">
+          <ion-icon name="navigate-outline"></ion-icon>
+          <span>{{ discoveryHint }}</span>
+        </div>
       }
-    </div>
+      <div class="deck-container">
+        @for (profile of visibleCards; track profile.id; let i = $index) {
+          <app-swipe-card
+            [profile]="profile"
+            [stackIndex]="i"
+            [interactive]="i === 0"
+            (swiped)="onSwiped($event)"
+            (detailClick)="openDetail($event)"
+          ></app-swipe-card>
+        }
+      </div>
 
-    <div class="action-bar">
-      <ion-button fill="clear" class="action-btn pass" shape="round" (click)="pass()">
-        <ion-icon name="close"></ion-icon>
-      </ion-button>
-      <ion-button fill="clear" class="action-btn like" shape="round" (click)="like()">
-        <ion-icon name="heart"></ion-icon>
-      </ion-button>
+      <div class="action-bar">
+        <ion-button fill="clear" class="action-btn pass" shape="round" (click)="pass()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" class="action-btn like" shape="round" (click)="like()">
+          <ion-icon name="heart"></ion-icon>
+        </ion-button>
+      </div>
     </div>
   }
 </ion-content>

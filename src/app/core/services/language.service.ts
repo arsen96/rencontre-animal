@@ -46,6 +46,12 @@ export class LanguageService {
       : environment.privacyPolicyUrl;
   }
 
+  getChildSafetyUrl(): string {
+    return this.getCurrentLanguage() === 'en'
+      ? environment.childSafetyUrlEn
+      : environment.childSafetyUrl;
+  }
+
   private applyLanguage(language: AppLanguage): void {
     this.translate.use(language);
     if (typeof document !== 'undefined') {

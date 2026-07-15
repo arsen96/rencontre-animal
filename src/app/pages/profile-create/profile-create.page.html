@@ -24,11 +24,20 @@
     <div class="glass-card form-block">
       <div class="form-field">
         <label>{{ 'profileCreate.firstName' | translate }}</label>
-        <ion-input [(ngModel)]="displayName" [placeholder]="'profileCreate.firstNamePlaceholder' | translate"></ion-input>
+        <ion-input
+          [(ngModel)]="displayName"
+          [placeholder]="'profileCreate.firstNamePlaceholder' | translate"
+          [autocapitalize]="'off'"
+          [autocorrect]="'off'"
+        ></ion-input>
       </div>
       <div class="form-field">
         <label>{{ 'profileCreate.eyeColor' | translate }}</label>
-        <ion-select [(ngModel)]="eyeColor" interface="action-sheet" [placeholder]="'common.choose' | translate">
+        <ion-select
+          [(ngModel)]="eyeColor"
+          interface="popover"
+          [placeholder]="'common.choose' | translate"
+        >
           @for (c of eyeColors; track c) {
             <ion-select-option [value]="c">{{ 'color.' + c | translate }}</ion-select-option>
           }
@@ -36,7 +45,11 @@
       </div>
       <div class="form-field">
         <label>{{ 'profileCreate.hairColor' | translate }}</label>
-        <ion-select [(ngModel)]="hairColor" interface="action-sheet" [placeholder]="'common.choose' | translate">
+        <ion-select
+          [(ngModel)]="hairColor"
+          interface="popover"
+          [placeholder]="'common.choose' | translate"
+        >
           @for (c of hairColors; track c) {
             <ion-select-option [value]="c">{{ 'color.' + c | translate }}</ion-select-option>
           }
@@ -54,6 +67,7 @@
           [autoGrow]="true"
           [maxlength]="160"
           rows="2"
+          [autocapitalize]="'off'"
         ></ion-textarea>
       </div>
       <div class="form-field city-autocomplete-field">
@@ -69,19 +83,39 @@
 
       <div class="form-field">
         <label>{{ 'profileCreate.movie1' | translate }}</label>
-        <ion-input [(ngModel)]="movie1" [placeholder]="'profileCreate.moviePlaceholder1' | translate"></ion-input>
+        <ion-input
+          [(ngModel)]="movie1"
+          [placeholder]="'profileCreate.moviePlaceholder1' | translate"
+          [autocapitalize]="'off'"
+          [autocorrect]="'off'"
+        ></ion-input>
       </div>
       <div class="form-field">
         <label>{{ 'profileCreate.movie2' | translate }}</label>
-        <ion-input [(ngModel)]="movie2" [placeholder]="'profileCreate.moviePlaceholder2' | translate"></ion-input>
+        <ion-input
+          [(ngModel)]="movie2"
+          [placeholder]="'profileCreate.moviePlaceholder2' | translate"
+          [autocapitalize]="'off'"
+          [autocorrect]="'off'"
+        ></ion-input>
       </div>
       <div class="form-field">
         <label>{{ 'profileCreate.song1' | translate }}</label>
-        <ion-input [(ngModel)]="song1" [placeholder]="'profileCreate.songPlaceholder1' | translate"></ion-input>
+        <ion-input
+          [(ngModel)]="song1"
+          [placeholder]="'profileCreate.songPlaceholder1' | translate"
+          [autocapitalize]="'off'"
+          [autocorrect]="'off'"
+        ></ion-input>
       </div>
       <div class="form-field">
         <label>{{ 'profileCreate.song2' | translate }}</label>
-        <ion-input [(ngModel)]="song2" [placeholder]="'profileCreate.songPlaceholder2' | translate"></ion-input>
+        <ion-input
+          [(ngModel)]="song2"
+          [placeholder]="'profileCreate.songPlaceholder2' | translate"
+          [autocapitalize]="'off'"
+          [autocorrect]="'off'"
+        ></ion-input>
       </div>
     </div>
 

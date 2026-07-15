@@ -6,6 +6,9 @@ export const environment = {
   production: false,
   privacyPolicyUrl: 'https://rencontre-animal.web.app/privacy.html',
   privacyPolicyUrlEn: 'https://rencontre-animal.web.app/privacy-en.html',
+  childSafetyUrl: 'https://rencontre-animal.web.app/child-safety.html',
+  childSafetyUrlEn: 'https://rencontre-animal.web.app/child-safety-en.html',
+  safetySupportEmail: 'support.animalrencontre@gmail.com',
   firebase: {
     apiKey: 'AIzaSyB8l6s9MHVDt5FZhT1GsHRHvXORtW6lif4',
     authDomain: 'rencontre-animal.firebaseapp.com',

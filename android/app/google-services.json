@@ -7,17 +7,70 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:768126961667:android:9bfddb4d09d8c1af6de636",
+        "mobilesdk_app_id": "1:768126961667:android:a92028f1931d09ef6de636",
         "android_client_info": {
           "package_name": "com.animalrencontre.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "768126961667-834mlr58t5pskcucgetc71bak4olgbbp.apps.googleusercontent.com",
+          "client_id": "768126961667-g8umer02127v5spp9nt74lcfglo9d4ei.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.animalrencontre.app",
+            "certificate_hash": "7cff35e172222081c12f09ac10edba02c6d79775"
+          }
+        },
+        {
+          "client_id": "768126961667-gnavo9tmh93k909avk5k26939hhjaced.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.animalrencontre.app",
+            "certificate_hash": "737647ecd09110a153760ccce150cdfebc8c0e94"
+          }
+        },
+        {
+          "client_id": "768126961667-8uvtrv0uao0u85genig7kil90rmdo6sg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7HZB7fS5iwFLokwl6azqtGD2d9eP8LEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768126961667-8uvtrv0uao0u85genig7kil90rmdo6sg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768126961667:android:9bfddb4d09d8c1af6de636",
+        "android_client_info": {
+          "package_name": "fr.animalrencontre.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768126961667-20eqc0vdig3olubn8kuavk84gj1n22k5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.animalrencontre.app",
+            "certificate_hash": "7cff35e172222081c12f09ac10edba02c6d79775"
+          }
+        },
+        {
+          "client_id": "768126961667-834mlr58t5pskcucgetc71bak4olgbbp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.animalrencontre.app",
             "certificate_hash": "737647ecd09110a153760ccce150cdfebc8c0e94"
           }
         },

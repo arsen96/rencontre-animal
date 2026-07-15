@@ -31,6 +31,11 @@
     --padding-end: 0;
     --color: var(--text-primary);
     --placeholder-color: var(--text-secondary);
+    text-transform: none !important;
+  }
+
+  ion-input input.native-input {
+    text-transform: none !important;
   }
 
   .city-spinner {

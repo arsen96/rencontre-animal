@@ -13,9 +13,15 @@
   "privacy": {
     "link": "Politique de confidentialité"
   },
+  "safety": {
+    "reportLink": "Signaler un problème de sécurité",
+    "standardsLink": "Normes de sécurité des enfants",
+    "reportSubject": "Signalement sécurité - Animal Rencontre",
+    "reportBody": "Bonjour,\n\nJe souhaite signaler le profil ou contenu suivant :\n\n- Pseudo concerné :\n- Description du problème :\n\nMerci."
+  },
   "landing": {
     "brand": "Animal Rencontre",
-    "tagline": "Une jungle mystérieuse. Rencontre des créatures rares — mais attention aux morsures.",
+    "tagline": "Rencontre des créatures rares — mais attention aux morsures.",
     "start": "Commencer"
   },
   "login": {

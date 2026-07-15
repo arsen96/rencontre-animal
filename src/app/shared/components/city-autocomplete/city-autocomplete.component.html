@@ -10,6 +10,8 @@
       [placeholder]="placeholder || ('city.placeholder' | translate)"
       maxlength="80"
       autocomplete="off"
+      autocapitalize="off"
+      autocorrect="off"
       (ionInput)="onInput($any($event).detail.value ?? '')"
       (ionFocus)="onFocus()"
       (ionBlur)="onBlur()"

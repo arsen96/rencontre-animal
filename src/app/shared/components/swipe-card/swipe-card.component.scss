@@ -5,6 +5,11 @@
   left: 16px;
   right: 16px;
   top: 0;
+  bottom: 0;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   touch-action: none;
   user-select: none;
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
@@ -55,9 +60,9 @@
 }
 
 .card-visual {
-  aspect-ratio: 4 / 5;
-  min-height: 320px;
-  max-height: 440px;
+  flex: 1 1 auto;
+  min-height: 180px;
+  max-height: min(42vh, 380px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,7 +107,8 @@
 }
 
 .card-info {
-  padding: 20px 22px 24px;
+  flex-shrink: 0;
+  padding: 16px 22px 18px;
   background: linear-gradient(180deg, rgba(11, 11, 11, 0.95) 0%, var(--black-deep) 100%);
   border-top: 1px solid rgba(200, 169, 107, 0.12);
 
@@ -125,6 +131,10 @@
     font-size: 0.88rem;
     line-height: 1.5;
     margin: 0 0 8px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
 
   .location-line,

@@ -215,6 +215,14 @@
         {{ 'privacy.link' | translate }}
       </button>
 
+      <button type="button" class="legal-link" (click)="openChildSafetyStandards()">
+        {{ 'safety.standardsLink' | translate }}
+      </button>
+
+      <button type="button" class="legal-link" (click)="reportSafetyIssue()">
+        {{ 'safety.reportLink' | translate }}
+      </button>
+
       <button type="button" class="logout-btn" (click)="logout()">
         {{ 'profile.logout' | translate }}
       </button>

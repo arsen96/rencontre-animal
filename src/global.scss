@@ -271,6 +271,7 @@ app-animal-flip-card.overlay-preview .flip-card.expanded {
 
 .form-field {
   margin-bottom: 16px;
+  text-transform: none;
 
   label {
     @include label-caps;
@@ -288,6 +289,34 @@ app-animal-flip-card.overlay-preview .flip-card.expanded {
     --padding-end: 16px;
     border-radius: 14px;
     border: 1px solid var(--glass-border);
+    text-transform: none !important;
+  }
+
+  ion-input input.native-input,
+  ion-textarea textarea.native-textarea,
+  ion-select .select-text,
+  ion-select .select-placeholder {
+    text-transform: none !important;
+  }
+}
+
+ion-input input.native-input,
+ion-textarea textarea.native-textarea {
+  text-transform: none !important;
+}
+
+ion-action-sheet {
+  .action-sheet-button,
+  .action-sheet-button-inner,
+  .action-sheet-title {
+    text-transform: none !important;
+  }
+}
+
+ion-alert {
+  .alert-radio-label,
+  .alert-checkbox-label {
+    text-transform: none !important;
   }
 }
 

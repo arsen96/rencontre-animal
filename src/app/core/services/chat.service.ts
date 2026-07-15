@@ -31,6 +31,8 @@ export class ChatService {
   private conversationsListener: Unsubscribe | null = null;
   private listeningForUid: string | null = null;
   private activeConversationId: string | null = null;
+  /** Dernière lecture par conversation (persistée dans Firestore). */
+  private readonly lastReadAtByConversation = new Map<string, Date>();
 
   readonly conversations$ = this.conversationsSubject.asObservable();
 
@@ -56,6 +58,11 @@ export class ChatService {
   ) {}
 
   setActiveConversation(conversationId: string | null): void {
+    const previous = this.activeConversationId;
+    if (previous && previous !== conversationId) {
+      this.markAsRead(previous);
+    }
+
     this.activeConversationId = conversationId;
     if (conversationId) {
       this.markAsRead(conversationId);
@@ -102,6 +109,12 @@ export class ChatService {
           updatedAtRaw && typeof updatedAtRaw.toDate === 'function'
             ? updatedAtRaw.toDate()
             : existing?.updatedAt ?? createdAt;
+
+        this.applyLastReadFromFirestore(
+          conversationId,
+          data['lastReadAt'],
+          currentUid
+        );
 
         const messages =
           existing?.messages.length
@@ -180,6 +193,11 @@ export class ChatService {
       }
 
       const data = change.doc.data();
+      this.applyLastReadFromFirestore(
+        conversationId,
+        data['lastReadAt'],
+        currentUid
+      );
       const messages = await this.loadMessages(matchId, conversationId);
       this.applyMessages(conversationId, messages);
       this.applyConversationMeta(conversationId, {
@@ -309,10 +327,19 @@ export class ChatService {
   }
 
   markAsRead(conversationId: string): void {
+    const conversation = this.getById(conversationId);
+    const lastMessage = conversation?.messages[conversation.messages.length - 1];
+    const readAt = lastMessage?.sentAt ?? new Date();
+    this.lastReadAtByConversation.set(conversationId, readAt);
+
     const list = this.conversations.map((c) =>
       c.id === conversationId ? { ...c, unreadCount: 0 } : c
     );
     this.conversationsSubject.next(list);
+
+    if (conversation?.matchId) {
+      void this.persistLastReadAt(conversation.matchId, readAt);
+    }
   }
 
   async sendMessage(conversationId: string, text: string): Promise<ChatMessage | null> {
@@ -547,6 +574,7 @@ export class ChatService {
       this.unsubscribeFromMessages(conversationId);
     }
     this.activeConversationId = null;
+    this.lastReadAtByConversation.clear();
     this.conversationsSubject.next([]);
   }
 
@@ -581,10 +609,15 @@ export class ChatService {
       }
 
       const updatedAt = messages[messages.length - 1]?.sentAt ?? c.updatedAt;
-      const unreadCount =
-        this.activeConversationId === conversationId
-          ? 0
-          : this.computeUnreadCount(messages, uid, conversationId);
+
+      if (this.activeConversationId === conversationId && messages.length > 0) {
+        this.lastReadAtByConversation.set(
+          conversationId,
+          messages[messages.length - 1].sentAt
+        );
+      }
+
+      const unreadCount = this.computeUnreadCount(messages, uid, conversationId);
 
       return {
         ...c,
@@ -608,11 +641,70 @@ export class ChatService {
     }
 
     const last = messages[messages.length - 1];
+    const lastReadAt = this.lastReadAtByConversation.get(conversationId);
+
     if (!last) {
+      return lastReadAt ? 0 : 1;
+    }
+
+    if (last.senderId === currentUid) {
+      return 0;
+    }
+
+    if (!lastReadAt) {
       return 1;
     }
 
-    return last.senderId !== currentUid ? 1 : 0;
+    return this.toTimestamp(last.sentAt) > this.toTimestamp(lastReadAt) ? 1 : 0;
+  }
+
+  private applyLastReadFromFirestore(
+    conversationId: string,
+    lastReadAtRaw: unknown,
+    currentUid: string
+  ): void {
+    if (!lastReadAtRaw || typeof lastReadAtRaw !== 'object') {
+      return;
+    }
+
+    const entry = (lastReadAtRaw as Record<string, unknown>)[currentUid];
+    const readAt = this.toDate(entry);
+    if (readAt) {
+      this.lastReadAtByConversation.set(conversationId, readAt);
+    }
+  }
+
+  private async persistLastReadAt(matchId: string, readAt: Date): Promise<void> {
+    const uid = this.auth.uid;
+    if (!uid) {
+      return;
+    }
+
+    try {
+      await runInInjectionContext(this.injector, () =>
+        updateDoc(doc(this.firestore, 'conversations', matchId), {
+          [`lastReadAt.${uid}`]: readAt,
+        })
+      );
+    } catch (error) {
+      console.error('Failed to persist last read timestamp', error);
+    }
+  }
+
+  private toDate(value: unknown): Date | null {
+    if (value instanceof Date) {
+      return value;
+    }
+
+    if (value && typeof (value as { toDate?: () => Date }).toDate === 'function') {
+      return (value as { toDate: () => Date }).toDate();
+    }
+
+    return null;
+  }
+
+  private toTimestamp(value: Date): number {
+    return value instanceof Date ? value.getTime() : new Date(value).getTime();
   }
 
   private mapMessage(

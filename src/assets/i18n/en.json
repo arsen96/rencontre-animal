@@ -13,6 +13,12 @@
   "privacy": {
     "link": "Privacy policy"
   },
+  "safety": {
+    "reportLink": "Report a safety issue",
+    "standardsLink": "Child safety standards",
+    "reportSubject": "Safety report - Animal Rencontre",
+    "reportBody": "Hello,\n\nI would like to report the following profile or content:\n\n- Username involved:\n- Description of the issue:\n\nThank you."
+  },
   "landing": {
     "brand": "Animal Rencontre",
     "tagline": "A mysterious jungle. Meet rare creatures — but beware the bites.",

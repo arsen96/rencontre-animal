@@ -2,8 +2,23 @@
   padding-bottom: 48px;
 }
 
+
 .form-block {
   margin-bottom: 20px;
+  text-transform: none;
+
+  ion-input,
+  ion-select,
+  ion-textarea {
+    text-transform: none !important;
+  }
+
+  ion-input input.native-input,
+  ion-textarea textarea.native-textarea,
+  ion-select .select-text,
+  ion-select .select-placeholder {
+    text-transform: none !important;
+  }
 }
 
 .edit-animal {
