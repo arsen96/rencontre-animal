@@ -3,8 +3,11 @@ import {
   Auth,
   authState,
   createUserWithEmailAndPassword,
+  deleteUser,
   GoogleAuthProvider,
   onAuthStateChanged,
+  reauthenticateWithCredential,
+  reauthenticateWithPopup,
   signInWithCredential,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -69,5 +72,47 @@ export class AuthService {
 
   logout() {
     return signOut(this.auth);
+  }
+
+  /**
+   * Ré-authentifie l'utilisateur courant pour obtenir une connexion "récente"
+   * (nécessaire avant une suppression de compte — auth/requires-recent-login).
+   * Ne gère automatiquement que le fournisseur Google ; pour les autres, c'est
+   * un no-op et la suppression sera tentée directement.
+   */
+  async reauthenticate(): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user) {
+      throw new Error('Aucun utilisateur connecté.');
+    }
+
+    const providerId = user.providerData?.[0]?.providerId;
+    if (providerId !== 'google.com') {
+      return;
+    }
+
+    if (Capacitor.isNativePlatform()) {
+      const result = await FirebaseAuthentication.signInWithGoogle();
+      const idToken = result.credential?.idToken;
+      if (!idToken) {
+        throw new Error('Ré-authentification Google annulée.');
+      }
+      const credential = GoogleAuthProvider.credential(idToken);
+      await reauthenticateWithCredential(user, credential);
+      return;
+    }
+
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    await reauthenticateWithPopup(user, provider);
+  }
+
+  /** Supprime le compte Firebase Auth de l'utilisateur courant. */
+  async deleteCurrentUser(): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user) {
+      throw new Error('Aucun utilisateur connecté.');
+    }
+    await deleteUser(user);
   }
 }

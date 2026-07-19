@@ -36,7 +36,7 @@ export function isProfileComplete(user: User): boolean {
 }
 
 export function isDiscoverableProfile(user: User): boolean {
-  return isProfileComplete(user) && resolveAge(user) !== null;
+  return !user.paused && isProfileComplete(user) && resolveAge(user) !== null;
 }
 
 export function normalizeUser(user: User): User {

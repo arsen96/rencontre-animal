@@ -226,6 +226,32 @@
       <button type="button" class="logout-btn" (click)="logout()">
         {{ 'profile.logout' | translate }}
       </button>
+
+      <div class="account-actions">
+        <button
+          type="button"
+          class="account-action-btn pause"
+          [disabled]="accountBusy"
+          (click)="confirmTogglePause()"
+        >
+          <ion-icon [name]="isPaused ? 'play-outline' : 'pause-outline'"></ion-icon>
+          {{ (isPaused ? 'account.resumeAccount' : 'account.pauseAccount') | translate }}
+        </button>
+
+        @if (isPaused) {
+          <p class="account-hint">{{ 'account.pausedHint' | translate }}</p>
+        }
+
+        <button
+          type="button"
+          class="account-action-btn delete"
+          [disabled]="accountBusy"
+          (click)="confirmDeleteAccount()"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+          {{ 'account.deleteAccount' | translate }}
+        </button>
+      </div>
     </div>
   }
 </ion-content>

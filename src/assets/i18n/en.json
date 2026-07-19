@@ -161,6 +161,25 @@
     "logout": "Log out",
     "viewProfileOf": "View {{name}}'s profile"
   },
+  "account": {
+    "pauseAccount": "Pause my account",
+    "resumeAccount": "Resume my account",
+    "pausedHint": "Your account is paused: you no longer appear in other users' search.",
+    "pauseConfirmTitle": "Pause account?",
+    "pauseConfirmMessage": "Your profile will no longer appear in other users' search while paused. You can resume it at any time.",
+    "pauseConfirm": "Pause",
+    "resumeConfirmTitle": "Resume your account?",
+    "resumeConfirmMessage": "Your profile will appear again in other users' search.",
+    "resumeConfirm": "Resume",
+    "deleteAccount": "Delete my account",
+    "deleteConfirmTitle": "Delete your account?",
+    "deleteConfirmMessage": "This action is permanent. Your profile, matches and conversations will be deleted and cannot be recovered.",
+    "deleteConfirm": "Delete permanently",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "errorTitle": "Oops",
+    "errorMessage": "Something went wrong. Try again."
+  },
   "language": {
     "title": "Language",
     "hint": "Choose the app language.",

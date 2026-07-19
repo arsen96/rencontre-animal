@@ -21,7 +21,7 @@
   },
   "landing": {
     "brand": "Animal Rencontre",
-    "tagline": "Rencontre des créatures rares — mais attention aux morsures.",
+    "tagline": "Une jungle mystérieuse.Rencontre des créatures rares — mais attention aux morsures.",
     "start": "Commencer"
   },
   "login": {
@@ -160,6 +160,25 @@
     "enterJungle": "Entrer dans la Jungle",
     "logout": "Se déconnecter",
     "viewProfileOf": "Voir le profil de {{name}}"
+  },
+  "account": {
+    "pauseAccount": "Mettre mon compte en pause",
+    "resumeAccount": "Réactiver mon compte",
+    "pausedHint": "Ton compte est en pause : tu n'apparais plus dans la recherche des autres.",
+    "pauseConfirmTitle": "Mettre en pause ?",
+    "pauseConfirmMessage": "Ton profil n'apparaîtra plus dans la recherche des autres tant qu'il est en pause. Tu peux le réactiver à tout moment.",
+    "pauseConfirm": "Mettre en pause",
+    "resumeConfirmTitle": "Réactiver ton compte ?",
+    "resumeConfirmMessage": "Ton profil réapparaîtra dans la recherche des autres utilisateurs.",
+    "resumeConfirm": "Réactiver",
+    "deleteAccount": "Supprimer mon compte",
+    "deleteConfirmTitle": "Supprimer ton compte ?",
+    "deleteConfirmMessage": "Cette action est définitive. Ton profil, tes matchs et tes conversations seront supprimés et ne pourront pas être récupérés.",
+    "deleteConfirm": "Supprimer définitivement",
+    "cancel": "Annuler",
+    "ok": "OK",
+    "errorTitle": "Oups",
+    "errorMessage": "Une erreur est survenue. Réessaie."
   },
   "language": {
     "title": "Langue",

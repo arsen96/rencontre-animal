@@ -30,6 +30,7 @@ export interface User {
   location?: GeoPoint;
   ageRange?: AgeRange;
   distanceKm?: number;
+  paused?: boolean;
 }
 
 export interface GeoPoint {

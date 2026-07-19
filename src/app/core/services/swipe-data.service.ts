@@ -210,7 +210,7 @@ export class SwipeDataService {
       }
 
       const user = await this.userData.getUser(fromUid);
-      if (user) {
+      if (user && !user.paused) {
         received.push(user);
       }
     }

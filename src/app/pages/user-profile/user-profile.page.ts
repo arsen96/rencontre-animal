@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, ViewWillEnter } from '@ionic/angular';
+import { AlertController, ModalController, ViewWillEnter } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { Match } from '../../core/interfaces/match.interface';
 import { CitySelection } from '../../core/interfaces/city-selection.interface';
 import { GeoPoint, User } from '../../core/interfaces/user.interface';
 import { AuthService } from '../../core/services/auth.service';
+import { AccountService } from '../../core/services/account.service';
 import { AnimalService } from '../../core/services/animal.service';
 import { AppLanguage, LanguageService } from '../../core/services/language.service';
 import { ChatService } from '../../core/services/chat.service';
@@ -38,6 +39,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   respondingTo: string | null = null;
   languages: readonly AppLanguage[] = ['fr', 'en'];
   currentLanguage: AppLanguage = 'fr';
+  accountBusy = false;
   readonly languageFlags: Record<AppLanguage, string> = {
     fr: 'assets/flags/fr.svg',
     en: 'assets/flags/gb.svg',
@@ -51,10 +53,12 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly session: UserSessionService,
     private readonly animalService: AnimalService,
     private readonly auth: AuthService,
+    private readonly accountService: AccountService,
     private readonly swipeData: SwipeDataService,
     private readonly swipeService: SwipeService,
     private readonly chatService: ChatService,
     private readonly modalCtrl: ModalController,
+    private readonly alertCtrl: AlertController,
     private readonly router: Router,
     private readonly languageService: LanguageService,
     private readonly translate: TranslateService
@@ -208,6 +212,107 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     this.session.reset();
     this.chatService.clear();
     this.router.navigate(['/landing']);
+  }
+
+  get isPaused(): boolean {
+    return !!this.user?.paused;
+  }
+
+  async confirmTogglePause(): Promise<void> {
+    if (this.accountBusy) {
+      return;
+    }
+
+    const pausing = !this.isPaused;
+    const alert = await this.alertCtrl.create({
+      header: this.translate.instant(
+        pausing ? 'account.pauseConfirmTitle' : 'account.resumeConfirmTitle'
+      ),
+      message: this.translate.instant(
+        pausing ? 'account.pauseConfirmMessage' : 'account.resumeConfirmMessage'
+      ),
+      buttons: [
+        {
+          text: this.translate.instant('account.cancel'),
+          role: 'cancel',
+        },
+        {
+          text: this.translate.instant(
+            pausing ? 'account.pauseConfirm' : 'account.resumeConfirm'
+          ),
+          role: 'confirm',
+          handler: () => {
+            void this.applyPause(pausing);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  private async applyPause(paused: boolean): Promise<void> {
+    this.accountBusy = true;
+    try {
+      await this.accountService.setPaused(paused);
+      if (this.user) {
+        this.user = { ...this.user, paused };
+      }
+    } catch (error) {
+      console.error('Failed to update pause state', error);
+      await this.showErrorAlert();
+    } finally {
+      this.accountBusy = false;
+    }
+  }
+
+  async confirmDeleteAccount(): Promise<void> {
+    if (this.accountBusy) {
+      return;
+    }
+
+    const alert = await this.alertCtrl.create({
+      header: this.translate.instant('account.deleteConfirmTitle'),
+      message: this.translate.instant('account.deleteConfirmMessage'),
+      buttons: [
+        {
+          text: this.translate.instant('account.cancel'),
+          role: 'cancel',
+        },
+        {
+          text: this.translate.instant('account.deleteConfirm'),
+          role: 'destructive',
+          cssClass: 'alert-button-danger',
+          handler: () => {
+            void this.performDeleteAccount();
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  private async performDeleteAccount(): Promise<void> {
+    this.accountBusy = true;
+    try {
+      await this.accountService.deleteAccount();
+      this.router.navigate(['/login'], { replaceUrl: true });
+    } catch (error) {
+      console.error('Failed to delete account', error);
+      await this.showErrorAlert();
+    } finally {
+      this.accountBusy = false;
+    }
+  }
+
+  private async showErrorAlert(): Promise<void> {
+    const alert = await this.alertCtrl.create({
+      header: this.translate.instant('account.errorTitle'),
+      message: this.translate.instant('account.errorMessage'),
+      buttons: [this.translate.instant('account.ok')],
+    });
+    await alert.present();
   }
 
   openPrivacyPolicy(): void {

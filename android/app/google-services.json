@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "768126961667-i9rtshpmp21o30115cq4tofpns9t3jfq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.animalrencontre.app",
+            "certificate_hash": "997a90240ac61a72f73d6dc9d468bf71224bbd4b"
+          }
+        },
+        {
           "client_id": "768126961667-8uvtrv0uao0u85genig7kil90rmdo6sg.apps.googleusercontent.com",
           "client_type": 3
         }
