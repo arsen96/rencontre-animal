@@ -18,6 +18,9 @@ import {
   locationOutline,
   logoGoogle,
   logOutOutline,
+  male,
+  maleFemale,
+  female,
   send,
 } from 'ionicons/icons';
 
@@ -50,6 +53,9 @@ addIcons({
   'image-outline': imageOutline,
   'checkmark-outline': checkmarkOutline,
   'close-circle-outline': closeCircleOutline,
+  male,
+  female,
+  'male-female': maleFemale,
 });
 
 @NgModule({

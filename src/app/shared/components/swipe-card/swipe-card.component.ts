@@ -48,6 +48,17 @@ export class SwipeCardComponent implements OnDestroy {
     return Math.min(Math.max(-this.offsetX / 120, 0), 1);
   }
 
+  get genderIcon(): string {
+    switch (this.profile?.gender) {
+      case 'male':
+        return 'male';
+      case 'femelle':
+        return 'female';
+      default:
+        return 'male-female';
+    }
+  }
+
   ngOnDestroy(): void {
     this.detachListeners();
   }
