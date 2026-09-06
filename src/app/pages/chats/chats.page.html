@@ -3,7 +3,7 @@
 <ion-header class="ion-no-border chats-header">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="backToJungle()">
+      <ion-button (click)="backToHome()">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -17,7 +17,7 @@
       <span class="emoji">💬</span>
       <h2>{{ 'chats.emptyTitle' | translate }}</h2>
       <p>{{ 'chats.emptySubtitle' | translate }}</p>
-      <ion-button fill="outline" (click)="backToJungle()">{{ 'chats.backToJungle' | translate }}</ion-button>
+      <ion-button fill="outline" (click)="backToHome()">{{ 'chats.backToExplore' | translate }}</ion-button>
     </div>
   } @else {
     <ion-list lines="none" class="conv-list">

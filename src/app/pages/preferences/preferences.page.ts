@@ -35,7 +35,6 @@ export class PreferencesPage {
     if (!this.selected) {
       return;
     }
-    this.session.patchOnboarding({ meetPreference: this.selected });
-    this.router.navigate(['/animal-select']);
+    this.router.navigate(['/personality-quiz']);
   }
 }

@@ -3,7 +3,7 @@
 <ion-content class="jungle-content" [fullscreen]="true">
   @if (user) {
     <div class="page-shell profile-page">
-      <app-step-header [currentStep]="6" [totalSteps]="6"></app-step-header>
+      <app-step-header [currentStep]="5" [totalSteps]="5"></app-step-header>
 
       <div class="avatar-hero">
         <div class="card-image-frame collectible-stage">
@@ -11,7 +11,7 @@
         </div>
         <button type="button" class="change-animal-btn" (click)="changeAnimal()">
           <ion-icon name="swap-horizontal-outline"></ion-icon>
-          {{ 'profile.changeAnimal' | translate }}
+          {{ 'profile.retakeQuiz' | translate }}
         </button>
       </div>
 
@@ -60,130 +60,6 @@
         }
       </div>
 
-      <div class="profile-card glass-card connections-card">
-        <h3>{{ 'profile.matchesTitle' | translate }}</h3>
-        <p class="section-hint">{{ 'profile.matchesHint' | translate }}</p>
-
-        @if (loadingConnections) {
-          <div class="connections-loading">
-            <ion-spinner name="crescent"></ion-spinner>
-          </div>
-        } @else if (matches.length === 0) {
-          <p class="empty-hint">{{ 'profile.matchesEmpty' | translate }}</p>
-        } @else {
-          <div class="connection-list connection-list--scroll">
-            @for (match of matches; track match.id) {
-              <div class="connection-row">
-                <button
-                  type="button"
-                  class="connection-avatar"
-                  [attr.aria-label]="'profile.viewProfileOf' | translate: { name: match.user.displayName }"
-                  (click)="openProfileDetail(match.user)"
-                >
-                  <app-animal-avatar
-                    [animal]="match.user.animal"
-                    size="sm"
-                    variant="inline"
-                  ></app-animal-avatar>
-                </button>
-                <div class="connection-info">
-                  <strong>{{ match.user.displayName }}</strong>
-                  <span>
-                    {{ match.user.animal.name }}
-                    @if (match.user.city) {
-                      · {{ match.user.city }}
-                    }
-                    @if (match.user.distanceKm != null) {
-                      · {{ match.user.distanceKm }} km
-                    }
-                  </span>
-                </div>
-                <button type="button" class="message-btn" (click)="openMatchChat(match)">
-                  <ion-icon name="chatbubble-outline"></ion-icon>
-                  {{ 'common.message' | translate }}
-                </button>
-              </div>
-            }
-          </div>
-        }
-      </div>
-
-      <div class="profile-card glass-card connections-card">
-        <h3>{{ 'profile.likesTitle' | translate }}</h3>
-        <p class="section-hint">{{ 'profile.likesHint' | translate }}</p>
-
-        @if (loadingConnections) {
-          <div class="connections-loading">
-            <ion-spinner name="crescent"></ion-spinner>
-          </div>
-        } @else if (receivedLikes.length === 0) {
-          <p class="empty-hint">{{ 'profile.likesEmpty' | translate }}</p>
-        } @else {
-          <div class="connection-list connection-list--scroll">
-            @for (profile of receivedLikes; track profile.id) {
-              <div class="connection-row">
-                <button
-                  type="button"
-                  class="connection-avatar"
-                  [attr.aria-label]="'profile.viewProfileOf' | translate: { name: profile.displayName }"
-                  (click)="openProfileDetail(profile)"
-                >
-                  <app-animal-avatar
-                    [animal]="profile.animal"
-                    size="sm"
-                    variant="inline"
-                  ></app-animal-avatar>
-                </button>
-                <div class="connection-info">
-                  <strong>{{ profile.displayName }}</strong>
-                  <span>
-                    {{ profile.age }} {{ 'common.years' | translate }} · {{ profile.animal.name }}
-                    @if (profile.city) {
-                      · {{ profile.city }}
-                    }
-                    @if (profile.distanceKm != null) {
-                      · {{ profile.distanceKm }} km
-                    }
-                  </span>
-                </div>
-                <div class="like-actions">
-                  <button
-                    type="button"
-                    class="action-chip pass"
-                    [disabled]="respondingTo === profile.id"
-                    (click)="declineLike(profile)"
-                  >
-                    <ion-icon name="close"></ion-icon>
-                  </button>
-                  <button
-                    type="button"
-                    class="action-chip like"
-                    [disabled]="respondingTo === profile.id"
-                    (click)="acceptLike(profile)"
-                  >
-                    <ion-icon name="heart"></ion-icon>
-                  </button>
-                </div>
-              </div>
-            }
-          </div>
-        }
-      </div>
-
-      <div class="profile-card glass-card age-range-card">
-        <h3>{{ 'profile.ageRangeTitle' | translate }}</h3>
-        <p class="age-range-value">{{ 'profile.ageRangeValue' | translate: { lower: ageRange.lower, upper: ageRange.upper } }}</p>
-        <ion-range
-          [(ngModel)]="ageRange"
-          (ionChange)="onAgeRangeChange($event)"
-          [dualKnobs]="true"
-          [min]="18"
-          [max]="80"
-          [pin]="true"
-          [snaps]="true"
-        ></ion-range>
-      </div>
-
       <div class="profile-card glass-card language-card">
         <h3>{{ 'language.title' | translate }}</h3>
         <p class="section-hint">{{ 'language.hint' | translate }}</p>
@@ -205,10 +81,10 @@
       </button>
 
       <app-primary-button
-        [label]="'profile.enterJungle' | translate"
+        [label]="'profile.enterApp' | translate"
         variant="green"
-        [disabled]="!canEnterJungle"
-        (pressed)="enterJungle()"
+        [disabled]="!canEnterApp"
+        (pressed)="enterApp()"
       ></app-primary-button>
 
       <button type="button" class="legal-link" (click)="openPrivacyPolicy()">

@@ -1,0 +1,28 @@
+@import '../../../theme/mixins.scss';
+
+.animal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(152px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+
+  app-animal-flip-card {
+    display: block;
+  }
+}
+
+.search-block {
+  margin-bottom: 16px;
+}
+
+.search-meta {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.animal-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 32px 12px;
+}

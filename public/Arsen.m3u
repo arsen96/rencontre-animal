@@ -1,0 +1,81 @@
+#EXTM3U
+
+########## 🇦🇲 ՀԱՅԿԱԿԱՆ ##########
+
+#EXTINF:-1 tvg-chno="1" group-title="🇦🇲 Հայկական ալիքներ",Armenia TV
+http://stream.mcquack.net/175/index.m3u8
+
+#EXTINF:-1 tvg-chno="2" group-title="🇦🇲 Հայկական ալիքներ",Armenia 1
+https://ifl01eu-new.bozztv.com/am1abr/index.m3u8
+
+#EXTINF:-1 tvg-chno="3" group-title="🇦🇲 Հայկական ալիքներ",Armenia 2
+https://amtv.tulixcdn.com/amtv3/am3abr/index.m3u8
+
+#EXTINF:-1 tvg-chno="4" group-title="🇦🇲 Հայկական ալիքներ",Armenia Premium
+http://stream.mcquack.net/123/index.m3u8
+
+#EXTINF:-1 tvg-chno="5" group-title="🇦🇲 Հայկական ալիքներ",ATV HD
+http://stream.mcquack.net/36/index.m3u8
+
+#EXTINF:-1 tvg-chno="6" group-title="🇦🇲 Հայկական ալիքներ",Առաջին ալիք - Լուրեր
+https://amtvusdvr.tulix.tv/am3abr/index.m3u8
+
+#EXTINF:-1 tvg-chno="7" group-title="🇦🇲 Հայկական ալիքներ",Կենտրոն TV
+http://stream.mcquack.net/39/index.m3u8
+
+#EXTINF:-1 tvg-chno="8" group-title="🇦🇲 Հայկական ալիքներ",Շանթ TV
+http://stream.mcquack.net/37/index.m3u8
+
+
+########## ⚽ ՖՈՒՏԲՈԼ ##########
+
+#EXTINF:-1 tvg-chno="20" group-title="⚽ Ֆուտբոլ",Fast Sports
+https://ncdn-y-vmedia-w1.teamcloud.am/channel1new/index.m3u8?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xL2FwaS9ndWVzdC9yZWdpc3RlciIsImlhdCI6MTc4NzI1MjE1NiwiZXhwIjoyMTAyNjEyMTU2LCJuYmYiOjE3ODcyNTIxNTYsImp0aSI6ImZKVUxQN1BFeWlyZnhGWDEiLCJzdWIiOiIxNzU1ODIyMSIsInBydiI6Ijc3ZTM4MDBiMjE0ZGVkNTZkNWRiNDkyYTI0Mzg3ZjJiNTg0Y2Q3YzkiLCJ1c2VyX3R5cGUiOiJndWVzdCJ9.wuLklieLLEXQKXIV-3oag-hyHrD4bXJAhPEg64vVWKk
+
+#EXTINF:-1 tvg-chno="21" group-title="⚽ Ֆուտբոլ",S Sport
+https://corestream.siteyaptim.live/s-sport/index.m3u8
+
+#EXTINF:-1 tvg-chno="22" group-title="⚽ Ֆուտբոլ",Setanta Sports 1
+http://stream.mcquack.net/234/index.m3u8
+
+#EXTINF:-1 tvg-chno="23" group-title="⚽ Ֆուտբոլ",Setanta Sports 2
+http://stream.mcquack.net/235/index.m3u8
+
+#EXTINF:-1 tvg-chno="24" group-title="⚽ Ֆուտբոլ",Матч! Футбол 1
+http://3d643533.skalkak.pw/iptv/DN4ZQUTY5AP8KB/124/index.m3u8
+
+#EXTINF:-1 tvg-chno="25" group-title="⚽ Ֆուտբոլ",Матч! Футбол 2
+http://3d643533.skalkak.pw/iptv/DN4ZQUTY5AP8KB/530/index.m3u8
+
+#EXTINF:-1 tvg-chno="26" group-title="⚽ Ֆուտբոլ",Матч! Футбол 3
+http://3d643533.skalkak.pw/iptv/DN4ZQUTY5AP8KB/522/index.m3u8
+
+
+########## 🎬 ՖԻԼՄԵՐ ԵՎ ԿԻՆՈ ##########
+
+#EXTINF:-1 tvg-chno="41" group-title="🎬 Ֆիլմեր և կինո",CINE THRILLER
+https://jmp2.uk/plu-60c3472a51a2050008dad272.m3u8
+
+#EXTINF:-1 tvg-chno="42" group-title="🎬 Ֆիլմեր և կինո",Pluto Comédies Cultes
+https://jmp2.uk/plu-67b4b2d976a934282e92d71c.m3u8
+
+
+########## 🇫🇷 ՖՐԱՆՍԻԱԿԱՆ ##########
+
+#EXTINF:-1 tvg-chno="60" group-title="🇫🇷 Ֆրանսիական ալիքներ",RMC Story
+https://d15aro46bnpfm8.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-fqkqiax1078up/RMC_Story_FR.m3u8
+
+
+########## 🇷🇺 ՌՈՒՍԱԿԱՆ ##########
+
+#EXTINF:-1 tvg-chno="70" group-title="🇷🇺 Ռուսական ալիքներ",National Geographic
+http://stream.mcquack.net/116/index.m3u8
+
+#EXTINF:-1 tvg-chno="71" group-title="🇷🇺 Ռուսական ալիքներ",National Geographic Wild
+http://hls127.freeott.top:8080/Nat_Geo_Wild_SD/video.m3u8
+
+#EXTINF:-1 tvg-chno="72" group-title="🇷🇺 Ռուսական ալիքներ",Xohanoc
+http://stream.mcquack.net/216/index.m3u8
+
+#EXTINF:-1 tvg-chno="73" group-title="🇷🇺 Ռուսական ալիքներ",Русский Бестселлер
+http://stream.mcquack.net/208/index.m3u8

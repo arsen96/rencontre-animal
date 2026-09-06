@@ -18,12 +18,52 @@
       ]
     }
   ],
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
-  }
+  "hosting": [
+    {
+      "site": "rencontre-animal",
+      "public": "public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "headers": [
+        {
+          "source": "**/*.m3u",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/vnd.apple.mpegurl"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "site": "arsenkubat",
+      "public": "public",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/channels.m3u",
+          "destination": "/Arsen.m3u"
+        }
+      ],
+      "headers": [
+        {
+          "source": "**/*.m3u",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/vnd.apple.mpegurl"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

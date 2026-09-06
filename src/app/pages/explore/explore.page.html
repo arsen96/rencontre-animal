@@ -1,0 +1,117 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-header class="ion-no-border jungle-header">
+  <ion-toolbar>
+    <ion-title>{{ 'explore.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  <div class="page-shell">
+    @if (loading) {
+      <div class="loading-block">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    } @else {
+      <section class="explore-section same-totem-section">
+        <h2 class="section-title">{{ 'explore.sameTotemTitle' | translate }}</h2>
+        @if (user?.animal) {
+          <p class="section-hint">
+            {{
+              'explore.sameTotemHint'
+                | translate: { animal: user!.animal.name, emoji: user!.animal.emoji }
+            }}
+          </p>
+        }
+
+        @if (loadingPeople) {
+          <div class="loading-block compact">
+            <ion-spinner name="crescent"></ion-spinner>
+          </div>
+        } @else if (sameTotemUsers.length === 0) {
+          <p class="empty-inline">{{ 'explore.sameTotemEmpty' | translate }}</p>
+        } @else {
+          <div class="user-list">
+            @for (profile of sameTotemUsers; track profile.id) {
+              <div class="user-row">
+                <button type="button" class="user-main" (click)="openProfile(profile)">
+                  <app-animal-avatar
+                    [animal]="profile.animal"
+                    size="sm"
+                    variant="inline"
+                  ></app-animal-avatar>
+                  <div class="user-info">
+                    <strong>{{ profile.displayName }}</strong>
+                    <span class="same-badge">{{ 'explore.sameTotemBadge' | translate }}</span>
+                    <span class="meta">
+                      @if (profile.city) {
+                        {{ profile.city }}
+                      }
+                      @if (profile.distanceKm != null) {
+                        · {{ profile.distanceKm }} km
+                      }
+                    </span>
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  class="message-btn"
+                  [disabled]="openingChatFor === profile.id"
+                  (click)="openChat(profile)"
+                >
+                  @if (openingChatFor === profile.id) {
+                    <ion-spinner name="crescent"></ion-spinner>
+                  } @else {
+                    <ion-icon name="chatbubble-outline"></ion-icon>
+                    {{ 'common.message' | translate }}
+                  }
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </section>
+
+      <section class="explore-section affinity-section">
+        <h2 class="section-title">{{ 'explore.affinitiesTitle' | translate }}</h2>
+        @if (user?.animal) {
+          <p class="section-hint">
+            {{ 'explore.subtitle' | translate: { animal: user!.animal.name } }}
+          </p>
+        }
+
+        @if (affinities.length === 0) {
+          <p class="empty-inline">{{ 'explore.empty' | translate }}</p>
+        } @else {
+          <div class="affinity-list">
+            @for (item of affinities; track item.animal.id) {
+              <button type="button" class="affinity-row" (click)="openUsers(item)">
+                <app-animal-avatar
+                  [animal]="item.animal"
+                  size="sm"
+                  variant="inline"
+                ></app-animal-avatar>
+                <div class="affinity-info">
+                  <strong>
+                    {{ item.animal.emoji }} {{ item.animal.name }}
+                    <span class="percent">{{ item.percent }}%</span>
+                  </strong>
+                  <span class="reason">{{ item.reason }}</span>
+                </div>
+                <span class="people-badge" [class.empty]="peopleCount(item.animal.id) === 0">
+                  {{
+                    (peopleCount(item.animal.id) === 1
+                      ? 'explore.peopleBadgeOne'
+                      : 'explore.peopleBadgeMany'
+                    ) | translate: { count: peopleCount(item.animal.id) }
+                  }}
+                </span>
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+              </button>
+            }
+          </div>
+        }
+      </section>
+    }
+  </div>
+</ion-content>

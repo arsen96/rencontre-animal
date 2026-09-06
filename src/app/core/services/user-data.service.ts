@@ -61,6 +61,11 @@ export class UserDataService {
     return snapshot.docs.map((d) => ({ id: d.id, ...d.data() } as User));
   }
 
+  async getUsersByAnimalId(animalId: string): Promise<User[]> {
+    const all = await this.getAllUsers();
+    return all.filter((user) => user.animal?.id === animalId);
+  }
+
   /**
    * Supprime le document utilisateur, ses sous-collections connues, ainsi que
    * les matchs/conversations le concernant (best-effort selon les règles Firestore).

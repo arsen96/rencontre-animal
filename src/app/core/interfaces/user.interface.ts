@@ -1,6 +1,7 @@
 import { Animal } from './animal.interface';
 
 export type Gender = 'femelle' | 'male' | 'non-binaire';
+/** @deprecated Dating preference — kept optional for legacy Firestore docs. */
 export type MeetPreference = 'femelle' | 'male' | 'tout';
 
 export interface UserProfile {
@@ -21,7 +22,8 @@ export interface User {
   displayName: string;
   age: number;
   gender: Gender;
-  meetPreference: MeetPreference;
+  /** Legacy field; no longer used for discovery. */
+  meetPreference?: MeetPreference;
   birthDate: string;
   animal: Animal;
   profile: UserProfile;
@@ -31,6 +33,9 @@ export interface User {
   ageRange?: AgeRange;
   distanceKm?: number;
   paused?: boolean;
+  quizAnswers?: Record<string, string>;
+  quizScores?: Record<string, number>;
+  totemAssignedAt?: string;
 }
 
 export interface GeoPoint {

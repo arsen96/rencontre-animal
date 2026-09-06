@@ -1,0 +1,34 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-header class="ion-no-border animal-detail-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    @if (animal) {
+      <ion-title>{{ animal.name }}</ion-title>
+    }
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="jungle-content animal-detail-page" [fullscreen]="true">
+  @if (animal) {
+    <div class="detail-shell">
+      <app-animal-flip-card
+        class="detail-card"
+        [animal]="animal"
+        [(flipped)]="flipped"
+        [selected]="true"
+        [expanded]="true"
+        [clickable]="false"
+        [flipInteractive]="true"
+      ></app-animal-flip-card>
+
+      <button type="button" class="affinity-link" (click)="seeAffinities()">
+        {{ 'collection.seeAffinities' | translate }}
+      </button>
+    </div>
+  }
+</ion-content>

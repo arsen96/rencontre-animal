@@ -1,0 +1,47 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-header class="ion-no-border jungle-header">
+  <ion-toolbar>
+    <ion-title>{{ 'collection.title' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  <div class="page-shell">
+    <p class="page-subtitle">{{ 'collection.subtitle' | translate }}</p>
+
+    <div class="search-block">
+      <ion-searchbar
+        class="animal-search"
+        [placeholder]="'collection.searchPlaceholder' | translate"
+        [value]="searchTerm"
+        [debounce]="0"
+        show-clear-button="focus"
+        (ionInput)="onSearchInput($event)"
+      ></ion-searchbar>
+      @if (searchMetaLabel) {
+        <p class="search-meta">{{ searchMetaLabel }}</p>
+      }
+    </div>
+
+    @if (loading) {
+      <div class="animal-empty">
+        <p>{{ 'common.loading' | translate }}</p>
+      </div>
+    } @else if (filteredAnimals.length > 0) {
+      <div class="animal-grid">
+        @for (animal of filteredAnimals; track animal.id) {
+          <app-animal-flip-card
+            [animal]="animal"
+            (cardClick)="openAnimal($event)"
+          ></app-animal-flip-card>
+        }
+      </div>
+    } @else {
+      <div class="animal-empty">
+        <h2>{{ 'collection.emptyTitle' | translate }}</h2>
+        <p>{{ 'collection.emptySubtitle' | translate }}</p>
+      </div>
+    }
+  </div>
+</ion-content>

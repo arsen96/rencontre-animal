@@ -27,9 +27,16 @@ const routes: Routes = [
       import('./pages/gender/gender.module').then((m) => m.GenderPageModule),
   },
   {
-    path: 'preferences',
+    path: 'personality-quiz',
     loadChildren: () =>
-      import('./pages/preferences/preferences.module').then((m) => m.PreferencesPageModule),
+      import('./pages/personality-quiz/personality-quiz.module').then(
+        (m) => m.PersonalityQuizPageModule
+      ),
+  },
+  {
+    path: 'totem-reveal',
+    loadChildren: () =>
+      import('./pages/totem-reveal/totem-reveal.module').then((m) => m.TotemRevealPageModule),
   },
   {
     path: 'animal-select',
@@ -48,19 +55,11 @@ const routes: Routes = [
   {
     path: 'user-profile',
     loadChildren: () =>
-      import('./pages/user-profile/user-profile.module').then(
-        (m) => m.UserProfilePageModule
-      ),
+      import('./pages/user-profile/user-profile.module').then((m) => m.UserProfilePageModule),
   },
   {
-    path: 'jungle',
-    loadChildren: () =>
-      import('./pages/jungle/jungle.module').then((m) => m.JunglePageModule),
-  },
-  {
-    path: 'match',
-    loadChildren: () =>
-      import('./pages/match/match.module').then((m) => m.MatchPageModule),
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then((m) => m.TabsPageModule),
   },
   {
     path: 'chats',
@@ -72,6 +71,9 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/chat/chat.module').then((m) => m.ChatPageModule),
   },
+  { path: 'jungle', redirectTo: 'tabs/my-card', pathMatch: 'full' },
+  { path: 'match', redirectTo: 'tabs/explore', pathMatch: 'full' },
+  { path: 'preferences', redirectTo: 'personality-quiz', pathMatch: 'full' },
   { path: '**', redirectTo: 'landing' },
 ];
 

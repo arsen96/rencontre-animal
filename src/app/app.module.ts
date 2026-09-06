@@ -8,11 +8,18 @@ import { addIcons } from 'ionicons';
 import {
   arrowBack,
   chatbubbleEllipsesOutline,
+  chatbubbleOutline,
   chatbubblesOutline,
   checkmarkOutline,
+  checkmark,
+  chevronForwardOutline,
   close,
   closeCircleOutline,
+  compassOutline,
+  createOutline,
+  gridOutline,
   heart,
+  idCardOutline,
   imageOutline,
   informationCircleOutline,
   locationOutline,
@@ -21,7 +28,12 @@ import {
   male,
   maleFemale,
   female,
+  pauseOutline,
+  personCircleOutline,
+  playOutline,
   send,
+  swapHorizontalOutline,
+  trashOutline,
 } from 'ionicons/icons';
 
 import { Capacitor } from '@capacitor/core';
@@ -42,6 +54,7 @@ import { LanguageService } from './core/services/language.service';
 addIcons({
   'logo-google': logoGoogle,
   'chatbubble-ellipses-outline': chatbubbleEllipsesOutline,
+  'chatbubble-outline': chatbubbleOutline,
   'chatbubbles-outline': chatbubblesOutline,
   'information-circle-outline': informationCircleOutline,
   'location-outline': locationOutline,
@@ -52,10 +65,21 @@ addIcons({
   heart,
   'image-outline': imageOutline,
   'checkmark-outline': checkmarkOutline,
+  checkmark,
   'close-circle-outline': closeCircleOutline,
   male,
   female,
   'male-female': maleFemale,
+  'id-card-outline': idCardOutline,
+  'grid-outline': gridOutline,
+  'compass-outline': compassOutline,
+  'person-circle-outline': personCircleOutline,
+  'chevron-forward-outline': chevronForwardOutline,
+  'swap-horizontal-outline': swapHorizontalOutline,
+  'create-outline': createOutline,
+  'pause-outline': pauseOutline,
+  'play-outline': playOutline,
+  'trash-outline': trashOutline,
 });
 
 @NgModule({

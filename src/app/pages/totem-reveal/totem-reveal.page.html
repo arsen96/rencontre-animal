@@ -1,0 +1,33 @@
+<app-jungle-background></app-jungle-background>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  <div class="page-shell reveal-page">
+    <app-step-header [currentStep]="2" [totalSteps]="5"></app-step-header>
+
+    <p class="eyebrow">{{ 'reveal.eyebrow' | translate }}</p>
+    <h1 class="page-title">{{ 'reveal.title' | translate }}</h1>
+    @if (animal) {
+      <p class="page-subtitle">
+        {{ animal.emoji }} {{ animal.name }}
+        <span class="dot">·</span>
+        {{ animal.personality }}
+      </p>
+
+      <div class="reveal-card-wrap">
+        <app-animal-flip-card
+          [animal]="animal"
+          [(flipped)]="flipped"
+          [selected]="true"
+          [expanded]="true"
+          [clickable]="false"
+          [flipInteractive]="true"
+        ></app-animal-flip-card>
+      </div>
+    }
+
+    <app-primary-button
+      [label]="(isRetake ? 'reveal.backToCard' : 'reveal.continue') | translate"
+      (pressed)="continue()"
+    ></app-primary-button>
+  </div>
+</ion-content>

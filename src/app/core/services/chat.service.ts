@@ -314,6 +314,44 @@ export class ChatService {
     return conversation;
   }
 
+  /**
+   * Opens an existing conversation with another user, or creates one
+   * without requiring a dating-style mutual match.
+   */
+  async openOrCreateWithUser(other: User): Promise<Conversation> {
+    const uid = this.auth.uid;
+    if (!uid) {
+      throw new Error('Not authenticated');
+    }
+    if (other.id === uid) {
+      throw new Error('Cannot chat with yourself');
+    }
+
+    const pairId = [uid, other.id].sort().join('_');
+    const conversationId = `conv-${pairId}`;
+    const existing =
+      this.getById(conversationId) ?? this.getByMatchId(pairId);
+    if (existing) {
+      return existing;
+    }
+
+    await this.syncFromFirestore(uid);
+    const afterSync =
+      this.getById(conversationId) ?? this.getByMatchId(pairId);
+    if (afterSync) {
+      return afterSync;
+    }
+
+    const match: Match = {
+      id: pairId,
+      matchedAt: new Date(),
+      user: other,
+      isNew: false,
+      conversationId,
+    };
+    return this.createFromMatch(match);
+  }
+
   ensureConversation(match: Match): Conversation {
     return this.createFromMatch(match);
   }

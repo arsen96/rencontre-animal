@@ -106,7 +106,7 @@ export class ProfileCreatePage implements OnInit {
         height: this.height ?? current?.profile.height ?? 0,
       },
     });
-    this.router.navigate(['/animal-select'], { queryParams: { edit: 1 } });
+    this.router.navigate(['/personality-quiz'], { queryParams: { retake: 1 } });
   }
 
   submit(): void {

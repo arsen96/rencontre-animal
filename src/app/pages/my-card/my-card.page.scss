@@ -1,0 +1,51 @@
+.my-card-page {
+  .eyebrow {
+    margin: 0 0 6px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+}
+
+.card-wrap {
+  width: 100%;
+  max-width: 340px;
+  margin: 16px auto 20px;
+
+  app-animal-flip-card {
+    display: block;
+    width: 100%;
+  }
+}
+
+.traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.trait-chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 169, 107, 0.28);
+  color: var(--gold-light);
+  font-size: 0.78rem;
+}
+
+.description {
+  color: var(--text-secondary);
+  line-height: 1.55;
+  font-size: 0.92rem;
+  margin: 0 0 22px;
+}
+
+.retake-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(200, 169, 107, 0.3);
+  background: transparent;
+  color: var(--gold-light);
+}

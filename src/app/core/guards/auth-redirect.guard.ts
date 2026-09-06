@@ -36,9 +36,9 @@ export const authRedirectGuard: CanActivateFn = async (): Promise<boolean | UrlT
   if (profile) {
     const user = normalizeUser(profile);
     session.setCurrentUser(user);
-    const route = isProfileComplete(user) ? '/jungle' : onboardingRouteFor(user);
+    const route = isProfileComplete(user) ? '/tabs/my-card' : onboardingRouteFor(user);
     return router.createUrlTree([route]);
   }
 
-  return router.createUrlTree(['/birthdate']);
+  return router.createUrlTree(['/personality-quiz']);
 };

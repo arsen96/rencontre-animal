@@ -1,0 +1,165 @@
+.loading-block,
+.empty {
+  text-align: center;
+  padding: 40px 12px;
+  color: var(--text-secondary);
+}
+
+.loading-block.compact {
+  padding: 20px 12px;
+}
+
+.explore-section {
+  margin-bottom: 28px;
+}
+
+.section-title {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  color: var(--gold-light);
+  letter-spacing: 0.02em;
+}
+
+.section-hint,
+.empty-inline {
+  margin: 0 0 14px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.same-totem-section {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(200, 169, 107, 0.14);
+}
+
+.user-list,
+.affinity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(200, 169, 107, 0.22);
+  background: rgba(200, 169, 107, 0.06);
+}
+
+.user-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  text-align: left;
+  padding: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+
+  strong {
+    color: var(--text-primary);
+  }
+
+  .same-badge {
+    color: var(--gold);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .meta {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+  }
+}
+
+.message-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 169, 107, 0.35);
+  background: rgba(200, 169, 107, 0.12);
+  color: var(--gold-light);
+  font-size: 0.8rem;
+
+  ion-spinner {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.affinity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(200, 169, 107, 0.18);
+  background: rgba(11, 11, 11, 0.55);
+  color: var(--text-primary);
+
+  ion-icon {
+    color: var(--gold-muted);
+    flex-shrink: 0;
+  }
+}
+
+.people-badge {
+  flex-shrink: 0;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 169, 107, 0.35);
+  background: rgba(200, 169, 107, 0.14);
+  color: var(--gold-light);
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.empty {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+  }
+}
+
+.affinity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+
+  strong {
+    font-size: 0.98rem;
+  }
+
+  .percent {
+    margin-left: 6px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .reason {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+}

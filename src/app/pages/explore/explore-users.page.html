@@ -1,0 +1,82 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-header class="ion-no-border jungle-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      @if (animal) {
+        {{ animal.emoji }} {{ animal.name }}
+      }
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  <div class="page-shell">
+    @if (animal && isSameTotem) {
+      <p class="page-subtitle">
+        {{ 'explore.sameTotemUsersSubtitle' | translate: { animal: animal.name } }}
+      </p>
+      <p class="reason">{{ 'explore.sameTotemBadge' | translate }}</p>
+    } @else if (animal && affinityPercent != null) {
+      <p class="page-subtitle">
+        {{
+          'explore.usersSubtitle'
+            | translate: { animal: animal.name, percent: affinityPercent }
+        }}
+      </p>
+      <p class="reason">{{ reason }}</p>
+    }
+
+    @if (loading) {
+      <div class="loading-block">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    } @else if (users.length === 0) {
+      <p class="empty">{{ 'explore.usersEmpty' | translate }}</p>
+    } @else {
+      <div class="user-list">
+        @for (user of users; track user.id) {
+          <div class="user-row">
+            <button type="button" class="user-main" (click)="openProfile(user)">
+              <app-animal-avatar
+                [animal]="user.animal"
+                size="sm"
+                variant="inline"
+              ></app-animal-avatar>
+              <div class="user-info">
+                <strong>{{ user.displayName }}</strong>
+                <span>
+                  {{ user.animal.name }}
+                  @if (user.city) {
+                    · {{ user.city }}
+                  }
+                  @if (user.distanceKm != null) {
+                    · {{ user.distanceKm }} km
+                  }
+                </span>
+              </div>
+            </button>
+            <button
+              type="button"
+              class="message-btn"
+              [disabled]="openingChatFor === user.id"
+              (click)="openChat(user)"
+            >
+              @if (openingChatFor === user.id) {
+                <ion-spinner name="crescent"></ion-spinner>
+              } @else {
+                <ion-icon name="chatbubble-outline"></ion-icon>
+                {{ 'common.message' | translate }}
+              }
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</ion-content>

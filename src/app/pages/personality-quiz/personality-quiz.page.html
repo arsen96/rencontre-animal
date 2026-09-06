@@ -1,0 +1,48 @@
+<app-jungle-background variant="subtle"></app-jungle-background>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  <div class="page-shell quiz-page">
+    <app-step-header [currentStep]="1" [totalSteps]="5"></app-step-header>
+
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar" [style.width.%]="progress"></div>
+    </div>
+    <p class="quiz-step">
+      {{ 'quiz.step' | translate: { current: index + 1, total: questions.length } }}
+    </p>
+
+    <h1 class="page-title">{{ 'quiz.title' | translate }}</h1>
+    <p class="page-subtitle question-text">{{ questionText() }}</p>
+
+    <div class="options">
+      @for (option of current?.options; track option.id) {
+        <button
+          type="button"
+          class="option-btn"
+          [class.selected]="selectedOptionId === option.id"
+          (click)="selectOption(option.id)"
+        >
+          {{ optionText(option.id) }}
+        </button>
+      }
+    </div>
+
+    <div class="quiz-actions">
+      <button type="button" class="link-back" (click)="goBack()">
+        {{ 'common.back' | translate }}
+      </button>
+      <app-primary-button
+        [label]="(index === questions.length - 1 ? 'quiz.reveal' : 'common.continue') | translate"
+        [disabled]="!canContinue"
+        (pressed)="continue()"
+      ></app-primary-button>
+    </div>
+
+    @if (loading) {
+      <div class="quiz-loading">
+        <ion-spinner name="crescent"></ion-spinner>
+        <p>{{ 'quiz.computing' | translate }}</p>
+      </div>
+    }
+  </div>
+</ion-content>

@@ -70,7 +70,7 @@ export class AnimalDetailPage implements OnInit, OnDestroy {
 
     if (this.isEdit) {
       this.session.updateAnimal(this.animal);
-      void this.router.navigate(['/jungle']);
+      void       this.router.navigate(['/tabs/my-card']);
       return;
     }
 

@@ -28,7 +28,6 @@ export function isProfileComplete(user: User): boolean {
   return !!(
     user.birthDate &&
     user.gender &&
-    user.meetPreference &&
     user.animal?.id &&
     user.profile?.height &&
     user.city?.trim()
@@ -45,14 +44,14 @@ export function normalizeUser(user: User): User {
 }
 
 export function onboardingRouteFor(user: User | null): string {
-  if (!user?.birthDate || !user.gender || !user.meetPreference) {
+  if (!user?.animal?.id) {
+    return '/personality-quiz';
+  }
+  if (!user.birthDate || !user.gender) {
     return '/birthdate';
   }
-  if (!user.animal?.id) {
-    return '/animal-select';
-  }
-  if (!user.profile?.height) {
+  if (!user.profile?.height || !user.city?.trim()) {
     return '/profile-create';
   }
-  return '/user-profile';
+  return '/tabs/my-card';
 }

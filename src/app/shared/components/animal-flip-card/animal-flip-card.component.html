@@ -3,7 +3,12 @@
   [class.flipped]="flipped"
   [class.selected]="selected"
   [class.expanded]="expanded"
-  [class.non-interactive]="!clickable"
+  [class.non-interactive]="!clickable && !flipInteractive"
+  [class.flip-interactive]="flipInteractive"
+  (pointerdown)="onPointerDown($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerup)="onPointerUp()"
+  (pointercancel)="onPointerUp()"
   (click)="onClick()"
 >
   <div class="flip-inner">
@@ -13,7 +18,9 @@
       </div>
       <div class="card-caption">
         <span class="name">{{ animal.name }}</span>
-        <span class="hint">{{ 'flipCard.reveal' | translate }}</span>
+        <span class="hint">{{
+          (flipInteractive ? 'flipCard.hintSwipeText' : 'flipCard.reveal') | translate
+        }}</span>
       </div>
     </div>
 
@@ -28,7 +35,31 @@
             <span>{{ trait }}</span>
           }
         </div>
+        @if (flipInteractive) {
+          <p class="hint-back">{{ 'flipCard.hintSwipePhoto' | translate }}</p>
+        }
       </div>
     </div>
   </div>
 </div>
+
+@if (flipInteractive) {
+  <div class="face-toggle" role="group" [attr.aria-label]="'flipCard.toggleGroup' | translate">
+    <button
+      type="button"
+      class="face-toggle-btn"
+      [class.active]="!flipped"
+      (click)="showPhoto(); $event.stopPropagation()"
+    >
+      {{ 'flipCard.photo' | translate }}
+    </button>
+    <button
+      type="button"
+      class="face-toggle-btn"
+      [class.active]="flipped"
+      (click)="showText(); $event.stopPropagation()"
+    >
+      {{ 'flipCard.text' | translate }}
+    </button>
+  </div>
+}

@@ -21,13 +21,13 @@
   },
   "landing": {
     "brand": "Animal Rencontre",
-    "tagline": "A mysterious jungle. Meet rare creatures — but beware the bites.",
+    "tagline": "Discover your totem animal, collect cards and explore your affinities.",
     "start": "Get started"
   },
   "login": {
-    "title": "Welcome to the jungle",
-    "subtitleLogin": "Log in to continue your adventure.",
-    "subtitleRegister": "Create your account to start the adventure.",
+    "title": "Welcome",
+    "subtitleLogin": "Log in to find your card and collection.",
+    "subtitleRegister": "Create your account to discover your totem animal.",
     "email": "Email",
     "emailPlaceholder": "you@example.com",
     "password": "Password",
@@ -51,7 +51,7 @@
   },
   "birthdate": {
     "title": "Your date of birth",
-    "subtitle": "We need your age to show you the right profiles.",
+    "subtitle": "We need your age to personalize your experience.",
     "day": "Day",
     "month": "Month",
     "year": "Year"
@@ -73,18 +73,62 @@
     }
   },
   "gender": {
-    "title": "Are you female or male?",
+    "title": "How do you identify?",
     "subtitle": "Choose the option that fits you best.",
     "femelle": "Female",
     "male": "Male",
     "nonBinaire": "Non-binary"
   },
-  "preferences": {
-    "title": "Who do you want to meet?",
-    "subtitle": "Tell us your dating preferences.",
-    "femelle": "Female",
-    "male": "Male",
-    "tout": "Everyone"
+  "quiz": {
+    "title": "Personality quiz",
+    "step": "Question {{current}} / {{total}}",
+    "reveal": "Reveal my animal",
+    "computing": "Analyzing your personality…"
+  },
+  "reveal": {
+    "eyebrow": "Your totem",
+    "title": "Here is your collector card",
+    "continue": "Continue",
+    "backToCard": "Back to my card"
+  },
+  "tabs": {
+    "myCard": "My card",
+    "collection": "Collection",
+    "explore": "Explore"
+  },
+  "myCard": {
+    "title": "My card",
+    "eyebrow": "Your totem animal",
+    "retakeQuiz": "Retake the quiz"
+  },
+  "collection": {
+    "title": "Collection",
+    "subtitle": "Browse the animal card catalog.",
+    "searchPlaceholder": "Search for an animal",
+    "emptyTitle": "No animal found",
+    "emptySubtitle": "Try another name or a personality trait.",
+    "metaFoundOne": "{{count}} animal found for “{{query}}”",
+    "metaFoundMany": "{{count}} animals found for “{{query}}”",
+    "metaAvailableOne": "{{count}} animal available",
+    "metaAvailableMany": "{{count}} animals available",
+    "seeAffinities": "See affinities"
+  },
+  "explore": {
+    "title": "Explore",
+    "subtitle": "Animals with affinity to your {{animal}}",
+    "affinitiesTitle": "Affinities",
+    "sameTotemTitle": "Same totem as you",
+    "sameTotemHint": "{{emoji}} Other {{animal}} people",
+    "sameTotemBadge": "Same totem",
+    "sameTotemEmpty": "No one with the same totem yet. Come back later.",
+    "sameTotemUsersSubtitle": "{{animal}} people — same totem as you",
+    "empty": "No affinities for now.",
+    "reasonShared": "{{other}} shares with your {{source}}: {{traits}}.",
+    "reasonGeneric": "{{other}} naturally resonates with your {{source}}.",
+    "usersSubtitle": "{{animal}} people — {{percent}}% affinity with your totem",
+    "usersEmpty": "No one with this totem yet. Come back later.",
+    "peopleBadgeOne": "{{count}} person",
+    "peopleBadgeMany": "{{count}} people"
   },
   "animalSelect": {
     "title": "Choose your collector card",
@@ -101,7 +145,7 @@
   "profileCreate": {
     "titleCreate": "Create your profile",
     "titleEdit": "Edit your profile",
-    "subtitle": "A few details to stand out in the jungle.",
+    "subtitle": "A few details to complete your card.",
     "changeAnimal": "Change animal",
     "firstName": "Your first name",
     "firstNamePlaceholder": "e.g. Alex",
@@ -140,40 +184,33 @@
   },
   "profile": {
     "changeAnimal": "Change animal",
+    "retakeQuiz": "Retake the quiz",
     "eyes": "Eyes",
     "hair": "Hair",
     "height": "Height",
     "movies": "Movies",
     "songs": "Songs",
     "cityTitle": "My city",
-    "cityHint": "Required to appear in the Jungle and see other profiles.",
-    "cityError": "Enter your city to enter the Jungle.",
-    "matchesTitle": "My matches",
-    "matchesHint": "People you have matched with",
-    "matchesEmpty": "No match yet. Explore the Jungle!",
-    "likesTitle": "Likes received",
-    "likesHint": "They liked you — your turn to respond.",
-    "likesEmpty": "No one waiting for now.",
-    "ageRangeTitle": "Age range to meet",
-    "ageRangeValue": "{{lower}} – {{upper}} years",
+    "cityHint": "Useful to sort affinities by proximity.",
+    "cityError": "Enter your city to continue.",
     "editProfile": "Edit my profile",
-    "enterJungle": "Enter the Jungle",
+    "enterApp": "See my card",
     "logout": "Log out",
     "viewProfileOf": "View {{name}}'s profile"
   },
   "account": {
     "pauseAccount": "Pause my account",
     "resumeAccount": "Resume my account",
-    "pausedHint": "Your account is paused: you no longer appear in other users' search.",
+    "pausedHint": "Your account is paused: you no longer appear in Explore.",
     "pauseConfirmTitle": "Pause account?",
-    "pauseConfirmMessage": "Your profile will no longer appear in other users' search while paused. You can resume it at any time.",
+    "pauseConfirmMessage": "Your profile will no longer appear in Explore while paused. You can resume it at any time.",
     "pauseConfirm": "Pause",
     "resumeConfirmTitle": "Resume your account?",
-    "resumeConfirmMessage": "Your profile will appear again in other users' search.",
+    "resumeConfirmMessage": "Your profile will appear again in Explore.",
     "resumeConfirm": "Resume",
     "deleteAccount": "Delete my account",
     "deleteConfirmTitle": "Delete your account?",
-    "deleteConfirmMessage": "This action is permanent. Your profile, matches and conversations will be deleted and cannot be recovered.",
+    "deleteConfirmMessage": "This action is permanent. Your profile and conversations will be deleted and cannot be recovered.",
     "deleteConfirm": "Delete permanently",
     "cancel": "Cancel",
     "ok": "OK",
@@ -186,23 +223,12 @@
     "fr": "Français",
     "en": "English"
   },
-  "jungle": {
-    "title": "The Jungle",
-    "loading": "Loading the jungle…",
-    "emptyTitle": "No more profiles for now",
-    "passedOne": "You passed on {{count}} profile. Want to give them another chance?",
-    "passedMany": "You passed on {{count}} profiles. Want to give them another chance?",
-    "reviewButton": "Review profiles",
-    "comeBackLater": "Come back later — the jungle is repopulating!",
-    "discoveryFrance": "Search widened — all of France",
-    "discoveryWider": "Search widened — up to {{km}} km"
-  },
   "chats": {
     "title": "My conversations",
     "emptyTitle": "No conversation",
-    "emptySubtitle": "Match with someone in the Jungle to start a chat.",
-    "backToJungle": "Back to the Jungle",
-    "newMatch": "New match — say hello!",
+    "emptySubtitle": "Discover affinities in Explore to start a chat.",
+    "backToExplore": "Back to Explore",
+    "newMatch": "New conversation — say hello!",
     "photoPreview": "Photo"
   },
   "chat": {
@@ -219,14 +245,6 @@
     "dateToday": "Today",
     "dateYesterday": "Yesterday"
   },
-  "match": {
-    "title": "It's a match!",
-    "subtitle": "The jungle brings you together",
-    "youAnd": "You &",
-    "distance": "{{km}} km away from you",
-    "sendMessage": "Send a message",
-    "keepSwiping": "Keep swiping"
-  },
   "city": {
     "hint": "Start typing then choose your city from the list.",
     "placeholder": "e.g. Paris, Lyon, Marseille…",
@@ -237,6 +255,11 @@
   },
   "flipCard": {
     "reveal": "Reveal the card",
-    "title": "Collector card"
+    "title": "Collector card",
+    "photo": "Photo",
+    "text": "Text",
+    "toggleGroup": "Show photo or text",
+    "hintSwipeText": "Swipe or tap to see the card info",
+    "hintSwipePhoto": "Swipe or tap to see the photo"
   }
 }

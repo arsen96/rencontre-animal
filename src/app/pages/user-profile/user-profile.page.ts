@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ModalController, ViewWillEnter } from '@ionic/angular';
+import { AlertController, ViewWillEnter } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, Subscription } from 'rxjs';
-import { Match } from '../../core/interfaces/match.interface';
 import { CitySelection } from '../../core/interfaces/city-selection.interface';
 import { GeoPoint, User } from '../../core/interfaces/user.interface';
 import { AuthService } from '../../core/services/auth.service';
@@ -11,12 +10,9 @@ import { AccountService } from '../../core/services/account.service';
 import { AnimalService } from '../../core/services/animal.service';
 import { AppLanguage, LanguageService } from '../../core/services/language.service';
 import { ChatService } from '../../core/services/chat.service';
-import { SwipeDataService } from '../../core/services/swipe-data.service';
-import { SwipeService } from '../../core/services/swipe.service';
 import { UserSessionService } from '../../core/services/user-session.service';
-import { ProfileDetailModalComponent } from '../../shared/components/profile-detail-modal/profile-detail-modal.component';
 import { CityAutocompleteComponent } from '../../shared/components/city-autocomplete/city-autocomplete.component';
-import { withDistanceFrom, resolveCityCoordinates } from '../../core/utils/distance.util';
+import { resolveCityCoordinates } from '../../core/utils/distance.util';
 import { openExternalUrl } from '../../core/utils/open-external-url.util';
 import { buildSafetyReportMailto } from '../../core/utils/safety-report.util';
 
@@ -32,11 +28,6 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   cityLocation?: GeoPoint;
   cityValid = false;
   cityRequiredHint = false;
-  ageRange: { lower: number; upper: number } = { lower: 18, upper: 45 };
-  matches: Match[] = [];
-  receivedLikes: User[] = [];
-  loadingConnections = true;
-  respondingTo: string | null = null;
   languages: readonly AppLanguage[] = ['fr', 'en'];
   currentLanguage: AppLanguage = 'fr';
   accountBusy = false;
@@ -54,10 +45,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly animalService: AnimalService,
     private readonly auth: AuthService,
     private readonly accountService: AccountService,
-    private readonly swipeData: SwipeDataService,
-    private readonly swipeService: SwipeService,
     private readonly chatService: ChatService,
-    private readonly modalCtrl: ModalController,
     private readonly alertCtrl: AlertController,
     private readonly router: Router,
     private readonly languageService: LanguageService,
@@ -85,9 +73,6 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
       if (user) {
         this.user = this.animalService.enrichUser(user);
         this.applyUserCity(this.user);
-        if (this.user.ageRange) {
-          this.ageRange = { lower: this.user.ageRange.min, upper: this.user.ageRange.max };
-        }
         return;
       }
 
@@ -98,18 +83,22 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
   }
 
   ionViewWillEnter(): void {
-    void this.loadConnections();
+    void this.session.ensureCurrentUser().then((user) => {
+      if (!user) {
+        this.router.navigate(['/landing']);
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }
 
-  get canEnterJungle(): boolean {
+  get canEnterApp(): boolean {
     return this.cityValid;
   }
 
-  enterJungle(): void {
+  enterApp(): void {
     if (!this.cityValid) {
       this.cityRequiredHint = true;
       this.cityAutocomplete?.markSelectionRequired();
@@ -117,7 +106,7 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     }
 
     this.cityRequiredHint = false;
-    this.router.navigate(['/jungle']);
+    this.router.navigate(['/tabs/my-card']);
   }
 
   onCitySelection(selection: CitySelection | null): void {
@@ -137,74 +126,12 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     this.cityLocation = undefined;
   }
 
-  onAgeRangeChange(event: CustomEvent): void {
-    const value = event.detail?.value as { lower: number; upper: number } | undefined;
-    if (!value || !this.user) {
-      return;
-    }
-    this.ageRange = value;
-    this.session.updateProfile({
-      ageRange: { min: value.lower, max: value.upper },
-    });
-  }
-
   editProfile(): void {
     this.router.navigate(['/profile-create'], { queryParams: { edit: 1 } });
   }
 
   changeAnimal(): void {
-    this.router.navigate(['/animal-select'], { queryParams: { edit: 1 } });
-  }
-
-  openMatchChat(match: Match): void {
-    const conversation = this.chatService.ensureConversation(match);
-    this.router.navigate(['/chat', conversation.id]);
-  }
-
-  async openProfileDetail(profile: User): Promise<void> {
-    const enriched = this.user ? withDistanceFrom(this.user, profile) : profile;
-    const modal = await this.modalCtrl.create({
-      component: ProfileDetailModalComponent,
-      componentProps: { profile: enriched },
-      cssClass: 'profile-detail-modal',
-    });
-    await modal.present();
-  }
-
-  async acceptLike(profile: User): Promise<void> {
-    if (!this.user || this.respondingTo) {
-      return;
-    }
-
-    this.respondingTo = profile.id;
-    try {
-      const match = await this.swipeService.respondToReceivedLike(
-        this.user,
-        profile,
-        'like'
-      );
-      await this.loadConnections();
-
-      if (match) {
-        await this.swipeData.markMatchSeen(this.user.id, match.id);
-      }
-    } finally {
-      this.respondingTo = null;
-    }
-  }
-
-  async declineLike(profile: User): Promise<void> {
-    if (!this.user || this.respondingTo) {
-      return;
-    }
-
-    this.respondingTo = profile.id;
-    try {
-      await this.swipeService.respondToReceivedLike(this.user, profile, 'pass');
-      await this.loadConnections();
-    } finally {
-      this.respondingTo = null;
-    }
+    this.router.navigate(['/personality-quiz'], { queryParams: { retake: 1 } });
   }
 
   async logout(): Promise<void> {
@@ -344,43 +271,5 @@ export class UserProfilePage implements OnInit, OnDestroy, ViewWillEnter {
     }
 
     this.cityValid = !!(this.city.trim() && this.cityLocation);
-  }
-
-  private async loadConnections(): Promise<void> {
-    const user = await this.session.ensureCurrentUser();
-    if (!user) {
-      this.router.navigate(['/landing']);
-      return;
-    }
-
-    this.loadingConnections = true;
-    try {
-      await this.chatService.syncFromFirestore(user.id);
-
-      try {
-        const matches = await this.swipeData.getMatches(user.id);
-        this.matches = matches.map((match) => ({
-          ...match,
-          user: this.animalService.enrichUser(withDistanceFrom(user, match.user)),
-        }));
-      } catch (error) {
-        console.error('Failed to load matches', error);
-        this.matches = [];
-      }
-
-      try {
-        const receivedLikes = await this.swipeData.getReceivedLikes(user.id);
-        this.receivedLikes = receivedLikes.map((profile) =>
-          this.animalService.enrichUser(withDistanceFrom(user, profile))
-        );
-      } catch (error) {
-        console.error('Failed to load received likes', error);
-        this.receivedLikes = [];
-      }
-    } catch (error) {
-      console.error('Failed to load profile connections', error);
-    } finally {
-      this.loadingConnections = false;
-    }
   }
 }

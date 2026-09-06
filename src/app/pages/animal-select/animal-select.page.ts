@@ -115,7 +115,7 @@ export class AnimalSelectPage implements OnInit, OnDestroy {
       if (animal) {
         this.session.updateAnimal(animal);
       }
-      this.router.navigate(['/jungle']);
+      this.router.navigate(['/tabs/my-card']);
       return;
     }
 

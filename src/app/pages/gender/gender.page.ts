@@ -36,6 +36,6 @@ export class GenderPage {
       return;
     }
     this.session.patchOnboarding({ gender: this.selected });
-    this.router.navigate(['/preferences']);
+    this.router.navigate(['/profile-create']);
   }
 }

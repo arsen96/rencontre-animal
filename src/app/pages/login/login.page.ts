@@ -145,10 +145,10 @@ export class LoginPage implements OnInit {
       const user = normalizeUser(profile);
       this.session.setCurrentUser(user);
       this.router.navigate([
-        isProfileComplete(user) ? '/jungle' : onboardingRouteFor(user),
+        isProfileComplete(user) ? '/tabs/my-card' : onboardingRouteFor(user),
       ]);
     } else {
-      this.router.navigate(['/birthdate']);
+      this.router.navigate(['/personality-quiz']);
     }
   }
 

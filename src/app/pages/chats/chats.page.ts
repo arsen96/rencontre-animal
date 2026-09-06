@@ -55,8 +55,8 @@ export class ChatsPage implements OnInit, OnDestroy, ViewWillEnter {
     this.router.navigate(['/chat', conversation.id]);
   }
 
-  backToJungle(): void {
-    this.router.navigate(['/jungle']);
+  backToHome(): void {
+    this.router.navigate(['/tabs/my-card']);
   }
 
   lastPreview(conversation: Conversation): string {

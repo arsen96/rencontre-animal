@@ -1,0 +1,57 @@
+<app-jungle-background></app-jungle-background>
+
+<ion-header class="ion-no-border jungle-header">
+  <ion-toolbar>
+    <ion-title>{{ 'myCard.title' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="profile-btn" (click)="openProfile()">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button class="chats-btn" (click)="openChats()">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+        @if (unreadChats > 0) {
+          <ion-badge color="warning">{{ unreadChats }}</ion-badge>
+        }
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="jungle-content" [fullscreen]="true">
+  @if (user?.animal) {
+    <div class="page-shell my-card-page">
+      <p class="eyebrow">{{ 'myCard.eyebrow' | translate }}</p>
+      <h1 class="page-title">
+        {{ user!.animal.emoji }} {{ user!.animal.name }}
+      </h1>
+      <p class="page-subtitle">{{ user!.animal.personality }}</p>
+
+      <div class="card-wrap">
+        <app-animal-flip-card
+          [animal]="user!.animal"
+          [(flipped)]="flipped"
+          [selected]="true"
+          [expanded]="true"
+          [clickable]="false"
+          [flipInteractive]="true"
+        ></app-animal-flip-card>
+      </div>
+
+      <div class="traits">
+        @for (trait of user!.animal.traits; track trait) {
+          <span class="trait-chip">{{ trait }}</span>
+        }
+      </div>
+
+      <p class="description">{{ user!.animal.description }}</p>
+
+      <button type="button" class="retake-btn" (click)="retakeQuiz()">
+        {{ 'myCard.retakeQuiz' | translate }}
+      </button>
+    </div>
+  } @else {
+    <div class="page-shell">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+  }
+</ion-content>

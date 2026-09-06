@@ -2,13 +2,36 @@
 
 :host {
   display: block;
+  width: 100%;
   height: 240px;
+}
+
+:host(.is-expanded) {
+  height: min(56vh, 480px);
+}
+
+:host(.flip-interactive) {
+  height: auto;
+}
+
+:host(.is-expanded.flip-interactive) {
+  height: auto;
+}
+
+:host(.flip-interactive) .flip-card {
+  height: min(52vh, 440px);
 }
 
 .flip-card {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  touch-action: pan-y;
+  user-select: none;
+
+  &.flip-interactive {
+    touch-action: none;
+  }
 
   &:not(.flipped):hover .flip-inner {
     box-shadow:
@@ -168,6 +191,40 @@
       border: 1px solid var(--gold-border);
       letter-spacing: 0.04em;
     }
+  }
+
+  .hint-back {
+    @include label-caps;
+    margin: 8px 0 0;
+    font-size: 0.55rem;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+}
+
+.face-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.face-toggle-btn {
+  min-width: 96px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(200, 169, 107, 0.28);
+  background: rgba(11, 11, 11, 0.55);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+
+  &.active {
+    color: var(--gold-light);
+    border-color: var(--gold);
+    background: rgba(200, 169, 107, 0.14);
+    box-shadow: 0 0 16px var(--gold-glow-soft);
   }
 }
 

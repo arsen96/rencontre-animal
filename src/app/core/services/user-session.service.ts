@@ -127,7 +127,6 @@ export class UserSessionService {
       !o.birthMonth ||
       !o.birthYear ||
       !o.gender ||
-      !o.meetPreference ||
       !o.selectedAnimal ||
       o.profile?.height == null ||
       !o.city?.trim()
@@ -149,7 +148,6 @@ export class UserSessionService {
       displayName,
       age,
       gender: o.gender,
-      meetPreference: o.meetPreference,
       birthDate,
       animal: o.selectedAnimal,
       profile: {
@@ -162,7 +160,9 @@ export class UserSessionService {
       bio: o.bio?.trim() || undefined,
       city,
       location,
-      ageRange: { min: 18, max: 45 },
+      quizAnswers: o.quizAnswers,
+      quizScores: o.quizScores,
+      totemAssignedAt: new Date().toISOString(),
     };
 
     this.setCurrentUser(user);
