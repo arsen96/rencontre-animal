@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>768126961667-255bbsoahb67lnj6g76aru9djblr7u45.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.768126961667-255bbsoahb67lnj6g76aru9djblr7u45</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>768126961667-20eqc0vdig3olubn8kuavk84gj1n22k5.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCRUw7uKlDEmeSr7aw-ldCPjYVbJe34-0s</string>
+	<key>GCM_SENDER_ID</key>
+	<string>768126961667</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.animalrencontre.app</string>
+	<key>PROJECT_ID</key>
+	<string>rencontre-animal</string>
+	<key>STORAGE_BUCKET</key>
+	<string>rencontre-animal.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:768126961667:ios:c362b4a162b940f06de636</string>
+</dict>
+</plist>
