@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Capacitor } from '@capacitor/core';
 import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../../core/services/auth.service';
@@ -26,6 +27,8 @@ export class LoginPage implements OnInit {
   loading = false;
   error = '';
   checkingSession = true;
+  /** Apple Sign In is required on iOS when Google (third-party) login is offered. */
+  readonly showAppleSignIn = Capacitor.getPlatform() === 'ios';
 
   constructor(
     private readonly auth: AuthService,
@@ -133,6 +136,41 @@ export class LoginPage implements OnInit {
     this.loading = false;
   }
 
+  async appleLogin(): Promise<void> {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+    this.error = '';
+
+    let uid: string;
+    try {
+      const credential = await this.auth.loginWithApple();
+      uid = credential.user.uid;
+    } catch (error: unknown) {
+      const code = (error as { code?: string })?.code;
+      const message = (error as { message?: string })?.message ?? '';
+      const cancelled =
+        code === 'auth/popup-closed-by-user' ||
+        code === 'auth/cancelled-popup-request' ||
+        code === 'auth/user-cancelled' ||
+        message.includes('annulée') ||
+        message.includes('cancelled') ||
+        message.includes('Canceled') ||
+        message.includes('cancel');
+      if (!cancelled) {
+        console.error('Apple auth error', error);
+        this.error = this.mapAppleError(code, message);
+      }
+      this.loading = false;
+      return;
+    }
+
+    await this.routeAfterAuth(uid);
+    this.loading = false;
+  }
+
   private async routeAfterAuth(uid: string): Promise<void> {
     let profile = null;
     try {
@@ -157,6 +195,19 @@ export class LoginPage implements OnInit {
       return this.translate.instant('login.errors.googleCancelled');
     }
     return this.translate.instant(`login.errors.${this.errorKeyFor(code)}`);
+  }
+
+  private mapAppleError(code?: string, message?: string): string {
+    if (message?.includes('token manquant') || message?.includes('annulée')) {
+      return this.translate.instant('login.errors.appleCancelled');
+    }
+    if (code === 'auth/account-exists-with-different-credential') {
+      return this.translate.instant('login.errors.accountExists');
+    }
+    if (code === 'auth/network-request-failed') {
+      return this.translate.instant('login.errors.network');
+    }
+    return this.translate.instant('login.errors.generic');
   }
 
   private errorKeyFor(code?: string): string {

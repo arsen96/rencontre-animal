@@ -64,6 +64,18 @@
         {{ 'login.googleContinue' | translate }}
       </button>
 
+      @if (showAppleSignIn) {
+        <button
+          type="button"
+          class="btn-apple"
+          [disabled]="loading"
+          (click)="appleLogin()"
+        >
+          <ion-icon name="logo-apple"></ion-icon>
+          {{ 'login.appleContinue' | translate }}
+        </button>
+      }
+
       <button type="button" class="toggle-mode" (click)="toggleMode()">
         {{ (isLogin ? 'login.toggleToRegister' : 'login.toggleToLogin') | translate }}
       </button>

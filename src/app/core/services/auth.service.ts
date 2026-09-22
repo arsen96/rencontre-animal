@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   deleteUser,
   GoogleAuthProvider,
+  OAuthProvider,
   onAuthStateChanged,
   reauthenticateWithCredential,
   reauthenticateWithPopup,
@@ -70,6 +71,34 @@ export class AuthService {
     return signInWithPopup(this.auth, provider);
   }
 
+  /**
+   * Sign in with Apple — required on iOS when a third-party login (Google) is offered.
+   * Existing email/Google accounts are unchanged; Apple creates/links its own Firebase uid.
+   */
+  async loginWithApple(): Promise<UserCredential> {
+    if (Capacitor.isNativePlatform()) {
+      const result = await FirebaseAuthentication.signInWithApple({
+        skipNativeAuth: true,
+        scopes: ['email', 'name'],
+      });
+      const idToken = result.credential?.idToken;
+      if (!idToken) {
+        throw new Error('Connexion Apple annulée ou token manquant.');
+      }
+      const provider = new OAuthProvider('apple.com');
+      const credential = provider.credential({
+        idToken,
+        rawNonce: result.credential?.nonce,
+      });
+      return signInWithCredential(this.auth, credential);
+    }
+
+    const provider = new OAuthProvider('apple.com');
+    provider.addScope('email');
+    provider.addScope('name');
+    return signInWithPopup(this.auth, provider);
+  }
+
   logout() {
     return signOut(this.auth);
   }
@@ -77,8 +106,7 @@ export class AuthService {
   /**
    * Ré-authentifie l'utilisateur courant pour obtenir une connexion "récente"
    * (nécessaire avant une suppression de compte — auth/requires-recent-login).
-   * Ne gère automatiquement que le fournisseur Google ; pour les autres, c'est
-   * un no-op et la suppression sera tentée directement.
+   * Gère Google et Apple ; email/password reste un no-op (tentative directe).
    */
   async reauthenticate(): Promise<void> {
     const user = this.auth.currentUser;
@@ -87,10 +115,26 @@ export class AuthService {
     }
 
     const providerId = user.providerData?.[0]?.providerId;
-    if (providerId !== 'google.com') {
+    if (providerId === 'google.com') {
+      await this.reauthenticateGoogle(user);
       return;
     }
+    if (providerId === 'apple.com') {
+      await this.reauthenticateApple(user);
+      return;
+    }
+  }
 
+  /** Supprime le compte Firebase Auth de l'utilisateur courant. */
+  async deleteCurrentUser(): Promise<void> {
+    const user = this.auth.currentUser;
+    if (!user) {
+      throw new Error('Aucun utilisateur connecté.');
+    }
+    await deleteUser(user);
+  }
+
+  private async reauthenticateGoogle(user: FirebaseUser): Promise<void> {
     if (Capacitor.isNativePlatform()) {
       const result = await FirebaseAuthentication.signInWithGoogle();
       const idToken = result.credential?.idToken;
@@ -107,12 +151,28 @@ export class AuthService {
     await reauthenticateWithPopup(user, provider);
   }
 
-  /** Supprime le compte Firebase Auth de l'utilisateur courant. */
-  async deleteCurrentUser(): Promise<void> {
-    const user = this.auth.currentUser;
-    if (!user) {
-      throw new Error('Aucun utilisateur connecté.');
+  private async reauthenticateApple(user: FirebaseUser): Promise<void> {
+    if (Capacitor.isNativePlatform()) {
+      const result = await FirebaseAuthentication.signInWithApple({
+        skipNativeAuth: true,
+        scopes: ['email', 'name'],
+      });
+      const idToken = result.credential?.idToken;
+      if (!idToken) {
+        throw new Error('Ré-authentification Apple annulée.');
+      }
+      const provider = new OAuthProvider('apple.com');
+      const credential = provider.credential({
+        idToken,
+        rawNonce: result.credential?.nonce,
+      });
+      await reauthenticateWithCredential(user, credential);
+      return;
     }
-    await deleteUser(user);
+
+    const provider = new OAuthProvider('apple.com');
+    provider.addScope('email');
+    provider.addScope('name');
+    await reauthenticateWithPopup(user, provider);
   }
 }

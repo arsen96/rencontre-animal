@@ -24,6 +24,7 @@ import {
   informationCircleOutline,
   locationOutline,
   logoGoogle,
+  logoApple,
   logOutOutline,
   male,
   maleFemale,
@@ -53,6 +54,7 @@ import { LanguageService } from './core/services/language.service';
 
 addIcons({
   'logo-google': logoGoogle,
+  'logo-apple': logoApple,
   'chatbubble-ellipses-outline': chatbubbleEllipsesOutline,
   'chatbubble-outline': chatbubbleOutline,
   'chatbubbles-outline': chatbubblesOutline,

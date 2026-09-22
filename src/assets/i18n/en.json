@@ -35,10 +35,12 @@
     "signIn": "Log in",
     "createAccount": "Create my account",
     "googleContinue": "Continue with Google",
+    "appleContinue": "Continue with Apple",
     "toggleToRegister": "No account yet? Sign up",
     "toggleToLogin": "Already have an account? Log in",
     "errors": {
       "googleCancelled": "Google sign-in cancelled.",
+      "appleCancelled": "Apple sign-in cancelled.",
       "invalidEmail": "The email address is not valid.",
       "emailInUse": "This account already exists. Log in instead.",
       "weakPassword": "Password too short (6 characters minimum).",
