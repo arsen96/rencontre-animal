@@ -24,6 +24,12 @@ ion-toolbar {
   @include collector-card-frame(var(--card-radius-lg));
   padding: 24px 20px;
 
+  .avatar-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 16px;
+  }
+
   h2 {
     @include heading-display;
     color: var(--text-primary);

@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonContent, ViewWillEnter } from '@ionic/angular';
+import { IonContent, ModalController, ViewWillEnter } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Animal } from '../../core/interfaces/animal.interface';
@@ -14,6 +14,7 @@ import { Conversation } from '../../core/interfaces/conversation.interface';
 import { ChatMessage } from '../../core/interfaces/message.interface';
 import { ChatService } from '../../core/services/chat.service';
 import { UserSessionService } from '../../core/services/user-session.service';
+import { ProfileDetailModalComponent } from '../../shared/components/profile-detail-modal/profile-detail-modal.component';
 
 @Component({
   selector: 'app-chat',
@@ -41,7 +42,8 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly router: Router,
     private readonly session: UserSessionService,
     readonly chatService: ChatService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly modalCtrl: ModalController
   ) {}
 
   ngOnInit(): void {
@@ -214,6 +216,20 @@ export class ChatPage implements OnInit, OnDestroy, ViewWillEnter {
 
   goBack(): void {
     this.router.navigate(['/chats']);
+  }
+
+  async openParticipantProfile(): Promise<void> {
+    const profile = this.conversation?.participant;
+    if (!profile) {
+      return;
+    }
+
+    const modal = await this.modalCtrl.create({
+      component: ProfileDetailModalComponent,
+      componentProps: { profile },
+      cssClass: 'profile-detail-modal',
+    });
+    await modal.present();
   }
 
   private async bootstrapChat(): Promise<void> {

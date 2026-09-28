@@ -10,10 +10,24 @@
     font-weight: 600;
     letter-spacing: 0.02em;
 
+    .title-profile-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      max-width: 100%;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+
     .title-avatar {
       display: inline-block;
       vertical-align: middle;
       margin-right: 8px;
+      pointer-events: none;
     }
   }
 

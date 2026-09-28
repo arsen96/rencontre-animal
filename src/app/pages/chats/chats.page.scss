@@ -68,6 +68,7 @@
   .avatar {
     width: 52px;
     height: 52px;
+    padding: 0;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -77,6 +78,7 @@
     background: var(--black-deep);
     border: 1px solid var(--gold-border);
     box-shadow: 0 0 12px var(--gold-glow-soft);
+    cursor: pointer;
   }
 
   ion-label {

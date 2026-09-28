@@ -11,6 +11,13 @@
 
 <ion-content class="modal-content">
   <div class="details">
+    <div class="avatar-wrap">
+      <app-animal-avatar
+        [animal]="profile.animal"
+        size="lg"
+        variant="circle"
+      ></app-animal-avatar>
+    </div>
     <h2>{{ profile.displayName }}, {{ profile.age }}</h2>
     <p class="animal">{{ profile.animal.name }} — {{ profile.animal.personality }}</p>
     @if (profile.animal.description) {

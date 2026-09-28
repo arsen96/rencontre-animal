@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ViewWillEnter } from '@ionic/angular';
+import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Conversation } from '../../core/interfaces/conversation.interface';
 import { AuthService } from '../../core/services/auth.service';
 import { ChatService } from '../../core/services/chat.service';
 import { UserSessionService } from '../../core/services/user-session.service';
+import { ProfileDetailModalComponent } from '../../shared/components/profile-detail-modal/profile-detail-modal.component';
 
 @Component({
   selector: 'app-chats',
@@ -21,7 +22,8 @@ export class ChatsPage implements OnInit, OnDestroy, ViewWillEnter {
     private readonly chatService: ChatService,
     private readonly session: UserSessionService,
     private readonly auth: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly modalCtrl: ModalController
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,16 @@ export class ChatsPage implements OnInit, OnDestroy, ViewWillEnter {
 
   openChat(conversation: Conversation): void {
     this.router.navigate(['/chat', conversation.id]);
+  }
+
+  async openProfile(event: Event, conversation: Conversation): Promise<void> {
+    event.stopPropagation();
+    const modal = await this.modalCtrl.create({
+      component: ProfileDetailModalComponent,
+      componentProps: { profile: conversation.participant },
+      cssClass: 'profile-detail-modal',
+    });
+    await modal.present();
   }
 
   backToJungle(): void {

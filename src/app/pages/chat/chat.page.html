@@ -9,15 +9,17 @@
     </ion-buttons>
     @if (conversation) {
       <ion-title>
-        @if (participantAnimal) {
-          <app-animal-avatar
-            [animal]="participantAnimal"
-            size="xs"
-            variant="inline"
-            class="title-avatar"
-          ></app-animal-avatar>
-        }
-        {{ participantName }}
+        <button type="button" class="title-profile-btn" (click)="openParticipantProfile()">
+          @if (participantAnimal) {
+            <app-animal-avatar
+              [animal]="participantAnimal"
+              size="xs"
+              variant="inline"
+              class="title-avatar"
+            ></app-animal-avatar>
+          }
+          {{ participantName }}
+        </button>
       </ion-title>
     }
   </ion-toolbar>
