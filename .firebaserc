@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "rencontre-animal"
-  }
+  },
+  "targets": {
+    "rencontre-animal": {
+      "hosting": {
+        "arsenkubat": [
+          "arsenkubat"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
