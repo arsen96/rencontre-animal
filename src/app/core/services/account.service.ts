@@ -41,7 +41,8 @@ export class AccountService {
    * (connecté mais sans profil, qui renverrait vers l'onboarding).
    */
   async deleteAccount(): Promise<void> {
-    await this.auth.reauthenticate();
+    // Revoke Apple's authorization before deleting data; cancellation leaves the account intact.
+    await this.auth.reauthenticate(true);
 
     const uid = this.auth.uid;
     if (uid) {

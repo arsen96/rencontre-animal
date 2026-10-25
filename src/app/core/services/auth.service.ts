@@ -9,6 +9,7 @@ import {
   onAuthStateChanged,
   reauthenticateWithCredential,
   reauthenticateWithPopup,
+  revokeAccessToken,
   signInWithCredential,
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -82,8 +83,8 @@ export class AuthService {
         scopes: ['email', 'name'],
       });
       const idToken = result.credential?.idToken;
-      if (!idToken) {
-        throw new Error('Connexion Apple annulée ou token manquant.');
+      if (!idToken || !result.credential?.nonce) {
+        throw new Error('Réponse Apple invalide : jeton ou nonce manquant.');
       }
       const provider = new OAuthProvider('apple.com');
       const credential = provider.credential({
@@ -107,8 +108,9 @@ export class AuthService {
    * Ré-authentifie l'utilisateur courant pour obtenir une connexion "récente"
    * (nécessaire avant une suppression de compte — auth/requires-recent-login).
    * Gère Google et Apple ; email/password reste un no-op (tentative directe).
+   * revokeAppleToken est réservé au parcours de suppression de compte.
    */
-  async reauthenticate(): Promise<void> {
+  async reauthenticate(revokeAppleToken = false): Promise<void> {
     const user = this.auth.currentUser;
     if (!user) {
       throw new Error('Aucun utilisateur connecté.');
@@ -120,7 +122,7 @@ export class AuthService {
       return;
     }
     if (providerId === 'apple.com') {
-      await this.reauthenticateApple(user);
+      await this.reauthenticateApple(user, revokeAppleToken);
       return;
     }
   }
@@ -151,28 +153,57 @@ export class AuthService {
     await reauthenticateWithPopup(user, provider);
   }
 
-  private async reauthenticateApple(user: FirebaseUser): Promise<void> {
+  private async reauthenticateApple(user: FirebaseUser, revokeToken = false): Promise<void> {
     if (Capacitor.isNativePlatform()) {
-      const result = await FirebaseAuthentication.signInWithApple({
-        skipNativeAuth: true,
-        scopes: ['email', 'name'],
-      });
-      const idToken = result.credential?.idToken;
-      if (!idToken) {
-        throw new Error('Ré-authentification Apple annulée.');
+      // Firebase iOS revokeToken needs a native currentUser. Ordinary sign-in
+      // keeps skipNativeAuth=true; only account deletion opens a native session.
+      const nativeRevocation = revokeToken && Capacitor.getPlatform() === 'ios';
+      try {
+        const result = await FirebaseAuthentication.signInWithApple({
+          skipNativeAuth: !nativeRevocation,
+          scopes: ['email', 'name'],
+        });
+        const idToken = result.credential?.idToken;
+        if (!idToken || !result.credential?.nonce) {
+          throw new Error('Réponse Apple invalide : jeton ou nonce manquant.');
+        }
+        if (nativeRevocation && result.user?.uid !== user.uid) {
+          throw new Error('Le compte Apple sélectionné ne correspond pas au compte à supprimer.');
+        }
+        const token = nativeRevocation
+          ? result.credential.authorizationCode
+          : result.credential.accessToken;
+        if (revokeToken && !token) {
+          throw new Error('Impossible de révoquer Apple : code ou jeton manquant.');
+        }
+        const provider = new OAuthProvider('apple.com');
+        const credential = provider.credential({ idToken, rawNonce: result.credential.nonce });
+        await reauthenticateWithCredential(user, credential);
+        if (revokeToken && token) {
+          if (nativeRevocation) {
+            await FirebaseAuthentication.revokeAccessToken({ token });
+          } else {
+            await revokeAccessToken(this.auth, token);
+          }
+        }
+      } finally {
+        if (nativeRevocation) {
+          await FirebaseAuthentication.signOut();
+        }
       }
-      const provider = new OAuthProvider('apple.com');
-      const credential = provider.credential({
-        idToken,
-        rawNonce: result.credential?.nonce,
-      });
-      await reauthenticateWithCredential(user, credential);
       return;
     }
 
     const provider = new OAuthProvider('apple.com');
     provider.addScope('email');
     provider.addScope('name');
-    await reauthenticateWithPopup(user, provider);
+    const result = await reauthenticateWithPopup(user, provider);
+    if (revokeToken) {
+      const token = OAuthProvider.credentialFromResult(result)?.accessToken;
+      if (!token) {
+        throw new Error('Impossible de révoquer Apple : jeton manquant.');
+      }
+      await revokeAccessToken(this.auth, token);
+    }
   }
 }

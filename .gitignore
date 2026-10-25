@@ -31,6 +31,7 @@ log.txt
 
 # Node
 /node_modules
+/.npm-cache/
 /functions/node_modules
 /functions/lib
 npm-debug.log
